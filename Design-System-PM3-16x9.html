@@ -86,15 +86,14 @@
   .hero{background:#000;padding:12px;display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:1.25fr 1fr;gap:12px;min-height:calc(100vh - 49px);min-height:min(100svh - 49px,860px)}
   .hero > div{position:relative;overflow:hidden}
   .h-main{grid-row:1/3;background:var(--purple-deep);border-radius:var(--r-xl) 0 0 var(--r-xl);padding:56px 56px 48px;display:flex;flex-direction:column;justify-content:space-between;gap:36px;color:#fff}
-  .h-main::after{content:'';position:absolute;right:0;bottom:0;width:26px;height:46%;background:var(--yellow)}
   .h-kicker{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray-fog)}
   .h-main h1{font-weight:800;font-size:clamp(44px,6.6vw,104px);line-height:.94;text-transform:uppercase;letter-spacing:-.025em;margin:28px 0 22px}
   .h-main h1 .l2{color:var(--gray-fog)}
   .h-main h1 .em{display:block;text-transform:none;font-size:.78em;margin-top:.12em;color:#fff;font-weight:500;letter-spacing:-.01em}
   .h-main p{color:var(--gray-fog);max-width:46ch;font-size:16px;margin:0}
-  .h-logo{height:42px;width:auto}
+  .h-logo{height:32px;width:auto;align-self:flex-start}
   .h-tex{border-radius:0 var(--r-xl) 0 0;background:url('assets/tex/tex-dobras-lilas.jpg') center/cover}
-  .h-photo{border-radius:0 0 var(--r-xl) 0;background:url('assets/img/foto-sofa-fone.jpg') 42% 30%/cover}
+  .h-photo{border-radius:0 0 var(--r-xl) 0;background:url('assets/img/foto-sofa-fone.jpg') 50% 62%/cover}
   .h-photo .tag{position:absolute;left:18px;bottom:18px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:#fff;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;border-radius:var(--r-pill)}
 
   /* ---------- sections ---------- */
@@ -218,11 +217,11 @@
 
   /* ---------- grid fluido ---------- */
   .fluid-demo{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-  .fl{position:relative;aspect-ratio:1/1;background:#000;border-radius:var(--r-xl);overflow:hidden}
+  .fl{position:relative;aspect-ratio:1/1;background:var(--purple-deep);border-radius:var(--r-xl);overflow:hidden}
   .fl > *{position:absolute}
-  .fl .b-photo{inset:0 0 auto auto;width:62%;height:56%;background:url('assets/img/foto-mesa-cafe.jpg') 60% 40%/cover;border-radius:0}
-  .fl .b-white{left:0;top:0;width:66%;height:50%;background:#fff;border-radius:0 0 var(--r-xl) 0}
-  .fl .b-purple{left:5%;top:50%;right:0;bottom:0;background:var(--purple-deep);border-radius:var(--r-xl) 0 0 0}
+  .fl .b-photo{inset:0 0 auto auto;width:50%;height:50%;background:url('assets/img/foto-mesa-cafe.jpg') 55% 30%/cover;border-radius:0}
+  .fl .b-white{left:0;top:0;width:50%;height:50%;background:#fff;border-radius:0 0 var(--r-xl) 0}
+  .fl .b-purple{left:5%;top:50%;right:0;bottom:0;background:var(--purple-deep);border-radius:0}
   .fl .b-yellow{left:0;top:50%;width:5%;bottom:0;background:var(--yellow)}
   .fl .b-label{left:6%;top:9%;font-family:var(--display);font-weight:800;font-size:clamp(14px,2vw,22px);text-transform:uppercase;line-height:1;letter-spacing:-.01em;color:var(--ink)}
   .fl .b-label.l2{top:auto;bottom:9%;left:12%;color:var(--gray-fog)}
@@ -488,7 +487,7 @@ body{overflow-x:hidden}
 .srow .sp{grid-column:2;font:400 19px ui-monospace,Consolas,monospace;color:var(--muted);text-align:left}
 
 /* grid fluido */
-.flx{position:relative;width:800px;height:800px;background:#000;border-radius:48px;overflow:hidden;flex:none}
+.flx{position:relative;width:800px;height:800px;background:var(--purple-deep);border-radius:48px;overflow:hidden;flex:none}
 .flx>div{position:absolute}
 .rl7{display:grid;gap:12px}
 .rl7 .it{display:flex;gap:22px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:22px;padding:15px 24px}
@@ -553,7 +552,7 @@ body{overflow-x:hidden}
 <section class="slide cover" data-nofoot>
   <div style="position:absolute;inset:28px;display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:1.2fr 1fr;gap:28px">
     <div style="grid-row:1/3;background:var(--purple-deep);border-radius:64px 0 0 64px;padding:96px 104px 88px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;color:#fff">
-      <div style="position:absolute;right:0;bottom:0;width:34px;height:42%;background:var(--yellow)"></div>
+
       <div>
         <div style="font:700 24px var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--gray-fog)">Design System · v1.0 · 2026</div>
         <div style="font:800 168px/.92 var(--display);text-transform:uppercase;letter-spacing:-.03em;margin:44px 0 36px">Pessoas<br><span style="color:var(--gray-fog)">criam</span><br>produtos.</div>
@@ -721,9 +720,9 @@ body{overflow-x:hidden}
 <section class="slide" data-sec="Grid &amp; forma">
   <div style="display:grid;grid-template-columns:800px 1fr;gap:72px;align-items:center;height:856px">
     <div class="flx">
-      <div style="right:0;top:0;width:62%;height:56%;background:url('assets/img/foto-mesa-cafe.jpg') 62% 30%/cover"></div>
-      <div style="left:0;top:0;width:66%;height:50%;background:#fff;border-radius:0 0 80px 0"></div>
-      <div style="left:5%;top:50%;right:0;bottom:0;background:var(--purple-deep);border-radius:80px 0 0 0"></div>
+      <div style="right:0;top:0;width:50%;height:50%;background:url('assets/img/foto-mesa-cafe.jpg') 55% 30%/cover"></div>
+      <div style="left:0;top:0;width:50%;height:50%;background:#fff;border-radius:0 0 80px 0"></div>
+      <div style="left:5%;top:50%;right:0;bottom:0;background:var(--purple-deep)"></div>
       <div style="left:0;top:50%;width:5%;bottom:0;background:var(--yellow)"></div>
       <div style="left:8%;top:9%;font:800 34px/1 var(--display);text-transform:uppercase;color:var(--ink)">Bloco<br>branco</div>
       <div style="left:12%;bottom:9%;font:800 34px/1 var(--display);text-transform:uppercase;color:#fff">Bloco roxo</div>
@@ -902,7 +901,7 @@ body{overflow-x:hidden}
   <div class="kick"><b>08</b> Peças de referência</div>
   <h2 style="margin-bottom:26px">Slides <span class="c2">e títulos</span></h2>
   <div style="display:flex;gap:44px;align-items:flex-start">
-    <div class="pcx" style="width:1060px"><div class="piece wd">
+    <div class="pcx" style="width:1060px"><div class="piece wd" style="background:#fff">
           <div class="a" style="left:0;top:0;width:calc(320*var(--u));height:calc(360*var(--u));background:var(--purple-royal)"></div>
           <div class="a" style="left:calc(320*var(--u));top:0;width:calc(800*var(--u));height:calc(360*var(--u));background:#fff"></div>
           <div class="a" style="left:0;top:calc(360*var(--u));width:calc(1120*var(--u));height:calc(720*var(--u));background:var(--gray-fog)"></div>
@@ -912,7 +911,7 @@ body{overflow-x:hidden}
           <img class="a" src="assets/logo/pm3-logo-preto.svg" alt="" style="left:calc(40*var(--u));top:calc(404*var(--u));height:calc(56*var(--u))">
           <div class="a T" style="left:calc(40*var(--u));top:calc(780*var(--u));font-size:calc(96*var(--u));color:#000;text-transform:uppercase;line-height:.98">Proporções<br>harmônicas</div>
         </div><div class="cap"><b>Slide · 1920 × 1080</b><span>Divisão assimétrica 7/12 + 5/12</span></div></div>
-    <div class="pcx" style="width:580px"><div class="piece wd" style="aspect-ratio:16/9;--u:calc(100cqw / 1080);background:var(--purple-deep)">
+    <div class="pcx" style="width:580px"><div class="piece wd" data-title style="aspect-ratio:16/9;--u:calc(100cqw / 1080);background:var(--purple-deep)">
           <div class="a" style="inset:0;background:var(--purple-deep)"></div>
           <div class="a T" style="left:calc(60*var(--u));top:calc(70*var(--u));font-size:calc(84*var(--u));color:#fff;text-transform:uppercase;width:calc(900*var(--u))">Eleve seu<br>conhecimento<br><span style="color:var(--gray-fog)">em produtos<br>digitais</span></div>
           <div class="a S" style="left:calc(60*var(--u));bottom:calc(60*var(--u));font-size:calc(88*var(--u));color:#fff;font-weight:400">Esse é o momento</div>
@@ -997,7 +996,7 @@ body{overflow-x:hidden}
   <div style="position:absolute;inset:28px;display:grid;grid-template-columns:1fr 1.5fr;gap:28px">
     <div style="background:var(--purple-deep);border-radius:64px 0 0 64px;display:flex;align-items:center;justify-content:center;position:relative">
       <img src="assets/logo/pm3-simbolo-branco.svg" alt="" style="width:360px">
-      <div style="position:absolute;left:0;bottom:0;width:34px;height:36%;background:var(--yellow)"></div>
+
     </div>
     <div style="border-radius:0 64px 64px 0;background:url('assets/tex/tex-dobras-lilas.jpg') center/cover;position:relative;display:flex;align-items:flex-end;padding:80px">
       <div style="font:800 76px/.95 var(--display);text-transform:uppercase;letter-spacing:-.03em;color:#fff;text-shadow:0 2px 30px rgba(69,46,120,.5)">PM3.COM.BR</div>

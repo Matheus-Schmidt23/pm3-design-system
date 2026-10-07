@@ -88,15 +88,14 @@
   .hero{background:#000;padding:12px;display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:1.25fr 1fr;gap:12px;min-height:calc(100vh - 49px);min-height:min(100svh - 49px,860px)}
   .hero > div{position:relative;overflow:hidden}
   .h-main{grid-row:1/3;background:var(--purple-deep);border-radius:var(--r-xl) 0 0 var(--r-xl);padding:56px 56px 48px;display:flex;flex-direction:column;justify-content:space-between;gap:36px;color:#fff}
-  .h-main::after{content:'';position:absolute;right:0;bottom:0;width:26px;height:46%;background:var(--yellow)}
   .h-kicker{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray-fog)}
   .h-main h1{font-weight:800;font-size:clamp(44px,6.6vw,104px);line-height:.94;text-transform:uppercase;letter-spacing:-.025em;margin:28px 0 22px}
   .h-main h1 .l2{color:var(--gray-fog)}
   .h-main h1 .em{display:block;text-transform:none;font-size:.78em;margin-top:.12em;color:#fff;font-weight:500;letter-spacing:-.01em}
   .h-main p{color:var(--gray-fog);max-width:46ch;font-size:16px;margin:0}
-  .h-logo{height:42px;width:auto}
+  .h-logo{height:32px;width:auto;align-self:flex-start}
   .h-tex{border-radius:0 var(--r-xl) 0 0;background:url('assets/tex/tex-dobras-lilas.jpg') center/cover}
-  .h-photo{border-radius:0 0 var(--r-xl) 0;background:url('assets/img/foto-sofa-fone.jpg') 42% 30%/cover}
+  .h-photo{border-radius:0 0 var(--r-xl) 0;background:url('assets/img/foto-sofa-fone.jpg') 50% 62%/cover}
   .h-photo .tag{position:absolute;left:18px;bottom:18px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:#fff;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;border-radius:var(--r-pill)}
 
   /* ---------- sections ---------- */
@@ -220,11 +219,11 @@
 
   /* ---------- grid fluido ---------- */
   .fluid-demo{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-  .fl{position:relative;aspect-ratio:1/1;background:#000;border-radius:var(--r-xl);overflow:hidden}
+  .fl{position:relative;aspect-ratio:1/1;background:var(--purple-deep);border-radius:var(--r-xl);overflow:hidden}
   .fl > *{position:absolute}
-  .fl .b-photo{inset:0 0 auto auto;width:62%;height:56%;background:url('assets/img/foto-mesa-cafe.jpg') 60% 40%/cover;border-radius:0}
-  .fl .b-white{left:0;top:0;width:66%;height:50%;background:#fff;border-radius:0 0 var(--r-xl) 0}
-  .fl .b-purple{left:5%;top:50%;right:0;bottom:0;background:var(--purple-deep);border-radius:var(--r-xl) 0 0 0}
+  .fl .b-photo{inset:0 0 auto auto;width:50%;height:50%;background:url('assets/img/foto-mesa-cafe.jpg') 55% 30%/cover;border-radius:0}
+  .fl .b-white{left:0;top:0;width:50%;height:50%;background:#fff;border-radius:0 0 var(--r-xl) 0}
+  .fl .b-purple{left:5%;top:50%;right:0;bottom:0;background:var(--purple-deep);border-radius:0}
   .fl .b-yellow{left:0;top:50%;width:5%;bottom:0;background:var(--yellow)}
   .fl .b-label{left:6%;top:9%;font-family:var(--display);font-weight:800;font-size:clamp(14px,2vw,22px);text-transform:uppercase;line-height:1;letter-spacing:-.01em;color:var(--ink)}
   .fl .b-label.l2{top:auto;bottom:9%;left:12%;color:var(--gray-fog)}
@@ -414,7 +413,6 @@
   @media screen and (max-width:980px){
     .hero{grid-template-columns:1fr;grid-template-rows:auto 220px 260px;min-height:0}
     .h-main{grid-row:auto;border-radius:var(--r-xl) var(--r-xl) 0 0;padding:40px 28px 36px}
-    .h-main::after{width:14px;height:32%}
     .h-tex{border-radius:0}.h-photo{border-radius:0 0 var(--r-xl) var(--r-xl)}
     .g3,.g4,.fam,.cc-grid,.voice-ex,.ph-rules{grid-template-columns:1fr 1fr}
     .sw-grid{grid-template-columns:1fr 1fr}
@@ -466,7 +464,6 @@
   #gate .gb{position:absolute;inset:12px;display:grid;grid-template-columns:1.5fr 1fr;grid-template-rows:1fr 1fr;gap:12px}
   #gate .gb > div{position:relative}
   #gate .g1{grid-row:1/3;background:var(--purple-deep);border-radius:var(--r-xl) 0 0 var(--r-xl)}
-  #gate .g1::after{content:'';position:absolute;right:0;bottom:0;width:22px;height:38%;background:var(--yellow)}
   #gate .g2{background:url('assets/tex/tex-dobras-lilas.jpg') center/cover;border-radius:0 var(--r-xl) 0 0}
   #gate .g3{background:url('assets/tex/tex-fitas-vidro.jpg') center/cover;border-radius:0 0 var(--r-xl) 0}
   .gate-card{position:relative;background:#fff;border-radius:var(--r-xl);padding:44px 40px 38px;width:100%;max-width:420px;box-shadow:0 30px 80px rgba(0,0,0,.45);text-align:left}
@@ -567,7 +564,7 @@
     <img class="h-logo" src="assets/logo/pm3-logo-branco.svg" alt="PM3">
   </div>
   <div class="h-tex"></div>
-  <div class="h-photo"><span class="tag">Grid fluido · blocos que se encaixam</span></div>
+  <div class="h-photo"></div>
 </header>
 
 <!-- ============================ ESSÊNCIA ============================ -->
@@ -805,7 +802,6 @@
         <div class="b-purple"></div>
         <div class="b-yellow"></div>
         <div class="b-label l2" style="color:#fff;bottom:9%;left:12%;top:auto">Bloco roxo</div>
-        <span class="num">1/3 · 2/3</span>
       </div>
       <div class="rules">
         <div class="rule"><div class="n">1</div><div><h4>Divisão assimétrica</h4><p>Proporções próximas de 1/3 + 2/3 ou 2/5 + 3/5. Nunca quatro quadrantes iguais.</p></div></div>
@@ -1060,7 +1056,7 @@
 
       <!-- SLIDE 16:9 -->
       <div class="pc-wrap p-slide reveal">
-        <div class="piece wd">
+        <div class="piece wd" style="background:#fff">
           <div class="a" style="left:0;top:0;width:calc(320*var(--u));height:calc(360*var(--u));background:var(--purple-royal)"></div>
           <div class="a" style="left:calc(320*var(--u));top:0;width:calc(800*var(--u));height:calc(360*var(--u));background:#fff"></div>
           <div class="a" style="left:0;top:calc(360*var(--u));width:calc(1120*var(--u));height:calc(720*var(--u));background:var(--gray-fog)"></div>
@@ -1074,7 +1070,7 @@
       </div>
 
       <div class="pc-wrap p-slide2 reveal">
-        <div class="piece wd" style="aspect-ratio:auto;height:100%;min-height:200px;--u:calc(100cqw / 1080);background:var(--purple-deep)">
+        <div class="piece wd" data-title style="aspect-ratio:auto;height:100%;min-height:200px;--u:calc(100cqw / 1080);background:var(--purple-deep)">
           <div class="a" style="inset:0;background:var(--purple-deep)"></div>
           <div class="a T" style="left:calc(60*var(--u));top:calc(70*var(--u));font-size:calc(84*var(--u));color:#fff;text-transform:uppercase;width:calc(900*var(--u))">Eleve seu<br>conhecimento<br><span style="color:var(--gray-fog)">em produtos<br>digitais</span></div>
           <div class="a S" style="left:calc(60*var(--u));bottom:calc(60*var(--u));font-size:calc(88*var(--u));color:#fff;font-weight:400">Esse é o momento</div>
