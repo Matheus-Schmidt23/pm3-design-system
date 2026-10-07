@@ -78,6 +78,9 @@
   .btn[disabled],.btn.is-disabled{background:var(--gray-fog-soft);color:#8d8899;border-color:transparent;cursor:not-allowed;transform:none;box-shadow:none}
   .btn-sm{padding:11px 20px;font-size:11.5px}
   .btn-pdf{background:var(--yellow);color:#000;border-radius:var(--r-pill);padding:9px 16px;font-size:11px}
+  nav.top a.btn-pdf{color:#000;font-size:11px;padding:9px 16px}
+  nav.top a.btn-pdf::after{display:none}
+  nav.top a.btn-pdf:hover{color:#000;filter:brightness(1.06)}
 
   /* ---------- hero (usa o próprio grid fluido) ---------- */
   .hero{background:#000;padding:12px;display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:1.25fr 1fr;gap:12px;min-height:calc(100vh - 49px);min-height:min(100svh - 49px,860px)}
@@ -845,14 +848,14 @@ body{overflow-x:hidden}
   <div class="kick"><b>07</b> Componentes</div>
   <h2>Cards <span class="c2">e chamadas</span></h2>
   <div style="display:grid;grid-template-columns:1fr 1fr 360px;gap:26px;margin-top:20px;align-items:start">
-    <div style="zoom:1.34"><div class="c-course"><div class="im" style="background-image:url('assets/img/foto-fone-oculos.jpg');height:150px"><span class="tag tag-yellow">Formação</span></div><div class="bd"><div class="c-kicker">Dados</div><h4>Analista <span class="em" style="text-transform:none">de dados</span></h4><p>Coleta, análise e visualização com SQL, Python e Power BI.</p><div class="ft"><span>Online · certificado</span><button class="btn btn-ghost btn-sm">Ver →</button></div></div></div></div>
-    <div style="zoom:1.34"><div class="c-course c-dark"><div class="im" style="background-image:url('assets/tex/tex-dobras-lilas.jpg');height:150px"><span class="tag tag-soft">Novo</span></div><div class="bd"><div class="c-kicker on-d">Produto</div><h4>Gestão <span class="em" style="text-transform:none">de produtos</span></h4><p>Da descoberta à entrega: produtos digitais que as pessoas querem usar.</p><div class="ft"><span>Online · certificado</span><button class="btn btn-light btn-sm">Ver →</button></div></div></div></div>
+    <div style="zoom:1.34"><div class="c-course"><div class="im" style="background-image:url('assets/img/foto-fone-oculos.jpg');height:150px"><span class="tag tag-yellow">Formação</span></div><div class="bd"><div class="c-kicker">Dados</div><h4>Analista de dados</h4><p>Coleta, análise e visualização com SQL, Python e Power BI.</p><div class="ft"><span>Online · certificado</span><button class="btn btn-ghost btn-sm">Ver →</button></div></div></div></div>
+    <div style="zoom:1.34"><div class="c-course c-dark"><div class="im" style="background-image:url('assets/tex/tex-dobras-lilas.jpg');height:150px"><span class="tag tag-soft">Novo</span></div><div class="bd"><div class="c-kicker on-d">Produto</div><h4>Gestão de produtos</h4><p>Da descoberta à entrega: produtos digitais que as pessoas querem usar.</p><div class="ft"><span>Online · certificado</span><button class="btn btn-light btn-sm">Ver →</button></div></div></div></div>
     <div style="display:grid;gap:22px">
-      <div style="zoom:1.2"><div class="c-stat"><div class="n">3 <span class="em">aulas</span></div><p><span class="plate">gratuitas com especialistas</span></p></div></div>
+      <div style="zoom:1.2"><div class="c-stat"><div class="n">3 aulas</div><p><span class="plate">gratuitas com especialistas</span></p></div></div>
       <div style="zoom:1.2"><div class="c-quote" style="padding:22px"><div class="qm">“</div><p style="font-size:18px">Aprendi a decidir com dados.</p><div class="who">Nome · Aluna</div></div></div>
     </div>
   </div>
-  <div style="zoom:1.3;margin-top:20px"><div class="cta-band" style="padding:30px 38px 30px 46px"><div><h4>Esse é o <span class="em">momento</span></h4><p>Inscreva-se já e comece com 3 aulas gratuitas.</p></div><button class="btn btn-accent">Quero agora</button></div></div>
+  <div style="zoom:1.3;margin-top:20px"><div class="cta-band" style="padding:30px 38px 30px 46px"><div><h4>Esse é o momento</h4><p>Inscreva-se já e comece com 3 aulas gratuitas.</p></div><button class="btn btn-accent">Quero agora</button></div></div>
 </section>
 
 <!-- 17 PEÇAS I -->
@@ -929,9 +932,9 @@ body{overflow-x:hidden}
     <div class="tr"><h3>Em pessoas</h3><p>“Pessoas criam produtos.” “Aulas com especialistas.”</p></div>
   </div>
   <div style="zoom:1.75;margin-top:34px"><div class="voice-ex" style="margin-top:0;gap:14px">
-    <div class="vx" style="background:var(--purple-deep);color:#fff;min-height:170px;padding:22px;border:1px solid rgba(255,255,255,.2)"><span class="lb" style="color:var(--gray-fog)">Convite</span><p style="font-size:20px">Eleve seu conhecimento em produtos digitais. <span class="em">Esse é o momento.</span></p></div>
-    <div class="vx" style="background:var(--grad-lilac);color:#000;min-height:170px;padding:22px"><span class="lb">Chamada</span><p style="font-size:20px">3 aulas gratuitas <span class="em">com especialistas.</span></p></div>
-    <div class="vx" style="background:#fff;color:#000;min-height:170px;padding:22px"><span class="lb">Manifesto</span><p style="font-size:20px">Pessoas criam produtos. Arriscar é uma <span class="em">oportunidade.</span></p></div>
+    <div class="vx" style="background:var(--purple-deep);color:#fff;min-height:170px;padding:22px;border:1px solid rgba(255,255,255,.2)"><span class="lb" style="color:var(--gray-fog)">Convite</span><p style="font-size:20px">Eleve seu conhecimento em produtos digitais. Esse é o momento.</p></div>
+    <div class="vx" style="background:var(--grad-lilac);color:#000;min-height:170px;padding:22px"><span class="lb">Chamada</span><p style="font-size:20px">3 aulas gratuitas com especialistas.</p></div>
+    <div class="vx" style="background:#fff;color:#000;min-height:170px;padding:22px"><span class="lb">Manifesto</span><p style="font-size:20px">Pessoas criam produtos. Arriscar é uma oportunidade.</p></div>
   </div></div>
   <p style="font-size:23px;color:var(--gray-fog);margin-top:26px">Frases curtas · títulos de 2 a 4 palavras por linha · parágrafos de até 5 linhas · sem promessas absolutas.</p>
 </section>
@@ -997,7 +1000,7 @@ body{overflow-x:hidden}
       <div style="position:absolute;left:0;bottom:0;width:34px;height:36%;background:var(--yellow)"></div>
     </div>
     <div style="border-radius:0 64px 64px 0;background:url('assets/tex/tex-dobras-lilas.jpg') center/cover;position:relative;display:flex;align-items:flex-end;padding:80px">
-      <div style="font:800 76px/.95 var(--display);text-transform:uppercase;letter-spacing:-.03em;color:#fff;text-shadow:0 2px 30px rgba(69,46,120,.5)">PM3.COM.BR<br><span style="font-family:var(--serif);font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;font-size:70px">Esse é o momento</span></div>
+      <div style="font:800 76px/.95 var(--display);text-transform:uppercase;letter-spacing:-.03em;color:#fff;text-shadow:0 2px 30px rgba(69,46,120,.5)">PM3.COM.BR</div>
     </div>
   </div>
 </section>
