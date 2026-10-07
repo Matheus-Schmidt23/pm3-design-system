@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Design System PM3 — 16:9</title>
+<meta name="viewport" content="width=1920">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Rubik:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    /* marca — oficiais (Key Visual 2025) */
+    --purple-deep:#452E78;
+    --purple-royal:#6645B1;
+    --black:#000000;
+    --white:#FFFFFF;
+    --gray-fog:#B9B5C1;
+    --yellow:#FFB12A;
+    --lilac-a:#B04DDD; --lilac-b:#FCCBC9;
+    --blaze-a:#4D2B9F; --blaze-b:#DACBF6;
+    /* interface — derivadas (vistas no template GTM) */
+    --ink:#16121F;
+    --paper:#FAFAF9;
+    --gray-fog-soft:#E4E1EA;
+    --muted:#6F6A7C;
+    --line:rgba(22,18,31,.09);
+
+    --grad-lilac:linear-gradient(135deg,var(--lilac-a) 0%,var(--lilac-b) 100%);
+    --grad-blaze:linear-gradient(90deg,var(--blaze-a) 0%,var(--blaze-b) 100%);
+
+    --display:"Inter Tight",-apple-system,"Segoe UI",Arial,sans-serif;
+    --body:"Rubik",-apple-system,"Segoe UI",Arial,sans-serif;
+    --serif:"Playfair Display",Georgia,serif;
+
+    --r-sm:8px; --r-btn:14px; --r-card:18px; --r-xl:40px; --r-pill:99px;
+    --shadow:0 1px 2px rgba(22,18,31,.04),0 10px 28px rgba(22,18,31,.06);
+    --shadow-lg:0 2px 4px rgba(22,18,31,.05),0 24px 56px rgba(22,18,31,.14);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--body);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.55}
+  h1,h2,h3,h4{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.02em}
+  p{margin:0 0 14px;color:#4a4458}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+  .em{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:0;font-variant-numeric:lining-nums}
+  code,.mono{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:.86em}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.show{opacity:1;transform:none}
+
+  /* ---------- nav ---------- */
+  nav.top{position:sticky;top:0;z-index:60;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 32px}
+  nav.top .brand{display:flex;align-items:center;gap:12px;color:#fff;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.02em;white-space:nowrap}
+  nav.top .brand img{height:24px;width:auto}
+  nav.top .brand span{color:var(--gray-fog);font-weight:500}
+  nav.top ul{list-style:none;display:flex;gap:22px;margin:0;padding:0}
+  nav.top a{white-space:nowrap;color:var(--gray-fog);text-decoration:none;font-family:var(--display);font-size:12.5px;font-weight:600;position:relative;padding:4px 0;transition:color .2s}
+  nav.top a::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--yellow);transition:width .3s}
+  nav.top a:hover{color:#fff}
+  nav.top a:hover::after{width:100%}
+
+  /* ---------- buttons (componentes reais) ---------- */
+  .btn{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;border:2px solid transparent;border-radius:var(--r-btn);padding:15px 28px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s,color .2s,border-color .2s;line-height:1}
+  .btn:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+  .btn-primary{background:var(--purple-royal);color:#fff}
+  .btn-primary:hover{background:var(--purple-deep);transform:translateY(-2px);box-shadow:0 10px 24px rgba(102,69,177,.35)}
+  .btn-primary:active{transform:translateY(0);box-shadow:none}
+  .btn-secondary{background:transparent;color:var(--purple-deep);border-color:var(--purple-deep)}
+  .btn-secondary:hover{background:var(--purple-deep);color:#fff;transform:translateY(-2px)}
+  .on-dark .btn-secondary:hover{background:#fff;color:var(--purple-deep) !important}
+  .btn-ghost{background:transparent;color:var(--purple-royal);padding-left:4px;padding-right:4px}
+  .btn-ghost:hover{color:var(--purple-deep);gap:14px}
+  .btn-light{background:#fff;color:var(--purple-deep)}
+  .btn-light:hover{background:var(--gray-fog-soft);transform:translateY(-2px)}
+  .btn-accent{background:var(--yellow);color:var(--black)}
+  .btn-accent:hover{filter:brightness(1.06);transform:translateY(-2px)}
+  .btn[disabled],.btn.is-disabled{background:var(--gray-fog-soft);color:#8d8899;border-color:transparent;cursor:not-allowed;transform:none;box-shadow:none}
+  .btn-sm{padding:11px 20px;font-size:11.5px}
+  .btn-pdf{background:var(--yellow);color:#000;border-radius:var(--r-pill);padding:9px 16px;font-size:11px}
+
+  /* ---------- hero (usa o próprio grid fluido) ---------- */
+  .hero{background:#000;padding:12px;display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:1.25fr 1fr;gap:12px;min-height:calc(100vh - 49px);min-height:min(100svh - 49px,860px)}
+  .hero > div{position:relative;overflow:hidden}
+  .h-main{grid-row:1/3;background:var(--purple-deep);border-radius:var(--r-xl) 0 0 var(--r-xl);padding:56px 56px 48px;display:flex;flex-direction:column;justify-content:space-between;gap:36px;color:#fff}
+  .h-main::after{content:'';position:absolute;right:0;bottom:0;width:26px;height:46%;background:var(--yellow)}
+  .h-kicker{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray-fog)}
+  .h-main h1{font-weight:800;font-size:clamp(44px,6.6vw,104px);line-height:.94;text-transform:uppercase;letter-spacing:-.025em;margin:28px 0 22px}
+  .h-main h1 .l2{color:var(--gray-fog)}
+  .h-main h1 .em{display:block;text-transform:none;font-size:.78em;margin-top:.12em;color:#fff;font-weight:500;letter-spacing:-.01em}
+  .h-main p{color:var(--gray-fog);max-width:46ch;font-size:16px;margin:0}
+  .h-logo{height:42px;width:auto}
+  .h-tex{border-radius:0 var(--r-xl) 0 0;background:url('assets/tex/tex-dobras-lilas.jpg') center/cover}
+  .h-photo{border-radius:0 0 var(--r-xl) 0;background:url('assets/img/foto-sofa-fone.jpg') 42% 30%/cover}
+  .h-photo .tag{position:absolute;left:18px;bottom:18px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:#fff;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;border-radius:var(--r-pill)}
+
+  /* ---------- sections ---------- */
+  .section{padding:112px 0}
+  .section.alt{background:#fff}
+  .section.dark{background:var(--purple-deep);color:#fff}
+  .section.black{background:#000;color:#fff}
+  .dark p,.black p{color:var(--gray-fog)}
+  .kicker{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--purple-royal);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+  .kicker .num{font-family:var(--display);font-weight:800;letter-spacing:0;font-size:13px;color:var(--yellow);background:#000;border-radius:var(--r-pill);padding:3px 9px}
+  .dark .kicker .num,.black .kicker .num{background:var(--yellow);color:#000}
+  .dark .kicker,.black .kicker{color:var(--gray-fog)}
+  h2.title{font-weight:800;font-size:clamp(34px,4.6vw,60px);line-height:.98;text-transform:uppercase;margin-bottom:22px}
+  h2.title .c2{color:var(--purple-royal)}
+  .dark h2.title .c2,.black h2.title .c2{color:var(--gray-fog)}
+  .lead{font-size:18px;max-width:64ch;color:#4a4458}
+  .dark .lead,.black .lead{color:var(--gray-fog)}
+  h3.sub{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--purple-royal);margin:56px 0 18px}
+  .dark h3.sub,.black h3.sub{color:var(--gray-fog)}
+  .grid{display:grid;gap:20px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .plate{display:inline-block;background:rgba(22,18,31,.62);border-radius:12px;padding:8px 12px;color:#fff}
+  .chip-prop{font-family:var(--display);font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#4a2f00;background:var(--yellow);padding:3px 8px;border-radius:var(--r-pill);vertical-align:middle;margin-left:8px;white-space:nowrap}
+
+  /* ---------- cards genéricos ---------- */
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:28px;box-shadow:var(--shadow);transition:transform .3s,box-shadow .3s}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+  .card h3{font-size:19px;font-weight:700;margin-bottom:8px}
+  .card p{font-size:14.5px;margin:0}
+  .card .idx{font-family:var(--display);font-weight:800;font-size:30px;color:var(--purple-royal);line-height:1;margin-bottom:12px;letter-spacing:-.03em}
+  .attr{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .attr span{font-family:var(--display);font-weight:600;font-size:14px;border:1.5px solid var(--purple-royal);color:var(--purple-deep);border-radius:var(--r-pill);padding:8px 18px;transition:.2s;cursor:default}
+  .attr span:hover{background:var(--purple-royal);color:#fff;transform:translateY(-2px)}
+  .quote-bar{background:var(--black);color:#fff;border-radius:var(--r-xl);padding:44px 52px;margin:48px 0 0;display:flex;gap:28px;align-items:flex-start}
+  .quote-bar .qm{font-family:var(--display);font-weight:800;font-size:92px;line-height:.7;color:var(--yellow)}
+  .quote-bar p{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;font-size:clamp(26px,3.4vw,44px);line-height:1;color:#fff;margin:0}
+  .quote-bar small{display:block;margin-top:14px;font-family:var(--display);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-fog);font-style:normal}
+
+  /* ---------- logo ---------- */
+  .logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .logo-tile{border-radius:var(--r-card);height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px;position:relative;overflow:hidden}
+  .logo-tile img{height:44px;width:auto}
+  .logo-tile.sym img{height:64px}
+  .logo-tile small{font-family:var(--display);font-size:11.5px;font-weight:600;opacity:.8}
+  .lt-white{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .lt-deep{background:var(--purple-deep);color:#fff}
+  .lt-black{background:#000;color:#fff;border:1px solid rgba(255,255,255,.2)}
+  .lt-fog{background:var(--gray-fog);color:#000}
+  .lt-royal{background:var(--purple-royal);color:#fff}
+  .lt-lilac{background:var(--grad-lilac);color:#000}
+  .clear-demo{display:flex;gap:44px;align-items:center;flex-wrap:wrap;margin-top:28px}
+  .cs-box{position:relative;background:rgba(255,255,255,.05);border:1.5px dashed var(--yellow);border-radius:10px;padding:34px}
+  .cs-box img{height:56px;width:auto;outline:1px solid rgba(255,255,255,.3)}
+  .cs-box i{position:absolute;font-style:normal;font-family:var(--display);font-size:11px;font-weight:800;color:#000;background:var(--yellow);border-radius:4px;padding:1px 6px;line-height:1.4}
+  .cs-box .xt{top:6px;left:50%;transform:translateX(-50%)}
+  .cs-box .xl{left:7px;top:50%;transform:translateY(-50%)}
+  .cs-box .xr{right:7px;top:50%;transform:translateY(-50%)}
+  .cs-box .xb{bottom:6px;left:50%;transform:translateX(-50%)}
+  .dd{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .dd3{grid-template-columns:repeat(3,1fr)}
+  .dd > div{border-radius:var(--r-card);padding:24px 26px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
+  .dd h4{font-size:14px;margin-bottom:12px;letter-spacing:.04em;text-transform:uppercase}
+  .dd .ok h4{color:#9fe3a8}.dd .no h4{color:#ffadb4}
+  .dd ul{list-style:none;margin:0;padding:0}
+  .dd li{font-size:14px;color:#ddd8e8;padding:9px 0 9px 22px;position:relative;border-top:1px solid rgba(255,255,255,.08)}
+  .dd li:first-child{border-top:none}
+  .dd li::before{content:'';position:absolute;left:0;top:16px;width:10px;height:2px;background:var(--gray-fog)}
+  .wrong{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+  .wrong > div{background:#fff;border-radius:14px;height:112px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .wrong img{height:26px}
+  .wrong span{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-family:var(--display);font-size:10.5px;font-weight:700;color:#b3222f;letter-spacing:.04em;text-transform:uppercase}
+  .wrong .x{position:absolute;top:8px;right:10px;color:#b3222f;font-weight:900;font-size:16px}
+
+  /* ---------- cores ---------- */
+  .sw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .sw{border-radius:var(--r-card);min-height:230px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;transition:transform .3s,box-shadow .3s;color:#fff}
+  .sw:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+  .sw.light{color:var(--ink)}
+  .sw.bordered{border:1px solid var(--line)}
+  .sw .nm{font-family:var(--display);font-weight:800;font-size:17px;line-height:1.1}
+  .sw .role{font-size:12px;opacity:.85;margin-top:4px}
+  .sw .codes{font-size:11.5px;line-height:1.65;font-family:ui-monospace,Consolas,monospace}
+  .sw .codes b{opacity:.65;font-weight:500;margin-right:6px}
+  .sw .hint{position:absolute;top:14px;right:14px;font-size:10px;font-family:var(--display);font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(0,0,0,.3);color:#fff;padding:3px 9px;border-radius:99px;opacity:0;transition:opacity .2s}
+  .sw.light .hint{background:rgba(255,255,255,.7);color:var(--ink)}
+  .sw:hover .hint{opacity:1}
+  .sw.wide{grid-column:span 2}
+  .proportion{display:flex;height:64px;border-radius:var(--r-card);overflow:hidden;margin-top:16px}
+  .proportion div{display:flex;align-items:flex-end;padding:10px 12px;font-family:var(--display);font-size:11.5px;font-weight:700;transition:flex-grow .3s}
+  .proportion div:hover{flex-grow:1.2 !important}
+  .ctr-table{width:100%;border-collapse:collapse;margin-top:12px}
+  .ctr-table td{padding:12px 14px;border-top:1px solid var(--line);font-size:14px;vertical-align:middle}
+  .ctr-table tr:first-child td{border-top:none}
+  .ctr-pair{display:inline-flex;align-items:center;justify-content:center;width:150px;height:44px;border-radius:10px;font-family:var(--display);font-weight:700;font-size:14px}
+  .ctr-badge{font-family:var(--display);font-weight:800;font-size:11px;letter-spacing:.06em;padding:3px 9px;border-radius:99px;display:inline-block}
+  .ctr-badge.aaa{background:#d8f3dc;color:#0b5d1e}.ctr-badge.aa{background:#e6f4d6;color:#3b6b0a}.ctr-badge.lg{background:#fff1c7;color:#7a5200}.ctr-badge.no{background:#ffe1e3;color:#9a1b27}
+
+  /* ---------- tipografia ---------- */
+  .fam{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+  .fam .card .big{font-size:60px;line-height:1;margin:6px 0 14px}
+  .fam .label{font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple-royal)}
+  .fam .meta{font-size:12.5px;color:var(--muted);margin-top:14px}
+  .weights{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:12px;font-size:15px}
+  .scale{margin-top:16px}
+  .scale-row{display:grid;grid-template-columns:90px 1fr 210px;align-items:baseline;gap:18px;padding:16px 0;border-top:1px solid var(--line)}
+  .scale-row:first-child{border-top:none}
+  .scale-row .tg{font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:var(--purple-royal);font-weight:600}
+  .scale-row .sp{font-family:ui-monospace,Consolas,monospace;font-size:11px;color:var(--muted);text-align:right}
+  .type-demo{background:var(--purple-deep);color:#fff;border-radius:var(--r-xl);padding:56px;display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:center}
+  .type-demo .k{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-fog);margin-bottom:18px}
+  .type-demo h3{font-size:clamp(34px,4.4vw,62px);font-weight:800;line-height:.95;text-transform:uppercase}
+  .type-demo h3 .c2{color:var(--gray-fog)}
+  .type-demo .em-line{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(30px,3.6vw,48px);margin-top:10px;color:#fff;line-height:1.1}
+  .type-demo p{color:var(--gray-fog);font-size:16px;margin:0 0 20px}
+  .anat{list-style:none;margin:0;padding:0;counter-reset:a}
+  .anat li{counter-increment:a;display:flex;gap:14px;padding:12px 0;border-top:1px solid rgba(255,255,255,.12);font-size:14px;color:#ddd8e8}
+  .anat li::before{content:counter(a);font-family:var(--display);font-weight:800;color:var(--yellow);font-size:15px;width:18px}
+  .anat b{color:#fff;font-family:var(--display)}
+
+  /* ---------- grid fluido ---------- */
+  .fluid-demo{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .fl{position:relative;aspect-ratio:1/1;background:#000;border-radius:var(--r-xl);overflow:hidden}
+  .fl > *{position:absolute}
+  .fl .b-photo{inset:0 0 auto auto;width:62%;height:56%;background:url('assets/img/foto-mesa-cafe.jpg') 60% 40%/cover;border-radius:0}
+  .fl .b-white{left:0;top:0;width:66%;height:50%;background:#fff;border-radius:0 0 var(--r-xl) 0}
+  .fl .b-purple{left:5%;top:50%;right:0;bottom:0;background:var(--purple-deep);border-radius:var(--r-xl) 0 0 0}
+  .fl .b-yellow{left:0;top:50%;width:5%;bottom:0;background:var(--yellow)}
+  .fl .b-label{left:6%;top:9%;font-family:var(--display);font-weight:800;font-size:clamp(14px,2vw,22px);text-transform:uppercase;line-height:1;letter-spacing:-.01em;color:var(--ink)}
+  .fl .b-label.l2{top:auto;bottom:9%;left:12%;color:var(--gray-fog)}
+  .fl .num{font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow);right:5%;top:6%;position:absolute}
+  .rules{display:grid;gap:12px}
+  .rule{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:18px 20px}
+  .rule .n{font-family:var(--display);font-weight:800;font-size:24px;color:var(--purple-royal);line-height:1;min-width:22px;letter-spacing:-.03em}
+  .rule h4{font-size:15.5px;font-weight:700;margin-bottom:3px}
+  .rule p{font-size:13.5px;margin:0}
+  /* canto côncavo (inverse radius): quadrado r×r com círculo transparente */
+  .ic{position:absolute;width:var(--r,40px);height:var(--r,40px);pointer-events:none}
+  .ic-tl{background:radial-gradient(circle at 100% 100%,transparent calc(var(--r,40px) - .5px),var(--c,#fff) var(--r,40px))}
+  .ic-tr{background:radial-gradient(circle at 0 100%,transparent calc(var(--r,40px) - .5px),var(--c,#fff) var(--r,40px))}
+  .ic-bl{background:radial-gradient(circle at 100% 0,transparent calc(var(--r,40px) - .5px),var(--c,#fff) var(--r,40px))}
+  .ic-br{background:radial-gradient(circle at 0 0,transparent calc(var(--r,40px) - .5px),var(--c,#fff) var(--r,40px))}
+  .ic-demo{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:20px}
+  .ic-card{border-radius:var(--r-card);overflow:hidden;background:#fff;border:1px solid var(--line)}
+  .ic-card .stage{aspect-ratio:16/10;position:relative;background:var(--purple-deep);overflow:hidden}
+  .ic-card .stage .blk{position:absolute}
+  .ic-card .cap{padding:16px 20px;font-size:13.5px}
+  .ic-card .cap b{font-family:var(--display);display:block;font-size:14.5px;margin-bottom:2px}
+  .shapes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+  .shape-tile{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:26px;display:flex;flex-direction:column;align-items:center;gap:14px}
+  .shape-tile img{height:120px;width:auto}
+  .shape-tile small{font-size:12.5px;color:var(--muted);text-align:center}
+  .tok-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .tok{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:24px 26px}
+  .tok h4{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple-royal);margin-bottom:16px}
+  .sp-row{display:flex;align-items:center;gap:14px;padding:5px 0;font-size:12.5px}
+  .sp-row .bar{height:12px;background:var(--purple-royal);border-radius:3px}
+  .sp-row .v{font-family:ui-monospace,Consolas,monospace;color:var(--muted);width:92px;flex:none}
+  .rd-row{display:flex;gap:14px;flex-wrap:wrap}
+  .rd{width:84px;text-align:center;font-size:11.5px;color:var(--muted)}
+  .rd div{height:64px;background:var(--purple-deep);margin-bottom:8px}
+  .sh-row{display:flex;gap:16px;flex-wrap:wrap}
+  .sh{width:120px;height:72px;background:#fff;border-radius:var(--r-card);display:flex;align-items:center;justify-content:center;font-size:11.5px;color:var(--muted);border:1px solid var(--line)}
+
+  /* ---------- texturas & fotografia ---------- */
+  .tex-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .tex{border-radius:var(--r-card);overflow:hidden;position:relative;aspect-ratio:1/1;background:#000}
+  .tex.tall{grid-row:span 2;aspect-ratio:auto}
+  .tex.wide{grid-column:span 2;aspect-ratio:2/1}
+  .tex img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .tex:hover img{transform:scale(1.05)}
+  .tex .cap{position:absolute;left:0;right:0;bottom:0;padding:34px 16px 14px;background:linear-gradient(0deg,rgba(0,0,0,.72),transparent);color:#fff;font-size:12px}
+  .tex .cap b{display:block;font-family:var(--display);font-size:13.5px}
+  .tex.grad{background:var(--grad-lilac)}
+  .tex.grad2{background:var(--grad-blaze)}
+  .photo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .photo-grid .ph{aspect-ratio:4/5;border-radius:var(--r-card);overflow:hidden;background:#ddd}
+  .photo-grid .ph:nth-child(3n+1){border-radius:var(--r-xl) var(--r-card) var(--r-card) var(--r-card)}
+  .photo-grid .ph:nth-child(5n){border-radius:var(--r-card) var(--r-xl) var(--r-card) var(--r-card)}
+  .photo-grid img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .photo-grid .ph:hover img{transform:scale(1.06)}
+  .ph-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+  .ph-rules .card{padding:22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:none;color:#fff}
+  .ph-rules .card:hover{transform:none;box-shadow:none;border-color:rgba(255,255,255,.3)}
+  .ph-rules .card p{color:var(--gray-fog)}
+  .ph-rules .card b{color:#fff}
+  .ph-rules h3{font-size:16px}
+
+  /* ---------- componentes ---------- */
+  .comp{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:30px;margin-bottom:20px}
+  .comp > .ct{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+  .comp > .ct h3{font-size:19px;font-weight:700}
+  .comp > .ct span{font-size:12px;color:var(--muted);font-family:ui-monospace,Consolas,monospace}
+  .comp .row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .comp .on-dark{background:var(--purple-deep);border-radius:var(--r-card);padding:28px;margin-top:18px}
+  .comp .on-black{background:#000;border-radius:var(--r-card);padding:28px;margin-top:18px}
+  .comp .cap{font-size:12.5px;color:var(--muted);margin-top:14px}
+  /* kicker/tag/badge */
+  .c-kicker{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--purple-royal)}
+  .c-kicker.on-d{color:var(--gray-fog)}
+  .tag{font-family:var(--display);font-weight:700;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:var(--r-pill);display:inline-block}
+  .tag-purple{background:var(--purple-deep);color:#fff}
+  .tag-soft{background:var(--blaze-b);color:var(--purple-deep)}
+  .tag-line{border:1.5px solid var(--purple-royal);color:var(--purple-deep)}
+  .tag-yellow{background:var(--yellow);color:#000}
+  .tag-fog{background:var(--gray-fog-soft);color:var(--ink)}
+  .swipe{display:inline-flex;align-items:center;gap:12px;font-family:var(--body);font-weight:400;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-fog)}
+  .swipe svg{width:12px;height:20px;stroke:var(--yellow);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  /* input */
+  .field{display:grid;gap:7px;min-width:280px}
+  .field label{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+  .field input,.field select{font-family:var(--body);font-size:15px;padding:14px 16px;border-radius:var(--r-btn);border:1.5px solid #cfcad9;background:#fff;color:var(--ink);transition:border-color .2s,box-shadow .2s;outline:none}
+  .field input::placeholder{color:#9a95a8}
+  .field input:hover{border-color:var(--gray-fog)}
+  .field input:focus{border-color:var(--purple-royal);box-shadow:0 0 0 4px rgba(102,69,177,.18)}
+  .field.err input{border-color:#c0283a;box-shadow:0 0 0 4px rgba(192,40,58,.12)}
+  .field .help{font-size:12.5px;color:var(--muted)}
+  .field.err .help{color:#b3222f}
+  .chk{display:flex;gap:10px;align-items:center;font-size:14px}
+  .chk i{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--purple-royal);display:inline-flex;align-items:center;justify-content:center}
+  .chk i.on{background:var(--purple-royal)}
+  .chk i.on::after{content:'';width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+  /* cards */
+  .cc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .c-course{border-radius:var(--r-xl);overflow:hidden;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
+  .c-course:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+  .c-course .im{height:170px;background-size:cover;background-position:center;position:relative}
+  .c-course .im .tag{position:absolute;left:16px;top:16px}
+  .c-course .bd{padding:24px 24px 26px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .c-course h4{font-size:21px;font-weight:700;line-height:1.05;text-transform:uppercase}
+  .c-course p{font-size:14px;margin:0}
+  .c-course .ft{margin-top:auto;padding-top:12px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted)}
+  .c-dark{background:var(--purple-deep);border:none;color:#fff}
+  .c-dark h4{color:#fff}.c-dark p{color:var(--gray-fog)}.c-dark .ft{color:var(--gray-fog)}
+  .c-stat{border-radius:var(--r-card);padding:26px;background:var(--grad-blaze);color:#fff}
+  .c-stat .n{font-family:var(--display);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.03em}
+  .c-stat .n .em{font-size:.8em}
+  .c-stat p{color:#fff;margin:12px 0 0;font-size:14px}
+  .c-quote{border-radius:var(--r-xl);background:#000;color:#fff;padding:32px}
+  .c-quote .qm{font-family:var(--serif);font-style:italic;color:var(--yellow);font-size:56px;line-height:.6}
+  .c-quote p{font-family:var(--serif);font-style:italic;font-size:21px;line-height:1.4;color:#fff;margin:6px 0 16px}
+  .c-quote .who{font-family:var(--display);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-fog);font-weight:600}
+  .cta-band{border-radius:var(--r-xl);background:var(--purple-deep);color:#fff;padding:44px 48px;display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap;position:relative;overflow:hidden}
+  .cta-band::before{content:'';position:absolute;left:0;top:0;bottom:0;width:14px;background:var(--yellow)}
+  .cta-band h4{font-size:clamp(26px,3.2vw,40px);font-weight:800;text-transform:uppercase;line-height:1;margin-bottom:8px}
+  .cta-band h4 .em{text-transform:none}
+  .cta-band p{color:var(--gray-fog);margin:0;max-width:44ch}
+  .seal{display:inline-flex;align-items:center;gap:14px;padding:14px 20px;border-radius:var(--r-card);background:#fff;border:1px solid var(--line)}
+  .seal img{height:26px}
+  .seal i{width:1px;height:28px;background:var(--gray-fog)}
+  .seal b{font-family:var(--display);font-size:14px}
+  .seal b em{font-style:normal;color:var(--purple-royal)}
+  .alert{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:var(--r-btn);font-size:14px;max-width:420px}
+  .alert i{width:22px;height:22px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:800;font-size:13px;color:#fff;font-family:var(--display)}
+  .alert.info{background:#efeafa;color:var(--purple-deep)}.alert.info i{background:var(--purple-royal)}
+  .alert.warn{background:#fff3d6;color:#6b4300}.alert.warn i{background:var(--yellow);color:#000}
+  .alert.err{background:#ffe6e8;color:#8f1d29}.alert.err i{background:#c0283a}
+  .alert.ok{background:#e0f5e6;color:#14602a}.alert.ok i{background:#2c9a4b}
+
+  /* ---------- peças (mockups em unidade 1080) ---------- */
+  .pieces{display:grid;grid-template-columns:repeat(12,1fr);gap:28px;align-items:start}
+  .pc-wrap{display:flex;flex-direction:column;gap:12px}
+  .pc-wrap .pc-cap{font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:10px}
+  .pc-wrap .pc-cap b{font-family:var(--display);color:var(--ink);font-size:13.5px}
+  .piece{container-type:inline-size;position:relative;overflow:hidden;background:#000;box-shadow:var(--shadow-lg);border-radius:14px;--u:calc(100cqw / 1080)}
+  .piece *{box-sizing:border-box}
+  .piece .a{position:absolute}
+  .p-feed{grid-column:span 5;}
+  .p-story{grid-column:span 3;}
+  .p-poster{grid-column:span 4;}
+  .p-slide{grid-column:span 8;}
+  .p-slide2{grid-column:span 4}
+  .piece.sq{aspect-ratio:1/1}
+  .piece.st{aspect-ratio:9/16}
+  .piece.po{aspect-ratio:4/5}
+  .piece.wd{aspect-ratio:16/9;--u:calc(100cqw / 1920)}
+  .T{font-family:var(--display);font-weight:700;letter-spacing:-.025em;line-height:.95}
+  .R{font-family:var(--body)}
+  .S{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:0}
+
+  /* ---------- voz ---------- */
+  .voice-ex{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+  .vx{border-radius:var(--r-xl);padding:30px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between}
+  .vx .lb{font-family:var(--display);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .vx p{font-family:var(--display);font-size:25px;font-weight:700;line-height:1.05;letter-spacing:-.02em;margin:0;color:inherit}
+  .vx p .em{font-size:1.04em}
+  .dodont{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+  .dodont > div{border-radius:var(--r-card);padding:24px 28px;background:#fff;border:1px solid var(--line)}
+  .dodont h4{font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+  .dodont .do h4{color:#14602a}.dodont .dont h4{color:#9a1b27}
+  .dodont li{font-size:14.5px;padding:8px 0;border-top:1px solid var(--line);list-style:none}
+  .dodont ul{margin:0;padding:0}
+  .dodont li:first-child{border-top:none}
+  .check{columns:2;column-gap:36px;margin-top:16px}
+  .check li{list-style:none;position:relative;padding:9px 0 9px 32px;font-size:14.5px;break-inside:avoid;border-bottom:1px solid var(--line)}
+  .check li::before{content:'';position:absolute;left:0;top:11px;width:18px;height:18px;border-radius:5px;border:1.5px solid var(--purple-royal)}
+  .check{margin-left:0;padding:0}
+
+  /* ---------- tokens / IA ---------- */
+  .code-card{background:#0d0a14;border-radius:var(--r-card);padding:0;overflow:hidden;margin-top:20px}
+  .code-card .bar{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.08);font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-fog)}
+  .code-card pre{margin:0;padding:22px 24px;overflow:auto;max-height:430px;font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:12.5px;line-height:1.65;color:#d8d2e6}
+  .code-card pre .k{color:#c9a3ff}.code-card pre .v{color:#ffcf87}.code-card pre .c{color:#7d7691}
+  textarea#mdOut{width:100%;min-height:340px;margin-top:16px;padding:20px 22px;border-radius:var(--r-card);border:1px solid rgba(255,255,255,.12);background:#0d0a14;color:#d8d2e6;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;line-height:1.6;resize:vertical;display:none}
+
+  footer{background:#000;color:var(--gray-fog);padding:64px 32px;text-align:center;font-size:13px}
+  footer img{height:42px;margin:0 auto 20px}
+  footer b{color:var(--yellow)}
+  .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#000;color:#fff;padding:12px 22px;border-radius:99px;font-family:var(--display);font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:300;box-shadow:0 10px 30px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.15)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---------- responsivo ---------- */
+
+
+/* ================= DECK 16:9 ================= */
+@page{size:1920px 1080px;margin:0}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{margin:0;padding:0;background:#1b1626}
+body{overflow-x:hidden}
+.slide{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--paper);color:var(--ink);padding:104px 128px 120px;box-sizing:border-box;break-after:page;page-break-after:always;margin:0 auto 28px}
+.slide.white{background:#fff}
+.slide.dark{background:var(--purple-deep);color:#fff}
+.slide.black{background:#000;color:#fff}
+.slide.cover{padding:0;background:#000}
+@media print{ .slide{margin:0} html,body{background:none} }
+.foot{position:absolute;left:128px;bottom:48px;display:flex;align-items:center;gap:22px;font:600 18px var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.foot img{height:28px;width:auto}
+.foot i{width:1px;height:20px;background:currentColor;opacity:.4}
+.dark .foot,.black .foot{color:var(--gray-fog)}
+.kick{font:700 22px var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--purple-royal);display:flex;gap:16px;align-items:center}
+.kick b{background:#000;color:var(--yellow);padding:4px 14px;border-radius:99px;font-size:20px;letter-spacing:.04em}
+.dark .kick,.black .kick{color:var(--gray-fog)}
+.dark .kick b,.black .kick b{background:var(--yellow);color:#000}
+.slide h2{font:800 88px/.94 var(--display);text-transform:uppercase;letter-spacing:-.028em;margin:24px 0 28px;color:inherit}
+.slide h2 .c2{color:var(--purple-royal)}
+.dark h2 .c2,.black h2 .c2{color:var(--gray-fog)}
+.slide p{margin:0;color:inherit}
+.lead{font-size:30px;line-height:1.4;max-width:1180px;color:#4a4458}
+.dark .lead,.black .lead{color:var(--gray-fog)}
+.mut{color:#4a4458}.dark .mut,.black .mut{color:var(--gray-fog)}
+.grid-c{display:grid;gap:24px}
+.cx{background:#fff;border:1px solid var(--line);border-radius:28px;padding:34px 38px;box-shadow:var(--shadow)}
+.cx h3{font:700 34px/1.05 var(--display);letter-spacing:-.02em;margin:0 0 12px}
+.cx p{font-size:24px;line-height:1.4;color:#4a4458}
+.cx .n{font:800 44px/1 var(--display);color:var(--purple-royal);margin-bottom:14px;letter-spacing:-.03em}
+.cx.in-dark{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16);box-shadow:none;color:#fff}
+.cx.in-dark p{color:var(--gray-fog)}
+.pill{font:600 24px var(--display);border:2px solid var(--purple-royal);color:var(--purple-deep);border-radius:99px;padding:10px 26px;white-space:nowrap}
+.fullimg{position:absolute;background-size:cover;background-repeat:no-repeat}
+
+/* logo tiles */
+.lt{border-radius:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;border:1px solid transparent}
+.lt img{height:64px;width:auto}
+.lt.sym img{height:92px}
+.lt small{font:600 20px var(--display);opacity:.85}
+
+/* swatches */
+.swx{flex:1;border-radius:32px;padding:34px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;min-height:0}
+.swx.light{color:var(--ink)}
+.swx.bd{border:2px solid var(--line)}
+.swx .nm{font:800 40px/1 var(--display);letter-spacing:-.02em;margin-bottom:10px}
+.swx .rl{font-size:22px;line-height:1.35;opacity:.9}
+.swx .cd{font:500 22px/1.7 ui-monospace,Consolas,monospace}
+.swx .cd b{opacity:.6;font-weight:500;margin-right:8px}
+.plate2{background:rgba(22,18,31,.62);border-radius:16px;padding:12px 16px;color:#fff}
+
+/* contraste */
+.ctr{display:grid;grid-template-columns:repeat(2,1fr);gap:0 56px}
+.ctr .r{display:flex;align-items:center;gap:22px;padding:25px 0;border-top:1px solid var(--line)}
+.ctr .r:nth-child(-n+2){border-top:none}
+.ctr .sample{width:190px;height:66px;border-radius:14px;display:flex;align-items:center;justify-content:center;font:700 22px var(--display);flex:none}
+.ctr .t{flex:1;font:700 27px/1.2 var(--display)}
+.ctr .t span{display:block;font:400 21px var(--body);color:var(--muted);margin-top:3px}
+.ctr .v{font:500 21px ui-monospace,Consolas,monospace;text-align:right}
+.ctr .bg2{font:800 15px var(--display);letter-spacing:.06em;padding:3px 12px;border-radius:99px;margin-left:10px}
+.bg-aaa{background:#d8f3dc;color:#0b5d1e}.bg-aa{background:#e6f4d6;color:#3b6b0a}.bg-lg{background:#fff1c7;color:#7a5200}.bg-no{background:#ffe1e3;color:#9a1b27}
+
+/* tipografia */
+.famx{border-radius:32px;padding:44px 44px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column}
+.famx .lb{font:700 20px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--purple-royal)}
+.famx .big{font-size:96px;line-height:1;margin:14px 0 24px}
+.famx .smp{font-size:28px;line-height:1.3}
+.famx .wt{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:22px;font-size:24px}
+.famx .nt{margin-top:auto;padding-top:22px;font-size:21px;line-height:1.4;color:var(--muted)}
+.famx.pu{background:var(--purple-deep);color:#fff;border:none}
+.famx.pu .lb{color:var(--gray-fog)}.famx.pu .nt{color:var(--gray-fog)}
+.srow{display:grid;grid-template-columns:120px 1fr;gap:4px 22px;align-items:baseline;padding:16px 0;border-top:1px solid var(--line)}
+.srow:first-child{border-top:none}
+.srow .tg{font:600 20px ui-monospace,Consolas,monospace;color:var(--purple-royal)}
+.srow .sp{grid-column:2;font:400 19px ui-monospace,Consolas,monospace;color:var(--muted);text-align:left}
+
+/* grid fluido */
+.flx{position:relative;width:800px;height:800px;background:#000;border-radius:48px;overflow:hidden;flex:none}
+.flx>div{position:absolute}
+.rl7{display:grid;gap:12px}
+.rl7 .it{display:flex;gap:22px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:22px;padding:15px 24px}
+.rl7 .it .n{font:800 34px/1 var(--display);color:var(--purple-royal);min-width:34px}
+.rl7 .it h4{font:700 24px/1.1 var(--display);margin:0 0 3px}
+.rl7 .it p{font-size:19px;line-height:1.3;color:#4a4458}
+.rl7 .it.hl{border:2px solid var(--purple-royal);box-shadow:0 0 0 5px rgba(102,69,177,.12)}
+
+/* tokens de forma */
+.tkx{background:#fff;border:1px solid var(--line);border-radius:28px;padding:34px 38px;box-shadow:var(--shadow)}
+.tkx h4{font:700 20px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--purple-royal);margin:0 0 22px}
+.sprow{display:flex;align-items:center;gap:16px;padding:6px 0;font:500 20px ui-monospace,Consolas,monospace;color:var(--muted)}
+.sprow span:first-child{width:150px;flex:none}
+.sprow i{display:block;height:16px;background:var(--purple-royal);border-radius:4px}
+.rdx{display:flex;gap:22px;align-items:flex-end;flex-wrap:wrap}
+.rdx div{text-align:center;font:500 18px ui-monospace,Consolas,monospace;color:var(--muted)}
+.rdx div b{display:block;width:96px;height:96px;background:var(--purple-deep);margin-bottom:10px}
+
+/* texturas / fotos */
+.tx{border-radius:28px;overflow:hidden;position:relative;background:#000}
+.tx img{width:100%;height:100%;object-fit:cover}
+.tx .cp{position:absolute;left:0;right:0;bottom:0;padding:44px 22px 16px;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent);font-size:20px;color:#fff}
+.tx .cp b{display:block;font:700 24px var(--display)}
+.phx{border-radius:28px;overflow:hidden;background:#ccc}
+.phx img{width:100%;height:100%;object-fit:cover}
+
+/* componentes em escala de slide */
+.zoomc{zoom:1.5}
+.zoomc2{zoom:1.3}
+.cmpx{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);padding:34px 38px}
+.cmpx h3{font:700 34px var(--display);letter-spacing:-.02em;margin:0 0 20px}
+
+/* peças */
+.pcx{display:flex;flex-direction:column;gap:14px}
+.pcx .piece{box-shadow:0 18px 50px rgba(22,18,31,.25)}
+.pcx .cap{font-size:21px;display:flex;justify-content:space-between;gap:16px;color:var(--muted)}
+.pcx .cap b{font-family:var(--display);color:var(--ink);font-size:23px}
+
+/* voz */
+.tr{border-radius:28px;padding:38px 40px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16)}
+.tr h3{font:700 36px var(--display);margin:0 0 8px;letter-spacing:-.02em}
+.tr p{font-size:26px;line-height:1.35;color:var(--gray-fog)}
+
+/* checklist */
+.ck{columns:2;column-gap:72px;list-style:none;margin:0;padding:0}
+.ck li{break-inside:avoid;position:relative;padding:25px 0 25px 64px;font-size:33px;line-height:1.3;border-bottom:1px solid var(--line)}
+.ck li::before{content:'';position:absolute;left:0;top:29px;width:36px;height:36px;border-radius:9px;border:2.5px solid var(--purple-royal)}
+.ck li.hl{font-weight:600}
+.ck li.hl::before{background:var(--purple-royal)}
+
+/* código */
+.codex{background:#0d0a14;border-radius:28px;padding:34px 38px;font:500 22px/1.5 ui-monospace,"Cascadia Mono",Consolas,monospace;color:#d8d2e6;white-space:pre}
+.codex .k{color:#c9a3ff}.codex .v{color:#ffcf87}.codex .c{color:#7d7691}
+.gp{display:grid;gap:14px}
+.gp div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:22px;padding:18px 26px}
+.gp b{display:block;font:700 30px var(--display);margin-bottom:4px;color:#fff}
+.gp span{font-size:24px;line-height:1.35;color:var(--gray-fog)}
+</style>
+</head>
+<body>
+<!-- 01 CAPA -->
+<section class="slide cover" data-nofoot>
+  <div style="position:absolute;inset:28px;display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:1.2fr 1fr;gap:28px">
+    <div style="grid-row:1/3;background:var(--purple-deep);border-radius:64px 0 0 64px;padding:96px 104px 88px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;color:#fff">
+      <div style="position:absolute;right:0;bottom:0;width:34px;height:42%;background:var(--yellow)"></div>
+      <div>
+        <div style="font:700 24px var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--gray-fog)">Design System · v1.0 · 2026</div>
+        <div style="font:800 168px/.92 var(--display);text-transform:uppercase;letter-spacing:-.03em;margin:44px 0 36px">Pessoas<br><span style="color:var(--gray-fog)">criam</span><br>produtos.</div>
+        <div style="font-size:30px;line-height:1.4;color:var(--gray-fog);max-width:760px">Fundamentos, componentes e regras de composição para criar qualquer peça PM3 — com a sofisticação do Key Visual.</div>
+      </div>
+      <img src="assets/logo/pm3-logo-branco.svg" alt="PM3" style="height:64px;width:auto;align-self:flex-start">
+    </div>
+    <div style="border-radius:0 64px 0 0;background:url('assets/tex/tex-dobras-lilas.jpg') center/cover"></div>
+    <div style="border-radius:0 0 64px 0;background:url('assets/img/foto-sofa-fone.jpg') 45% 30%/cover"></div>
+  </div>
+</section>
+
+<!-- 02 ESSÊNCIA -->
+<section class="slide" data-sec="Essência">
+  <div class="fullimg" style="right:0;top:0;bottom:0;width:640px;background-image:url('assets/img/foto-sofa-fone.jpg');background-position:57% 30%;border-radius:140px 0 0 140px"></div>
+  <div style="width:1050px;height:856px;display:flex;flex-direction:column;justify-content:center">
+    <div class="kick"><b>01</b> Essência da marca</div>
+    <h2>Pessoas criam <span class="c2">produtos</span></h2>
+    <p class="lead">A PM3 ensina produtos digitais para pessoas reais. A identidade coloca o profissional no centro — em ambientes de trabalho e estudo do dia a dia — cercado por uma linguagem gráfica fluida e sofisticada.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:48px">
+      <span class="pill">Produtos Digitais</span><span class="pill">Premium</span><span class="pill">Líder</span><span class="pill">Confiável</span><span class="pill">Autêntica</span><span class="pill">Transformadora</span><span class="pill">Ativa</span><span class="pill">Parceira</span><span class="pill">Aprendizado fluido</span>
+    </div>
+  </div>
+</section>
+
+<!-- 03 PRINCÍPIOS -->
+<section class="slide" data-sec="Essência">
+  <div class="kick"><b>01</b> Princípios de design</div>
+  <h2>Cinco ideias <span class="c2">em uma peça</span></h2>
+  <div class="grid-c" style="grid-template-columns:repeat(3,1fr);grid-auto-rows:310px;margin-top:38px">
+    <div class="cx"><div class="n">1</div><h3>Design sofisticado</h3><p>Acabamento refinado, muito respiro, poucos elementos. Premium se mostra pelo que se retira.</p></div>
+    <div class="cx"><div class="n">2</div><h3>Proporções harmônicas</h3><p>Divisões assimétricas (1/3 + 2/3, 2/5 + 3/5). Nunca quatro quadrantes iguais.</p></div>
+    <div class="cx"><div class="n">3</div><h3>Grid fluido</h3><p>Blocos de cor, foto e textura com cantos generosos que se encaixam uns nos outros.</p></div>
+    <div class="cx"><div class="n">4</div><h3>Sofisticação e dinamismo</h3><p>Contraste de pesos tipográficos, itálico de virada e gradientes em movimento.</p></div>
+    <div class="cx"><div class="n">5</div><h3>Articulação de cores</h3><p>Roxo e branco dominam; preto e prata ancoram; gradiente e amarelo são acento.</p></div>
+    <div class="cx" style="background:var(--purple-deep);border:none;color:#fff"><div class="n" style="color:var(--yellow)">+</div><h3>Pessoas no centro</h3><p style="color:var(--gray-fog)">Diversidade real, cenas verossímeis, olhar para dentro da peça.</p></div>
+  </div>
+</section>
+
+<!-- 04 LOGO: VERSÕES -->
+<section class="slide black" data-sec="Logo">
+  <div class="kick"><b>02</b> Logo &amp; símbolo</div>
+  <h2>O 3 <span class="c2">que se abre</span></h2>
+  <div class="grid-c" style="grid-template-columns:repeat(4,1fr);grid-auto-rows:288px;margin-top:34px;gap:22px">
+    <div class="lt" style="background:#fff;color:var(--ink)"><img src="assets/logo/pm3-logo-roxo.svg" alt=""><small>Roxo — fundo claro</small></div>
+    <div class="lt" style="background:var(--purple-deep)"><img src="assets/logo/pm3-logo-branco.svg" alt=""><small>Branco — roxo profundo</small></div>
+    <div class="lt" style="background:#000;border-color:rgba(255,255,255,.22)"><img src="assets/logo/pm3-logo-branco.svg" alt=""><small>Branco — preto</small></div>
+    <div class="lt" style="background:var(--gray-fog);color:#000"><img src="assets/logo/pm3-logo-preto.svg" alt=""><small>Preto — prata</small></div>
+    <div class="lt" style="background:var(--grad-lilac);color:#000"><img src="assets/logo/pm3-logo-preto.svg" alt=""><small>Preto — gradiente lilás</small></div>
+    <div class="lt" style="background:var(--purple-royal)"><img src="assets/logo/pm3-logo-branco.svg" alt=""><small>Branco — roxo vibrante</small></div>
+    <div class="lt sym" style="background:#fff;color:var(--ink)"><img src="assets/logo/pm3-simbolo-roxo.svg" alt=""><small>Símbolo — ícone, avatar</small></div>
+    <div class="lt sym" style="background:var(--purple-deep)"><img src="assets/logo/pm3-simbolo-branco.svg" alt=""><small>Símbolo — marca d'água</small></div>
+  </div>
+</section>
+
+<!-- 05 LOGO: USO -->
+<section class="slide white" data-sec="Logo">
+  <div class="kick"><b>02</b> Logo &amp; símbolo</div>
+  <h2>Respiro <span class="c2">e uso</span></h2>
+  <div style="display:grid;grid-template-columns:560px 1fr 1fr;gap:28px;margin-top:34px;height:600px">
+    <div class="cx" style="background:var(--purple-deep);border:none;color:#fff;display:flex;flex-direction:column;gap:28px">
+      <div style="position:relative;border:2px dashed var(--yellow);border-radius:14px;padding:50px;background:rgba(255,255,255,.05);align-self:flex-start">
+        <img src="assets/logo/pm3-logo-branco.svg" alt="" style="height:70px;display:block">
+        <span style="position:absolute;top:10px;left:50%;transform:translateX(-50%);background:var(--yellow);color:#000;font:800 17px var(--display);padding:1px 8px;border-radius:5px">X</span>
+        <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);background:var(--yellow);color:#000;font:800 17px var(--display);padding:1px 8px;border-radius:5px">X</span>
+      </div>
+      <p style="font-size:24px;line-height:1.4;color:var(--gray-fog)"><b style="color:#fff">Respiro (X)</b> = metade da altura do símbolo, em todos os lados. <b style="color:#fff">Mínimo:</b> logo 72 px / 18 mm; símbolo 24 px / 8 mm. <span class="chip-prop" style="font-size:14px">proposta</span></p>
+    </div>
+    <div class="cx"><h3 style="color:#14602a">Faça</h3>
+      <ul style="margin:0;padding:0;list-style:none;font-size:27px;line-height:1.35">
+        <li style="padding:10px 0;border-bottom:1px solid var(--line)">Use os SVGs oficiais</li>
+        <li style="padding:10px 0;border-bottom:1px solid var(--line)">Branco sobre roxo, preto ou foto escura</li>
+        <li style="padding:10px 0;border-bottom:1px solid var(--line)">Logo pequeno, num canto (inferior esquerdo é o preferido)</li>
+        <li style="padding:10px 0;border-bottom:1px solid var(--line)">Bloco preto para ancorar o logo em peças com foto</li>
+        <li style="padding:10px 0">“3” gigante só em contorno fino, uma vez por peça, <b>nunca sobre o rosto</b></li>
+      </ul></div>
+    <div class="cx"><h3 style="color:#9a1b27">Evite</h3>
+      <ul style="margin:0;padding:0;list-style:none;font-size:27px;line-height:1.35">
+        <li style="padding:10px 0;border-bottom:1px solid var(--line)">Distorcer, esticar, inclinar ou rotacionar</li>
+        <li style="padding:10px 0;border-bottom:1px solid var(--line)">Recolorir fora da paleta</li>
+        <li style="padding:10px 0;border-bottom:1px solid var(--line)">Roxo sobre roxo ou baixo contraste</li>
+        <li style="padding:10px 0;border-bottom:1px solid var(--line)">Aplicar sobre gradiente saturado sem respiro</li>
+        <li style="padding:10px 0">Adicionar sombra, brilho ou contorno</li>
+      </ul></div>
+  </div>
+</section>
+
+<!-- 06 CORES PRINCIPAIS -->
+<section class="slide" data-sec="Cores">
+  <div class="kick"><b>03</b> Cores</div>
+  <h2>Articulação <span class="c2">de cores</span></h2>
+  <div style="display:flex;gap:24px;height:650px;margin-top:30px">
+    <div class="swx" style="background:#452E78;flex:1.3"><div><div class="nm">Deep One Purple</div><div class="rl">Roxo profundo · institucional: blocos principais, logo, títulos em fundo claro</div></div><div class="cd"><b>HEX</b>#452E78<br><b>RGB</b>69 46 120<br><b>CMYK</b>89 98 20 7<br><b>PANTONE</b>7672 C</div></div>
+    <div class="swx" style="background:#6645B1"><div><div class="nm">Royal Purple</div><div class="rl">Roxo vibrante · ação: botões, kickers, hover</div></div><div class="cd"><b>HEX</b>#6645B1<br><b>RGB</b>102 69 177<br><b>CMYK</b>72 82 0 0<br><b>PANTONE</b>2725 C</div></div>
+    <div class="swx" style="background:#000"><div><div class="nm">Obsidian Black</div><div class="rl">Preto · ancoragem, alto contraste</div></div><div class="cd"><b>HEX</b>#000000<br><b>RGB</b>0 0 0<br><b>CMYK</b>100 100 100 100<br><b>PANTONE</b>6 C</div></div>
+    <div class="swx light bd" style="background:#fff"><div><div class="nm">Luminous White</div><div class="rl">Branco · respiro, cards, texto</div></div><div class="cd"><b>HEX</b>#FFFFFF<br><b>RGB</b>255 255 255<br><b>CMYK</b>0 0 0 0</div></div>
+  </div>
+</section>
+
+<!-- 07 APOIO + GRADIENTES -->
+<section class="slide" data-sec="Cores">
+  <div class="kick"><b>03</b> Cores</div>
+  <h2>Apoio, gradientes <span class="c2">e proporção</span></h2>
+  <div style="display:flex;gap:24px;height:410px;margin-top:26px">
+    <div class="swx light" style="background:#B9B5C1"><div><div class="nm">Gray Fog</div><div class="rl">Prata · fundo neutro, texto secundário</div></div><div class="cd"><b>HEX</b>#B9B5C1<br><b>CMYK</b>27 24 15 0<br><b>PANTONE</b>10077 C</div></div>
+    <div class="swx light" style="background:#FFB12A"><div><div class="nm">Yellow Glow</div><div class="rl">Amarelo · acento mínimo (≤2%)</div></div><div class="cd"><b>HEX</b>#FFB12A<br><b>CMYK</b>0 35 93 0<br><b>PANTONE</b>1235 C</div></div>
+    <div class="swx" style="background:linear-gradient(135deg,#B04DDD 0%,#FCCBC9 100%);color:#000"><div><div class="nm">Lilac Gradient</div><div class="rl">Fundo de bloco, atrás do “3” gigante</div></div><div class="cd"><b>DE</b>#B04DDD <b>PARA</b>#FCCBC9<br><b>ÂNGULO</b>135°</div></div>
+    <div class="swx" style="background:linear-gradient(90deg,#4D2B9F 0%,#DACBF6 100%)"><div class="plate2"><div class="nm">Blaze Gradient</div><div class="rl">Blocos extensos, estatísticas</div></div><div class="plate2 cd" style="align-self:flex-start"><b>DE</b>#4D2B9F <b>PARA</b>#DACBF6</div></div>
+  </div>
+  <div style="font:700 20px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--purple-royal);margin:34px 0 14px">Proporção de uso</div>
+  <div style="display:flex;height:100px;border-radius:22px;overflow:hidden;font:700 22px var(--display)">
+    <div style="flex:60;background:var(--purple-deep);color:#fff;padding:0 24px;display:flex;align-items:center">Roxo profundo + branco · ~60%</div>
+    <div style="flex:23;background:#000;color:#fff;padding:0 24px;display:flex;align-items:center">Preto ou prata · 20–25%</div>
+    <div style="flex:13;background:var(--grad-lilac);color:#000;padding:0 24px;display:flex;align-items:center">Gradiente · 10–15%</div>
+    <div style="flex:4;background:var(--yellow)"></div>
+  </div>
+  <p class="mut" style="font-size:22px;margin-top:16px">O roxo vibrante é cor de ação e entra nos 60%. O amarelo é só detalhe — uma barra fina, uma seta.</p>
+</section>
+
+<!-- 08 CONTRASTE -->
+<section class="slide white" data-sec="Cores">
+  <div class="kick"><b>03</b> Cores</div>
+  <h2>Contraste <span class="c2">verificado</span></h2>
+  <p class="lead" style="font-size:26px;margin-bottom:26px">Razões WCAG calculadas. Texto normal exige 4,5:1 (AA); texto grande, 3:1. Amarelo só aceita texto preto.</p>
+  <div class="ctr" id="ctr"></div>
+</section>
+
+<!-- 09 TIPOGRAFIA: FAMÍLIAS -->
+<section class="slide" data-sec="Tipografia">
+  <div class="kick"><b>04</b> Tipografia</div>
+  <h2>Contraste <span class="c2">que marca</span></h2>
+  <div class="grid-c" style="grid-template-columns:repeat(3,1fr);height:700px;margin-top:26px">
+    <div class="famx"><div class="lb">Títulos / destaques</div><div class="big" style="font-family:var(--display);font-weight:800;letter-spacing:-.03em">Inter Tight</div><div class="smp" style="font-family:var(--display);font-weight:700">AaBbCcDdEeFfGgHhIiJj<br>KkLlMmNnOoPpQqRrSs<br>0123456789</div><div class="wt" style="font-family:var(--display)"><span style="font-weight:400">Regular</span><span style="font-weight:500">Medium</span><span style="font-weight:700">Bold</span><span style="font-weight:800">Extrabold</span></div><div class="nt">Bold/Extrabold, caixa alta, tracking −2% a −3%, entrelinha ~0,95.</div></div>
+    <div class="famx"><div class="lb">Parágrafos e interface</div><div class="big" style="font-family:var(--body);font-weight:500">Rubik</div><div class="smp" style="font-family:var(--body)">AaBbCcDdEeFfGgHhIiJj<br>KkLlMmNnOoPpQqRrSs<br>0123456789</div><div class="wt" style="font-family:var(--body)"><span style="font-weight:300">Light</span><span style="font-weight:400">Regular</span><span style="font-weight:500">Medium</span><span style="font-weight:600">Semibold</span></div><div class="nt">Regular/Medium, entrelinha ~1,4. Nunca justificado; até 5 linhas.</div></div>
+    <div class="famx pu"><div class="lb">Frase de ênfase</div><div class="big" style="font-family:var(--serif);font-style:italic;font-weight:500">Playfair</div><div class="smp" style="font-family:var(--serif);font-style:italic">AaBbCcDdEeFfGgHhIiJj<br>KkLlMmNnOoPpQqRrSs<br>0123456789</div><div class="wt" style="font-family:var(--serif);font-style:italic"><span style="font-weight:400">Italic 400</span><span style="font-weight:500">Italic 500</span><span style="font-weight:600">Italic 600</span></div><div class="nt">Sempre itálico. <b style="color:#fff">Uma expressão por peça</b>, dentro ou abaixo do título.</div></div>
+  </div>
+</section>
+
+<!-- 10 TIPOGRAFIA: HIERARQUIA -->
+<section class="slide white" data-sec="Tipografia">
+  <div style="display:grid;grid-template-columns:900px 1fr;gap:64px;height:856px;align-items:stretch">
+    <div style="background:var(--purple-deep);border-radius:48px;padding:64px 64px;color:#fff;display:flex;flex-direction:column;justify-content:space-between">
+      <div style="font:700 22px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--gray-fog)">Eleve seu conhecimento</div>
+      <div>
+        <div style="font:800 104px/.94 var(--display);text-transform:uppercase;letter-spacing:-.03em">Eleve seu<br>conhecimento<br><span style="color:var(--gray-fog)">em produtos<br>digitais</span></div>
+        <div style="font-family:var(--serif);font-style:italic;font-weight:500;font-size:82px;margin-top:20px">Esse é o momento</div>
+      </div>
+      <div style="font-size:23px;color:var(--gray-fog)">Título Inter Tight + ênfase Playfair Italic</div>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:center">
+      <div class="kick" style="margin-bottom:10px"><b>04</b> Hierarquia</div>
+      <div class="srow"><span class="tg">Display</span><span style="font:800 48px/.95 var(--display);text-transform:uppercase;letter-spacing:-.03em">Pessoas criam</span><span class="sp">Inter Tight 800 · 56–104px</span></div>
+      <div class="srow"><span class="tg">H1</span><span style="font:800 40px/1 var(--display);text-transform:uppercase;letter-spacing:-.025em">Formação em dados</span><span class="sp">Inter Tight 800 · 36–48px</span></div>
+      <div class="srow"><span class="tg">H2</span><span style="font:700 32px/1.05 var(--display);letter-spacing:-.02em">Aprenda com especialistas</span><span class="sp">Inter Tight 700 · 28–32px</span></div>
+      <div class="srow"><span class="tg">Ênfase</span><span class="em" style="font-size:38px;line-height:1.1">com especialistas</span><span class="sp">Playfair Italic 500 · = título</span></div>
+      <div class="srow"><span class="tg">Kicker</span><span style="font:700 22px var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--purple-royal)">O que esse curso promete?</span><span class="sp">Inter Tight 700 · 12–13px · +16%</span></div>
+      <div class="srow"><span class="tg">Body</span><span style="font-size:26px;line-height:1.35">Aprenda a usar ferramentas de análise e visualização de dados.</span><span class="sp">Rubik 400 · 16–18px · LH 1,5</span></div>
+      <div class="srow"><span class="tg">Botão</span><span style="font:700 22px var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--purple-royal)">Quero agora</span><span class="sp">Inter Tight 700 · 13–14px · +6%</span></div>
+      <div class="mut" style="font-size:21px;margin-top:20px">Em peças de 1080 px: título 56–88 · corpo 32–40 · CTA/kicker 28–36.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 GRID FLUIDO -->
+<section class="slide" data-sec="Grid &amp; forma">
+  <div style="display:grid;grid-template-columns:800px 1fr;gap:72px;align-items:center;height:856px">
+    <div class="flx">
+      <div style="right:0;top:0;width:62%;height:56%;background:url('assets/img/foto-mesa-cafe.jpg') 62% 30%/cover"></div>
+      <div style="left:0;top:0;width:66%;height:50%;background:#fff;border-radius:0 0 80px 0"></div>
+      <div style="left:5%;top:50%;right:0;bottom:0;background:var(--purple-deep);border-radius:80px 0 0 0"></div>
+      <div style="left:0;top:50%;width:5%;bottom:0;background:var(--yellow)"></div>
+      <div style="left:8%;top:9%;font:800 34px/1 var(--display);text-transform:uppercase;color:var(--ink)">Bloco<br>branco</div>
+      <div style="left:12%;bottom:9%;font:800 34px/1 var(--display);text-transform:uppercase;color:#fff">Bloco roxo</div>
+    </div>
+    <div>
+      <div class="kick"><b>05</b> Grid fluido &amp; forma</div>
+      <h2 style="font-size:72px;margin-bottom:22px">Blocos que <span class="c2">se encaixam</span></h2>
+      <div class="rl7">
+        <div class="it"><span class="n">1</span><div><h4>Divisão assimétrica</h4><p>1/3 + 2/3 ou 2/5 + 3/5. Nunca quatro quadrantes iguais.</p></div></div>
+        <div class="it"><span class="n">2</span><div><h4>Cantos generosos</h4><p>40–80 px em peças de 1080 px; 18 px em cards de interface.</p></div></div>
+        <div class="it"><span class="n">3</span><div><h4>Canto côncavo</h4><p>Um bloco “morde” o vizinho. Use ao menos um por peça.</p></div></div>
+        <div class="it"><span class="n">4</span><div><h4>Foto sangrando</h4><p>Toca ao menos uma borda; a pessoa olha para dentro da peça.</p></div></div>
+        <div class="it"><span class="n">5</span><div><h4>Âncora preta + barra amarela</h4><p>Bloco preto segura o logo; filete amarelo dá energia.</p></div></div>
+        <div class="it"><span class="n">6</span><div><h4>Respiro</h4><p>Texto ocupa no máximo 60% da largura do bloco.</p></div></div>
+        <div class="it hl"><span class="n">7</span><div><h4>Rosto sempre livre</h4><p>Nada — bloco, texto, logo, textura — cobre rosto, olhos ou boca.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 TOKENS DE FORMA -->
+<section class="slide white" data-sec="Grid &amp; forma">
+  <div class="kick"><b>05</b> Grid fluido &amp; forma</div>
+  <h2>Tokens <span class="c2">de forma</span></h2>
+  <div class="grid-c" style="grid-template-columns:1fr 1fr 1fr;margin-top:30px;height:600px">
+    <div class="tkx"><h4>Espaçamento · base 4 px</h4>
+      <div class="sprow"><span>sp-1 · 4</span><i style="width:4px"></i></div>
+      <div class="sprow"><span>sp-2 · 8</span><i style="width:8px"></i></div>
+      <div class="sprow"><span>sp-4 · 16</span><i style="width:16px"></i></div>
+      <div class="sprow"><span>sp-6 · 24</span><i style="width:24px"></i></div>
+      <div class="sprow"><span>sp-8 · 32</span><i style="width:32px"></i></div>
+      <div class="sprow"><span>sp-12 · 48</span><i style="width:48px"></i></div>
+      <div class="sprow"><span>sp-16 · 64</span><i style="width:64px"></i></div>
+      <div class="sprow"><span>sp-24 · 96</span><i style="width:96px"></i></div>
+    </div>
+    <div class="tkx"><h4>Raios</h4>
+      <div class="rdx">
+        <div><b style="border-radius:8px"></b>sm · 8</div>
+        <div><b style="border-radius:14px"></b>btn · 14</div>
+        <div><b style="border-radius:18px"></b>card · 18</div>
+        <div><b style="border-radius:40px"></b>xl · 40</div>
+        <div><b style="border-radius:60px 0 0 0"></b>peça · 40–80</div>
+      </div>
+      <h4 style="margin-top:38px">Elevação</h4>
+      <div style="display:flex;gap:22px">
+        <div style="width:150px;height:84px;border-radius:18px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:500 18px ui-monospace,Consolas,monospace;color:var(--muted)">nenhuma</div>
+        <div style="width:150px;height:84px;border-radius:18px;box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;font:500 18px ui-monospace,Consolas,monospace;color:var(--muted);background:#fff">--shadow</div>
+      </div>
+      <p class="mut" style="font-size:20px;margin-top:16px">Peças gráficas: sem sombra.</p>
+    </div>
+    <div class="tkx"><h4>Formatos</h4>
+      <div style="display:grid;gap:14px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:12px"><b style="font:700 28px var(--display)">1080 × 1920</b><span class="mut" style="font-size:20px">Stories / Reels</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:12px"><b style="font:700 28px var(--display)">1080 × 1080</b><span class="mut" style="font-size:20px">Feed quadrado</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:12px"><b style="font:700 28px var(--display)">1920 × 1080</b><span class="mut" style="font-size:20px">Slides, capa de vídeo</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font:700 28px var(--display)">Vertical</b><span class="mut" style="font-size:20px">Mídia exterior</span></div>
+      </div>
+      <h4 style="margin-top:38px">Movimento <span class="chip-prop">proposta</span></h4>
+      <p class="mut" style="font-size:21px;line-height:1.4">200–300 ms, <i>ease</i>; elevação de −2 px em botões; respeitar <i>reduced motion</i>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13 TEXTURAS -->
+<section class="slide black" data-sec="Texturas &amp; fotos">
+  <div class="kick"><b>06</b> Texturas</div>
+  <h2>Camadas de <span class="c2">aprendizado</span></h2>
+  <p class="lead" style="font-size:26px;margin-bottom:22px"><b style="color:#fff">Uma textura por peça</b>, sempre recortada dentro de um bloco — nunca como fundo atrás de texto longo.</p>
+  <div class="grid-c" style="grid-template-columns:repeat(6,1fr);grid-auto-rows:300px;gap:18px">
+    <div class="tx" style="grid-column:span 2"><img src="assets/tex/tex-dobras-lilas.jpg" alt=""><div class="cp"><b>Dobras lilás</b>Textura principal</div></div>
+    <div class="tx" style="grid-column:span 2"><img src="assets/tex/tex-dobras-roxas.jpg" alt=""><div class="cp"><b>Dobras roxas</b>Aberturas, capas</div></div>
+    <div class="tx" style="grid-column:span 2"><img src="assets/tex/tex-fitas-vidro.jpg" alt=""><div class="cp"><b>Fitas de vidro</b>Capas, abertura de vídeo</div></div>
+    <div class="tx" style="grid-column:span 2"><img src="assets/tex/tex-ondas-dados.jpg" alt=""><div class="cp"><b>Ondas de dados</b>Conteúdo de dados e analytics</div></div>
+    <div class="tx" style="grid-column:span 2"><img src="assets/tex/tex-montanhas-dados.jpg" alt=""><div class="cp"><b>Montanhas de dados</b>Analytics</div></div>
+    <div class="tx" style="grid-column:span 2;background:var(--grad-lilac)"><div class="cp" style="background:none;color:#000"><b>Gradiente Lilac</b>Fundo de bloco</div></div>
+  </div>
+</section>
+
+<!-- 14 FOTOGRAFIA -->
+<section class="slide white" data-sec="Texturas &amp; fotos">
+  <div class="kick"><b>06</b> Fotografia</div>
+  <h2>Pessoas reais, <span class="c2">cenas reais</span></h2>
+  <div class="grid-c" style="grid-template-columns:repeat(5,1fr);height:430px;margin:20px 0 28px;gap:18px">
+    <div class="phx" style="border-radius:56px 28px 28px 28px"><img src="assets/img/foto-sofa-fone.jpg" alt="" style="object-position:55% 30%"></div>
+    <div class="phx"><img src="assets/img/foto-mesa-cafe.jpg" alt="" style="object-position:50% 30%"></div>
+    <div class="phx"><img src="assets/img/foto-fone-oculos.jpg" alt=""></div>
+    <div class="phx"><img src="assets/img/foto-conversa.jpg" alt="" style="object-position:60% 25%"></div>
+    <div class="phx" style="border-radius:28px 56px 28px 28px"><img src="assets/img/foto-sofa-homem.jpg" alt="" style="object-position:50% 30%"></div>
+  </div>
+  <div class="grid-c" style="grid-template-columns:repeat(3,1fr);gap:20px">
+    <div class="cx" style="padding:26px 30px"><h3 style="font-size:28px">Direção</h3><p style="font-size:21px">Trabalho e estudo: notebook, fones, conversas. Diversidade étnica, de gênero e de idade é obrigatória.</p></div>
+    <div class="cx" style="padding:26px 30px"><h3 style="font-size:28px">Luz e cor</h3><p style="font-size:21px">Luz natural lateral, tons de pele preservados, roupas sóbrias. Tratamento leve, sem filtros pesados.</p></div>
+    <div class="cx" style="padding:26px 30px;border:2px solid var(--purple-royal)"><h3 style="font-size:28px">Rosto sempre livre</h3><p style="font-size:21px">Nenhum bloco, texto, logo ou contorno cobre rosto, olhos ou boca.</p></div>
+  </div>
+</section>
+
+<!-- 15 COMPONENTES I -->
+<section class="slide" data-sec="Componentes">
+  <div class="kick"><b>07</b> Componentes</div>
+  <h2>Botões, tags <span class="c2">e campos</span></h2>
+  <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:24px;margin-top:20px">
+    <div class="cmpx" style="padding:30px 34px">
+      <div class="zoomc" style="zoom:2">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><button class="btn btn-primary">Quero agora</button><button class="btn btn-secondary">Saiba mais</button><button class="btn btn-ghost">Ver formações →</button></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px"><button class="btn btn-primary" disabled>Indisponível</button><button class="btn btn-primary btn-sm">Inscreva-se já</button></div>
+        <div class="on-dark" style="background:var(--purple-deep);border-radius:18px;padding:18px;margin-top:14px;display:flex;gap:12px;flex-wrap:wrap"><button class="btn btn-light btn-sm">Garanta sua vaga</button><button class="btn btn-accent btn-sm">Quero agora</button></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px"><span class="tag tag-purple">Formação</span><span class="tag tag-soft">Novo</span><span class="tag tag-line">Online</span><span class="tag tag-yellow">Pré-venda</span></div>
+      </div>
+    </div>
+    <div class="cmpx" style="padding:30px 34px">
+      <div style="zoom:2">
+        <div class="c-kicker" style="margin-bottom:14px">O que esse curso promete?</div>
+        <div class="field" style="min-width:0"><label>Seu e-mail</label><input type="email" placeholder="voce@empresa.com"><span class="help">Enviaremos o link de acesso.</span></div>
+        <div class="field err" style="min-width:0;margin-top:12px"><label>Telefone</label><input type="text" value="(11) 9999"><span class="help">Digite o número completo, com DDD.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 COMPONENTES II -->
+<section class="slide white" data-sec="Componentes">
+  <div class="kick"><b>07</b> Componentes</div>
+  <h2>Cards <span class="c2">e chamadas</span></h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr 360px;gap:26px;margin-top:20px;align-items:start">
+    <div style="zoom:1.34"><div class="c-course"><div class="im" style="background-image:url('assets/img/foto-fone-oculos.jpg');height:150px"><span class="tag tag-yellow">Formação</span></div><div class="bd"><div class="c-kicker">Dados</div><h4>Analista <span class="em" style="text-transform:none">de dados</span></h4><p>Coleta, análise e visualização com SQL, Python e Power BI.</p><div class="ft"><span>Online · certificado</span><button class="btn btn-ghost btn-sm">Ver →</button></div></div></div></div>
+    <div style="zoom:1.34"><div class="c-course c-dark"><div class="im" style="background-image:url('assets/tex/tex-dobras-lilas.jpg');height:150px"><span class="tag tag-soft">Novo</span></div><div class="bd"><div class="c-kicker on-d">Produto</div><h4>Gestão <span class="em" style="text-transform:none">de produtos</span></h4><p>Da descoberta à entrega: produtos digitais que as pessoas querem usar.</p><div class="ft"><span>Online · certificado</span><button class="btn btn-light btn-sm">Ver →</button></div></div></div></div>
+    <div style="display:grid;gap:22px">
+      <div style="zoom:1.2"><div class="c-stat"><div class="n">3 <span class="em">aulas</span></div><p><span class="plate">gratuitas com especialistas</span></p></div></div>
+      <div style="zoom:1.2"><div class="c-quote" style="padding:22px"><div class="qm">“</div><p style="font-size:18px">Aprendi a decidir com dados.</p><div class="who">Nome · Aluna</div></div></div>
+    </div>
+  </div>
+  <div style="zoom:1.3;margin-top:20px"><div class="cta-band" style="padding:30px 38px 30px 46px"><div><h4>Esse é o <span class="em">momento</span></h4><p>Inscreva-se já e comece com 3 aulas gratuitas.</p></div><button class="btn btn-accent">Quero agora</button></div></div>
+</section>
+
+<!-- 17 PEÇAS I -->
+<section class="slide" data-sec="Peças">
+  <div class="kick"><b>08</b> Peças de referência</div>
+  <h2 style="margin-bottom:22px">Tudo <span class="c2">junto</span></h2>
+  <div style="display:flex;gap:44px;align-items:flex-start;justify-content:space-between">
+    <div class="pcx" style="width:620px"><div class="piece sq">
+          <div class="a" style="left:calc(560*var(--u));top:0;width:calc(520*var(--u));height:calc(540*var(--u));background:url('assets/img/foto-mesa-cafe.jpg') 55% 25%/cover"></div>
+          <div class="a" style="left:0;top:0;width:calc(675*var(--u));height:calc(540*var(--u));background:#fff;border-bottom-right-radius:calc(90*var(--u))"></div>
+          <div class="a" style="left:0;top:calc(540*var(--u));width:100%;height:calc(540*var(--u));background:var(--purple-deep)"></div>
+          <div class="a" style="left:0;top:calc(540*var(--u));width:calc(45*var(--u));height:calc(540*var(--u));background:var(--yellow)"></div>
+          <div class="a" style="left:calc(45*var(--u));top:calc(540*var(--u));width:calc(90*var(--u));height:calc(90*var(--u));background:radial-gradient(circle at 100% 100%,#000 calc(89.5*var(--u)),var(--purple-deep) calc(90*var(--u)));display:none"></div>
+          <img class="a" src="assets/logo/pm3-logo-roxo.svg" alt="" style="left:calc(44*var(--u));top:calc(44*var(--u));height:calc(56*var(--u))">
+          <div class="a T" style="left:calc(44*var(--u));top:calc(190*var(--u));width:calc(600*var(--u));font-size:calc(66*var(--u));color:#000;font-weight:600">3 aulas gratuitas <span class="S" style="font-weight:500">com especialistas</span> em produtos digitais</div>
+          <div class="a T" style="left:calc(44*var(--u));top:calc(452*var(--u));font-size:calc(34*var(--u));color:#000;font-weight:600;letter-spacing:-.01em">Inscrições abertas · PM3.COM.BR</div>
+          <div class="a R" style="left:calc(100*var(--u));top:calc(600*var(--u));width:calc(640*var(--u));font-size:calc(35*var(--u));line-height:1.3;color:var(--gray-fog)">Conheça o contexto desse mercado e as principais habilidades que tornam o profissional requisitado por grandes empresas.</div>
+          <div class="a T" style="left:calc(100*var(--u));top:calc(895*var(--u));width:calc(437*var(--u));height:calc(105*var(--u));background:var(--purple-royal);color:#fff;border-radius:calc(14*var(--u));display:flex;align-items:center;justify-content:center;font-size:calc(38*var(--u));letter-spacing:.01em">QUERO AGORA</div>
+        </div><div class="cap"><b>Feed · 1080 × 1080</b><span>Anúncio de aulas</span></div></div>
+    <div class="pcx" style="width:348px"><div class="piece st">
+          <div class="a" style="inset:0;background:var(--purple-deep)"></div>
+          <div class="a T" style="left:calc(400*var(--u));top:calc(305*var(--u));font-size:calc(82*var(--u));color:#fff;text-transform:uppercase;width:calc(640*var(--u));line-height:.98">Curso para analistas de dados</div>
+          <div class="a R" style="left:calc(865*var(--u));top:calc(865*var(--u));font-size:calc(28*var(--u));letter-spacing:.06em;color:var(--gray-fog);display:flex;align-items:center;gap:calc(18*var(--u))">ARRASTE <svg viewBox="0 0 12 20" style="width:calc(24*var(--u));height:calc(40*var(--u));stroke:var(--yellow);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M2 2l8 8-8 8"/></svg></div>
+          <div class="a" style="left:0;top:calc(640*var(--u));width:calc(361*var(--u));height:calc(520*var(--u));background:url('assets/tex/tex-dobras-lilas.jpg') center/cover;border-top-right-radius:calc(70*var(--u))"></div>
+          <div class="a" style="left:0;top:calc(1160*var(--u));width:calc(361*var(--u));height:calc(760*var(--u));background:#000"></div>
+          <img class="a" src="assets/logo/pm3-logo-branco.svg" alt="" style="left:calc(45*var(--u));top:calc(1706*var(--u));height:calc(58*var(--u))">
+          <div class="a" style="left:calc(361*var(--u));top:calc(960*var(--u));right:0;bottom:0;background:url('assets/img/foto-fone-oculos.jpg') 45% 45%/cover"></div>
+        </div><div class="cap"><b>Story · 1080 × 1920</b></div></div>
+    <div class="pcx" style="width:496px"><div class="piece po">
+          <div class="a" style="inset:0;background:#fff"></div>
+          <div class="a" style="left:0;top:0;right:0;height:calc(1180*var(--u));background:var(--grad-lilac);border-radius:0 0 calc(80*var(--u)) 0;overflow:hidden">
+            <div class="a" style="inset:0;background:url('assets/img/foto-perfil-roxo.jpg') 50% 20%/cover;mix-blend-mode:normal"></div>
+            <svg class="a" viewBox="0 0 510 510" style="right:calc(-250*var(--u));top:calc(330*var(--u));width:calc(760*var(--u));height:calc(760*var(--u))"><path fill-rule="evenodd" clip-rule="evenodd" d="M447.264 0H62.8555C28.1478 0 0 28.1412 0 62.8408V447.159C0 481.859 28.1478 510 62.8555 510H304.139C345.049 510 387.152 463.615 387.152 410.79C387.152 350.931 329.067 302.399 269.193 302.399H187.135V273.304L342.544 125.682H109.252V80.1309H418.281V111.492L413.033 116.5L267.166 256.729C356.857 256.729 432.832 330.659 432.832 410.671C432.832 450.021 418.639 483.051 396.455 509.881H447.145C481.852 509.881 510 481.74 510 447.04V62.8408C510 28.1412 481.852 0 447.145 0Z" fill="none" stroke="#fff" stroke-width="3.4"/></svg>
+            <div class="a T" style="left:calc(48*var(--u));top:calc(48*var(--u));font-size:calc(58*var(--u));color:#000;text-transform:uppercase;width:calc(400*var(--u))">Pessoas criam produtos</div>
+          </div>
+          <img class="a" src="assets/logo/pm3-logo-roxo.svg" alt="" style="left:calc(48*var(--u));top:calc(1240*var(--u));height:calc(58*var(--u))">
+          <div class="a T" style="right:calc(48*var(--u));top:calc(1252*var(--u));font-size:calc(34*var(--u));color:var(--purple-deep)">PM3.COM.BR</div>
+        </div><div class="cap"><b>Poster · 1080 × 1350</b><span>“3” gigante</span></div></div>
+  </div>
+</section>
+
+<!-- 18 PEÇAS II -->
+<section class="slide white" data-sec="Peças">
+  <div class="kick"><b>08</b> Peças de referência</div>
+  <h2 style="margin-bottom:26px">Slides <span class="c2">e títulos</span></h2>
+  <div style="display:flex;gap:44px;align-items:flex-start">
+    <div class="pcx" style="width:1060px"><div class="piece wd">
+          <div class="a" style="left:0;top:0;width:calc(320*var(--u));height:calc(360*var(--u));background:var(--purple-royal)"></div>
+          <div class="a" style="left:calc(320*var(--u));top:0;width:calc(800*var(--u));height:calc(360*var(--u));background:#fff"></div>
+          <div class="a" style="left:0;top:calc(360*var(--u));width:calc(1120*var(--u));height:calc(720*var(--u));background:var(--gray-fog)"></div>
+          <div class="a" style="left:calc(1120*var(--u));top:0;right:0;bottom:0;background:url('assets/img/foto-conversa.jpg') 55% 20%/cover;border-top-left-radius:calc(110*var(--u))"></div>
+          <div class="a" style="left:calc(320*var(--u));top:0;width:calc(800*var(--u));height:calc(360*var(--u));background:#fff;border-bottom-right-radius:calc(110*var(--u))"></div>
+          <div class="a R" style="left:calc(360*var(--u));top:calc(36*var(--u));font-size:calc(34*var(--u));color:var(--ink)">Design sofisticado</div>
+          <img class="a" src="assets/logo/pm3-logo-preto.svg" alt="" style="left:calc(40*var(--u));top:calc(404*var(--u));height:calc(56*var(--u))">
+          <div class="a T" style="left:calc(40*var(--u));top:calc(780*var(--u));font-size:calc(96*var(--u));color:#000;text-transform:uppercase;line-height:.98">Proporções<br>harmônicas</div>
+        </div><div class="cap"><b>Slide · 1920 × 1080</b><span>Divisão assimétrica 7/12 + 5/12</span></div></div>
+    <div class="pcx" style="width:580px"><div class="piece wd" style="aspect-ratio:16/9;--u:calc(100cqw / 1080);background:var(--purple-deep)">
+          <div class="a" style="inset:0;background:var(--purple-deep)"></div>
+          <div class="a T" style="left:calc(60*var(--u));top:calc(70*var(--u));font-size:calc(84*var(--u));color:#fff;text-transform:uppercase;width:calc(900*var(--u))">Eleve seu<br>conhecimento<br><span style="color:var(--gray-fog)">em produtos<br>digitais</span></div>
+          <div class="a S" style="left:calc(60*var(--u));bottom:calc(60*var(--u));font-size:calc(88*var(--u));color:#fff;font-weight:400">Esse é o momento</div>
+          <div class="a T" style="right:calc(40*var(--u));top:calc(36*var(--u));font-size:calc(26*var(--u));color:#fff">PM3.COM.BR</div>
+        </div><div class="cap"><b>Título + ênfase</b><span>Inter Tight × Playfair</span></div></div>
+  </div>
+</section>
+
+<!-- 19 VOZ -->
+<section class="slide black" data-sec="Voz">
+  <div class="kick"><b>09</b> Tom de voz</div>
+  <h2>Direto <span class="c2">e convidativo</span></h2>
+  <div class="grid-c" style="grid-template-columns:repeat(4,1fr);gap:20px;margin-top:20px">
+    <div class="tr"><h3>Direto</h3><p>“Inscreva-se já.” “Garanta sua vaga.”</p></div>
+    <div class="tr"><h3>Afirmativo</h3><p>“Esse é o momento.” “A pré-venda já começou.”</p></div>
+    <div class="tr"><h3>Encorajador</h3><p>“Arriscar é uma oportunidade.”</p></div>
+    <div class="tr"><h3>Em pessoas</h3><p>“Pessoas criam produtos.” “Aulas com especialistas.”</p></div>
+  </div>
+  <div style="zoom:1.75;margin-top:34px"><div class="voice-ex" style="margin-top:0;gap:14px">
+    <div class="vx" style="background:var(--purple-deep);color:#fff;min-height:170px;padding:22px;border:1px solid rgba(255,255,255,.2)"><span class="lb" style="color:var(--gray-fog)">Convite</span><p style="font-size:20px">Eleve seu conhecimento em produtos digitais. <span class="em">Esse é o momento.</span></p></div>
+    <div class="vx" style="background:var(--grad-lilac);color:#000;min-height:170px;padding:22px"><span class="lb">Chamada</span><p style="font-size:20px">3 aulas gratuitas <span class="em">com especialistas.</span></p></div>
+    <div class="vx" style="background:#fff;color:#000;min-height:170px;padding:22px"><span class="lb">Manifesto</span><p style="font-size:20px">Pessoas criam produtos. Arriscar é uma <span class="em">oportunidade.</span></p></div>
+  </div></div>
+  <p style="font-size:23px;color:var(--gray-fog);margin-top:26px">Frases curtas · títulos de 2 a 4 palavras por linha · parágrafos de até 5 linhas · sem promessas absolutas.</p>
+</section>
+
+<!-- 20 CHECKLIST -->
+<section class="slide white" data-sec="Checklist">
+  <div class="kick"><b>10</b> Checklist</div>
+  <h2>Antes de <span class="c2">publicar</span></h2>
+  <ul class="ck" style="margin-top:20px">
+    <li>Logo PM3 num canto, pequeno, na cor certa para o fundo.</li>
+    <li>Paleta restrita: roxos, preto, branco, prata e amarelo mínimo.</li>
+    <li>Título Inter Tight Bold + uma expressão em Playfair Italic.</li>
+    <li>Blocos arredondados, assimétricos, com um canto côncavo.</li>
+    <li class="hl">Rosto inteiro e visível — nada o cobre.</li>
+    <li>Foto de pessoa real, olhando para dentro da peça.</li>
+    <li>No máximo uma textura, recortada dentro de um bloco.</li>
+    <li>CTA em botão roxo vibrante, texto branco em caixa alta.</li>
+    <li>Texto ocupa até 60% da largura do bloco.</li>
+    <li>PM3.COM.BR nas peças de alcance; contraste verificado.</li>
+  </ul>
+</section>
+
+<!-- 21 TOKENS + LACUNAS -->
+<section class="slide dark" data-sec="Tokens">
+  <div class="kick"><b>11</b> Tokens &amp; lacunas</div>
+  <h2 style="font-size:78px">Pronto <span class="c2">para código</span></h2>
+  <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:36px;margin-top:20px">
+    <div class="codex"><span class="c">/* PM3 — tokens v1.0 */</span>
+:root {
+  <span class="k">--pm3-roxo-profundo</span>: <span class="v">#452E78</span>;
+  <span class="k">--pm3-roxo-vibrante</span>: <span class="v">#6645B1</span>;
+  <span class="k">--pm3-preto</span>:   <span class="v">#000000</span>;
+  <span class="k">--pm3-prata</span>:   <span class="v">#B9B5C1</span>;
+  <span class="k">--pm3-amarelo</span>: <span class="v">#FFB12A</span>;
+  <span class="k">--pm3-grad-lilac</span>: linear-gradient(135deg,
+      <span class="v">#B04DDD</span>, <span class="v">#FCCBC9</span>);
+  <span class="k">--pm3-grad-blaze</span>: linear-gradient(90deg,
+      <span class="v">#4D2B9F</span>, <span class="v">#DACBF6</span>);
+  <span class="k">--pm3-font-titulo</span>: "Inter Tight";
+  <span class="k">--pm3-font-corpo</span>:  "Rubik";
+  <span class="k">--pm3-font-enfase</span>: "Playfair Display";
+  <span class="k">--pm3-r-btn</span>: <span class="v">14px</span>; <span class="k">--pm3-r-card</span>: <span class="v">18px</span>;
+  <span class="k">--pm3-r-xl</span>:  <span class="v">40px</span>;
+}</div>
+    <div>
+      <div style="font:700 20px var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--gray-fog);margin-bottom:14px">O Key Visual ainda não define</div>
+      <div class="gp">
+        <div><b>Iconografia</b><span>Sem biblioteca de ícones.</span></div>
+        <div><b>Gráficos e dados</b><span>Sem paleta categórica nem regras de legenda.</span></div>
+        <div><b>Web responsivo</b><span>Sem breakpoints, colunas ou layouts de site.</span></div>
+        <div><b>Sub-marcas e parceiros</b><span>Só há o exemplo Evolução 360.</span></div>
+        <div><b>Motion, vídeo e dark mode</b><span>Valores de movimento aqui são propostas.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 22 ENCERRAMENTO -->
+<section class="slide black cover" data-nofoot style="padding:0">
+  <div style="position:absolute;inset:28px;display:grid;grid-template-columns:1fr 1.5fr;gap:28px">
+    <div style="background:var(--purple-deep);border-radius:64px 0 0 64px;display:flex;align-items:center;justify-content:center;position:relative">
+      <img src="assets/logo/pm3-simbolo-branco.svg" alt="" style="width:360px">
+      <div style="position:absolute;left:0;bottom:0;width:34px;height:36%;background:var(--yellow)"></div>
+    </div>
+    <div style="border-radius:0 64px 64px 0;background:url('assets/tex/tex-dobras-lilas.jpg') center/cover;position:relative;display:flex;align-items:flex-end;padding:80px">
+      <div style="font:800 76px/.95 var(--display);text-transform:uppercase;letter-spacing:-.03em;color:#fff;text-shadow:0 2px 30px rgba(69,46,120,.5)">PM3.COM.BR<br><span style="font-family:var(--serif);font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;font-size:70px">Esse é o momento</span></div>
+    </div>
+  </div>
+</section>
+<script>
+// rodapé + numeração
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length;
+  slides.forEach((s,i)=>{
+    if(s.hasAttribute('data-nofoot'))return;
+    const dark=s.classList.contains('dark')||s.classList.contains('black');
+    const f=document.createElement('div');f.className='foot';
+    f.innerHTML='<img src="assets/logo/'+(dark?'pm3-logo-branco':'pm3-logo-roxo')+'.svg" alt="PM3"><i></i><span>Design System</span><i></i><span>'+(s.dataset.sec||'')+'</span><i></i><span>'+String(i+1).padStart(2,'0')+' / '+String(total).padStart(2,'0')+'</span>';
+    s.appendChild(f);
+  });
+  // contraste
+  const lum=h=>{const c=[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4));return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+  const ratio=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+  const pairs=[['#FFFFFF','#452E78','Branco sobre Roxo profundo','Texto em blocos principais'],['#FFFFFF','#6645B1','Branco sobre Roxo vibrante','Botão primário'],['#B9B5C1','#452E78','Prata sobre Roxo profundo','Corpo em fundo roxo'],['#452E78','#FFFFFF','Roxo profundo sobre Branco','Títulos, logo em fundo claro'],['#6645B1','#FFFFFF','Roxo vibrante sobre Branco','Kickers, botão secundário'],['#FFFFFF','#000000','Branco sobre Preto','Blocos de ancoragem'],['#000000','#B9B5C1','Preto sobre Prata','Blocos neutros'],['#000000','#FFB12A','Preto sobre Amarelo','Único texto sobre amarelo'],['#FFFFFF','#FFB12A','Branco sobre Amarelo','Não usar'],['#16121F','#FAFAF9','Ink sobre Paper','Texto corrido na interface']];
+  const el=document.getElementById('ctr');
+  if(el)el.innerHTML=pairs.map(([fg,bg,nm,use])=>{const r=ratio(fg,bg);const c=r>=7?['aaa','AAA']:r>=4.5?['aa','AA']:r>=3?['lg','Só texto grande']:['no','Reprovado'];
+    return '<div class="r"><div class="sample" style="background:'+bg+';color:'+fg+';'+((bg==='#FFFFFF'||bg==='#FAFAF9')?'border:1px solid rgba(22,18,31,.14)':'')+'">Aa Texto</div><div class="t">'+nm+'<span>'+use+'</span></div><div class="v">'+r.toFixed(2)+':1<span class="bg2 bg-'+c[0]+'">'+c[1]+'</span></div></div>'}).join('');
+  // pré-visualização em tela: escala para a largura da janela (não afeta a impressão)
+  function fit(){document.documentElement.style.zoom=Math.min(1,innerWidth/1960)}
+  if(!matchMedia('print').matches){fit();addEventListener('resize',fit)}
+  addEventListener('beforeprint',()=>document.documentElement.style.zoom=1);
+})();
+</script>
+</body>
+</html>

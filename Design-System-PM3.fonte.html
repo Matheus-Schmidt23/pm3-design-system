@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Design System — PM3</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Design System da PM3: cores, tipografia, logo, grid fluido, componentes, peças de referência e tokens, baseados no Key Visual 2025.">
+<link rel="icon" type="image/svg+xml" href="assets/logo/pm3-simbolo-roxo.svg">
+<script>try{if(localStorage.getItem('pm3_ds_ok')==='1')document.documentElement.classList.add('unlocked')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Rubik:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* marca — oficiais (Key Visual 2025) */
+    --purple-deep:#452E78;
+    --purple-royal:#6645B1;
+    --black:#000000;
+    --white:#FFFFFF;
+    --gray-fog:#B9B5C1;
+    --yellow:#FFB12A;
+    --lilac-a:#B04DDD; --lilac-b:#FCCBC9;
+    --blaze-a:#4D2B9F; --blaze-b:#DACBF6;
+    /* interface — derivadas (vistas no template GTM) */
+    --ink:#16121F;
+    --paper:#FAFAF9;
+    --gray-fog-soft:#E4E1EA;
+    --muted:#6F6A7C;
+    --line:rgba(22,18,31,.09);
+
+    --grad-lilac:linear-gradient(135deg,var(--lilac-a) 0%,var(--lilac-b) 100%);
+    --grad-blaze:linear-gradient(90deg,var(--blaze-a) 0%,var(--blaze-b) 100%);
+
+    --display:"Inter Tight",-apple-system,"Segoe UI",Arial,sans-serif;
+    --body:"Rubik",-apple-system,"Segoe UI",Arial,sans-serif;
+    --serif:"Playfair Display",Georgia,serif;
+
+    --r-sm:8px; --r-btn:14px; --r-card:18px; --r-xl:40px; --r-pill:99px;
+    --shadow:0 1px 2px rgba(22,18,31,.04),0 10px 28px rgba(22,18,31,.06);
+    --shadow-lg:0 2px 4px rgba(22,18,31,.05),0 24px 56px rgba(22,18,31,.14);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--body);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.55}
+  h1,h2,h3,h4{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.02em}
+  p{margin:0 0 14px;color:#4a4458}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+  .em{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:0;font-variant-numeric:lining-nums}
+  code,.mono{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:.86em}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.show{opacity:1;transform:none}
+
+  /* ---------- nav ---------- */
+  nav.top{position:sticky;top:0;z-index:60;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 32px}
+  nav.top .brand{display:flex;align-items:center;gap:12px;color:#fff;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.02em;white-space:nowrap}
+  nav.top .brand img{height:24px;width:auto}
+  nav.top .brand span{color:var(--gray-fog);font-weight:500}
+  nav.top ul{list-style:none;display:flex;gap:22px;margin:0;padding:0}
+  nav.top a{white-space:nowrap;color:var(--gray-fog);text-decoration:none;font-family:var(--display);font-size:12.5px;font-weight:600;position:relative;padding:4px 0;transition:color .2s}
+  nav.top a::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--yellow);transition:width .3s}
+  nav.top a:hover{color:#fff}
+  nav.top a:hover::after{width:100%}
+
+  /* ---------- buttons (componentes reais) ---------- */
+  .btn{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;border:2px solid transparent;border-radius:var(--r-btn);padding:15px 28px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s,color .2s,border-color .2s;line-height:1}
+  .btn:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+  .btn-primary{background:var(--purple-royal);color:#fff}
+  .btn-primary:hover{background:var(--purple-deep);transform:translateY(-2px);box-shadow:0 10px 24px rgba(102,69,177,.35)}
+  .btn-primary:active{transform:translateY(0);box-shadow:none}
+  .btn-secondary{background:transparent;color:var(--purple-deep);border-color:var(--purple-deep)}
+  .btn-secondary:hover{background:var(--purple-deep);color:#fff;transform:translateY(-2px)}
+  .on-dark .btn-secondary:hover{background:#fff;color:var(--purple-deep) !important}
+  .btn-ghost{background:transparent;color:var(--purple-royal);padding-left:4px;padding-right:4px}
+  .btn-ghost:hover{color:var(--purple-deep);gap:14px}
+  .btn-light{background:#fff;color:var(--purple-deep)}
+  .btn-light:hover{background:var(--gray-fog-soft);transform:translateY(-2px)}
+  .btn-accent{background:var(--yellow);color:var(--black)}
+  .btn-accent:hover{filter:brightness(1.06);transform:translateY(-2px)}
+  .btn[disabled],.btn.is-disabled{background:var(--gray-fog-soft);color:#8d8899;border-color:transparent;cursor:not-allowed;transform:none;box-shadow:none}
+  .btn-sm{padding:11px 20px;font-size:11.5px}
+  .btn-pdf{background:var(--yellow);color:#000;border-radius:var(--r-pill);padding:9px 16px;font-size:11px}
+  nav.top a.btn-pdf{color:#000;font-size:11px;padding:9px 16px}
+  nav.top a.btn-pdf::after{display:none}
+  nav.top a.btn-pdf:hover{color:#000;filter:brightness(1.06)}
+
+  /* ---------- hero (usa o próprio grid fluido) ---------- */
+  .hero{background:#000;padding:12px;display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:1.25fr 1fr;gap:12px;min-height:calc(100vh - 49px);min-height:min(100svh - 49px,860px)}
+  .hero > div{position:relative;overflow:hidden}
+  .h-main{grid-row:1/3;background:var(--purple-deep);border-radius:var(--r-xl) 0 0 var(--r-xl);padding:56px 56px 48px;display:flex;flex-direction:column;justify-content:space-between;gap:36px;color:#fff}
+  .h-main::after{content:'';position:absolute;right:0;bottom:0;width:26px;height:46%;background:var(--yellow)}
+  .h-kicker{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray-fog)}
+  .h-main h1{font-weight:800;font-size:clamp(44px,6.6vw,104px);line-height:.94;text-transform:uppercase;letter-spacing:-.025em;margin:28px 0 22px}
+  .h-main h1 .l2{color:var(--gray-fog)}
+  .h-main h1 .em{display:block;text-transform:none;font-size:.78em;margin-top:.12em;color:#fff;font-weight:500;letter-spacing:-.01em}
+  .h-main p{color:var(--gray-fog);max-width:46ch;font-size:16px;margin:0}
+  .h-logo{height:42px;width:auto}
+  .h-tex{border-radius:0 var(--r-xl) 0 0;background:url('assets/tex/tex-dobras-lilas.jpg') center/cover}
+  .h-photo{border-radius:0 0 var(--r-xl) 0;background:url('assets/img/foto-sofa-fone.jpg') 42% 30%/cover}
+  .h-photo .tag{position:absolute;left:18px;bottom:18px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:#fff;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;border-radius:var(--r-pill)}
+
+  /* ---------- sections ---------- */
+  .section{padding:112px 0}
+  .section.alt{background:#fff}
+  .section.dark{background:var(--purple-deep);color:#fff}
+  .section.black{background:#000;color:#fff}
+  .dark p,.black p{color:var(--gray-fog)}
+  .kicker{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--purple-royal);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+  .kicker .num{font-family:var(--display);font-weight:800;letter-spacing:0;font-size:13px;color:var(--yellow);background:#000;border-radius:var(--r-pill);padding:3px 9px}
+  .dark .kicker .num,.black .kicker .num{background:var(--yellow);color:#000}
+  .dark .kicker,.black .kicker{color:var(--gray-fog)}
+  h2.title{font-weight:800;font-size:clamp(34px,4.6vw,60px);line-height:.98;text-transform:uppercase;margin-bottom:22px}
+  h2.title .c2{color:var(--purple-royal)}
+  .dark h2.title .c2,.black h2.title .c2{color:var(--gray-fog)}
+  .lead{font-size:18px;max-width:64ch;color:#4a4458}
+  .dark .lead,.black .lead{color:var(--gray-fog)}
+  h3.sub{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--purple-royal);margin:56px 0 18px}
+  .dark h3.sub,.black h3.sub{color:var(--gray-fog)}
+  .grid{display:grid;gap:20px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .plate{display:inline-block;background:rgba(22,18,31,.62);border-radius:12px;padding:8px 12px;color:#fff}
+  .chip-prop{font-family:var(--display);font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#4a2f00;background:var(--yellow);padding:3px 8px;border-radius:var(--r-pill);vertical-align:middle;margin-left:8px;white-space:nowrap}
+
+  /* ---------- cards genéricos ---------- */
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:28px;box-shadow:var(--shadow);transition:transform .3s,box-shadow .3s}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+  .card h3{font-size:19px;font-weight:700;margin-bottom:8px}
+  .card p{font-size:14.5px;margin:0}
+  .card .idx{font-family:var(--display);font-weight:800;font-size:30px;color:var(--purple-royal);line-height:1;margin-bottom:12px;letter-spacing:-.03em}
+  .attr{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .attr span{font-family:var(--display);font-weight:600;font-size:14px;border:1.5px solid var(--purple-royal);color:var(--purple-deep);border-radius:var(--r-pill);padding:8px 18px;transition:.2s;cursor:default}
+  .attr span:hover{background:var(--purple-royal);color:#fff;transform:translateY(-2px)}
+  .quote-bar{background:var(--black);color:#fff;border-radius:var(--r-xl);padding:44px 52px;margin:48px 0 0;display:flex;gap:28px;align-items:flex-start}
+  .quote-bar .qm{font-family:var(--display);font-weight:800;font-size:92px;line-height:.7;color:var(--yellow)}
+  .quote-bar p{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;font-size:clamp(26px,3.4vw,44px);line-height:1;color:#fff;margin:0}
+  .quote-bar small{display:block;margin-top:14px;font-family:var(--display);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-fog);font-style:normal}
+
+  /* ---------- logo ---------- */
+  .logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .logo-tile{border-radius:var(--r-card);height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px;position:relative;overflow:hidden}
+  .logo-tile img{height:44px;width:auto}
+  .logo-tile.sym img{height:64px}
+  .logo-tile small{font-family:var(--display);font-size:11.5px;font-weight:600;opacity:.8}
+  .lt-white{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .lt-deep{background:var(--purple-deep);color:#fff}
+  .lt-black{background:#000;color:#fff;border:1px solid rgba(255,255,255,.2)}
+  .lt-fog{background:var(--gray-fog);color:#000}
+  .lt-royal{background:var(--purple-royal);color:#fff}
+  .lt-lilac{background:var(--grad-lilac);color:#000}
+  .clear-demo{display:flex;gap:44px;align-items:center;flex-wrap:wrap;margin-top:28px}
+  .cs-box{position:relative;background:rgba(255,255,255,.05);border:1.5px dashed var(--yellow);border-radius:10px;padding:34px}
+  .cs-box img{height:56px;width:auto;outline:1px solid rgba(255,255,255,.3)}
+  .cs-box i{position:absolute;font-style:normal;font-family:var(--display);font-size:11px;font-weight:800;color:#000;background:var(--yellow);border-radius:4px;padding:1px 6px;line-height:1.4}
+  .cs-box .xt{top:6px;left:50%;transform:translateX(-50%)}
+  .cs-box .xl{left:7px;top:50%;transform:translateY(-50%)}
+  .cs-box .xr{right:7px;top:50%;transform:translateY(-50%)}
+  .cs-box .xb{bottom:6px;left:50%;transform:translateX(-50%)}
+  .dd{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .dd3{grid-template-columns:repeat(3,1fr)}
+  .dd > div{border-radius:var(--r-card);padding:24px 26px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
+  .dd h4{font-size:14px;margin-bottom:12px;letter-spacing:.04em;text-transform:uppercase}
+  .dd .ok h4{color:#9fe3a8}.dd .no h4{color:#ffadb4}
+  .dd ul{list-style:none;margin:0;padding:0}
+  .dd li{font-size:14px;color:#ddd8e8;padding:9px 0 9px 22px;position:relative;border-top:1px solid rgba(255,255,255,.08)}
+  .dd li:first-child{border-top:none}
+  .dd li::before{content:'';position:absolute;left:0;top:16px;width:10px;height:2px;background:var(--gray-fog)}
+  .wrong{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+  .wrong > div{background:#fff;border-radius:14px;height:112px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .wrong img{height:26px}
+  .wrong span{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-family:var(--display);font-size:10.5px;font-weight:700;color:#b3222f;letter-spacing:.04em;text-transform:uppercase}
+  .wrong .x{position:absolute;top:8px;right:10px;color:#b3222f;font-weight:900;font-size:16px}
+
+  /* ---------- cores ---------- */
+  .sw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .sw{border-radius:var(--r-card);min-height:230px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;position:relative;transition:transform .3s,box-shadow .3s;color:#fff}
+  .sw:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+  .sw.light{color:var(--ink)}
+  .sw.bordered{border:1px solid var(--line)}
+  .sw .nm{font-family:var(--display);font-weight:800;font-size:17px;line-height:1.1}
+  .sw .role{font-size:12px;opacity:.85;margin-top:4px}
+  .sw .codes{font-size:11.5px;line-height:1.65;font-family:ui-monospace,Consolas,monospace}
+  .sw .codes b{opacity:.65;font-weight:500;margin-right:6px}
+  .sw .hint{position:absolute;top:14px;right:14px;font-size:10px;font-family:var(--display);font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(0,0,0,.3);color:#fff;padding:3px 9px;border-radius:99px;opacity:0;transition:opacity .2s}
+  .sw.light .hint{background:rgba(255,255,255,.7);color:var(--ink)}
+  .sw:hover .hint{opacity:1}
+  .sw.wide{grid-column:span 2}
+  .proportion{display:flex;height:64px;border-radius:var(--r-card);overflow:hidden;margin-top:16px}
+  .proportion div{display:flex;align-items:flex-end;padding:10px 12px;font-family:var(--display);font-size:11.5px;font-weight:700;transition:flex-grow .3s}
+  .proportion div:hover{flex-grow:1.2 !important}
+  .ctr-table{width:100%;border-collapse:collapse;margin-top:12px}
+  .ctr-table td{padding:12px 14px;border-top:1px solid var(--line);font-size:14px;vertical-align:middle}
+  .ctr-table tr:first-child td{border-top:none}
+  .ctr-pair{display:inline-flex;align-items:center;justify-content:center;width:150px;height:44px;border-radius:10px;font-family:var(--display);font-weight:700;font-size:14px}
+  .ctr-badge{font-family:var(--display);font-weight:800;font-size:11px;letter-spacing:.06em;padding:3px 9px;border-radius:99px;display:inline-block}
+  .ctr-badge.aaa{background:#d8f3dc;color:#0b5d1e}.ctr-badge.aa{background:#e6f4d6;color:#3b6b0a}.ctr-badge.lg{background:#fff1c7;color:#7a5200}.ctr-badge.no{background:#ffe1e3;color:#9a1b27}
+
+  /* ---------- tipografia ---------- */
+  .fam{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+  .fam .card .big{font-size:60px;line-height:1;margin:6px 0 14px}
+  .fam .label{font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple-royal)}
+  .fam .meta{font-size:12.5px;color:var(--muted);margin-top:14px}
+  .weights{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:12px;font-size:15px}
+  .scale{margin-top:16px}
+  .scale-row{display:grid;grid-template-columns:90px 1fr 210px;align-items:baseline;gap:18px;padding:16px 0;border-top:1px solid var(--line)}
+  .scale-row:first-child{border-top:none}
+  .scale-row .tg{font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:var(--purple-royal);font-weight:600}
+  .scale-row .sp{font-family:ui-monospace,Consolas,monospace;font-size:11px;color:var(--muted);text-align:right}
+  .type-demo{background:var(--purple-deep);color:#fff;border-radius:var(--r-xl);padding:56px;display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:center}
+  .type-demo .k{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-fog);margin-bottom:18px}
+  .type-demo h3{font-size:clamp(34px,4.4vw,62px);font-weight:800;line-height:.95;text-transform:uppercase}
+  .type-demo h3 .c2{color:var(--gray-fog)}
+  .type-demo .em-line{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(30px,3.6vw,48px);margin-top:10px;color:#fff;line-height:1.1}
+  .type-demo p{color:var(--gray-fog);font-size:16px;margin:0 0 20px}
+  .anat{list-style:none;margin:0;padding:0;counter-reset:a}
+  .anat li{counter-increment:a;display:flex;gap:14px;padding:12px 0;border-top:1px solid rgba(255,255,255,.12);font-size:14px;color:#ddd8e8}
+  .anat li::before{content:counter(a);font-family:var(--display);font-weight:800;color:var(--yellow);font-size:15px;width:18px}
+  .anat b{color:#fff;font-family:var(--display)}
+
+  /* ---------- grid fluido ---------- */
+  .fluid-demo{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .fl{position:relative;aspect-ratio:1/1;background:#000;border-radius:var(--r-xl);overflow:hidden}
+  .fl > *{position:absolute}
+  .fl .b-photo{inset:0 0 auto auto;width:62%;height:56%;background:url('assets/img/foto-mesa-cafe.jpg') 60% 40%/cover;border-radius:0}
+  .fl .b-white{left:0;top:0;width:66%;height:50%;background:#fff;border-radius:0 0 var(--r-xl) 0}
+  .fl .b-purple{left:5%;top:50%;right:0;bottom:0;background:var(--purple-deep);border-radius:var(--r-xl) 0 0 0}
+  .fl .b-yellow{left:0;top:50%;width:5%;bottom:0;background:var(--yellow)}
+  .fl .b-label{left:6%;top:9%;font-family:var(--display);font-weight:800;font-size:clamp(14px,2vw,22px);text-transform:uppercase;line-height:1;letter-spacing:-.01em;color:var(--ink)}
+  .fl .b-label.l2{top:auto;bottom:9%;left:12%;color:var(--gray-fog)}
+  .fl .num{font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow);right:5%;top:6%;position:absolute}
+  .rules{display:grid;gap:12px}
+  .rule{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:18px 20px}
+  .rule .n{font-family:var(--display);font-weight:800;font-size:24px;color:var(--purple-royal);line-height:1;min-width:22px;letter-spacing:-.03em}
+  .rule h4{font-size:15.5px;font-weight:700;margin-bottom:3px}
+  .rule p{font-size:13.5px;margin:0}
+  /* canto côncavo (inverse radius): quadrado r×r com círculo transparente */
+  .ic{position:absolute;width:var(--r,40px);height:var(--r,40px);pointer-events:none}
+  .ic-tl{background:radial-gradient(circle at 100% 100%,transparent calc(var(--r,40px) - .5px),var(--c,#fff) var(--r,40px))}
+  .ic-tr{background:radial-gradient(circle at 0 100%,transparent calc(var(--r,40px) - .5px),var(--c,#fff) var(--r,40px))}
+  .ic-bl{background:radial-gradient(circle at 100% 0,transparent calc(var(--r,40px) - .5px),var(--c,#fff) var(--r,40px))}
+  .ic-br{background:radial-gradient(circle at 0 0,transparent calc(var(--r,40px) - .5px),var(--c,#fff) var(--r,40px))}
+  .ic-demo{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:20px}
+  .ic-card{border-radius:var(--r-card);overflow:hidden;background:#fff;border:1px solid var(--line)}
+  .ic-card .stage{aspect-ratio:16/10;position:relative;background:var(--purple-deep);overflow:hidden}
+  .ic-card .stage .blk{position:absolute}
+  .ic-card .cap{padding:16px 20px;font-size:13.5px}
+  .ic-card .cap b{font-family:var(--display);display:block;font-size:14.5px;margin-bottom:2px}
+  .shapes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+  .shape-tile{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:26px;display:flex;flex-direction:column;align-items:center;gap:14px}
+  .shape-tile img{height:120px;width:auto}
+  .shape-tile small{font-size:12.5px;color:var(--muted);text-align:center}
+  .tok-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .tok{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:24px 26px}
+  .tok h4{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple-royal);margin-bottom:16px}
+  .sp-row{display:flex;align-items:center;gap:14px;padding:5px 0;font-size:12.5px}
+  .sp-row .bar{height:12px;background:var(--purple-royal);border-radius:3px}
+  .sp-row .v{font-family:ui-monospace,Consolas,monospace;color:var(--muted);width:92px;flex:none}
+  .rd-row{display:flex;gap:14px;flex-wrap:wrap}
+  .rd{width:84px;text-align:center;font-size:11.5px;color:var(--muted)}
+  .rd div{height:64px;background:var(--purple-deep);margin-bottom:8px}
+  .sh-row{display:flex;gap:16px;flex-wrap:wrap}
+  .sh{width:120px;height:72px;background:#fff;border-radius:var(--r-card);display:flex;align-items:center;justify-content:center;font-size:11.5px;color:var(--muted);border:1px solid var(--line)}
+
+  /* ---------- texturas & fotografia ---------- */
+  .tex-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .tex{border-radius:var(--r-card);overflow:hidden;position:relative;aspect-ratio:1/1;background:#000}
+  .tex.tall{grid-row:span 2;aspect-ratio:auto}
+  .tex.wide{grid-column:span 2;aspect-ratio:2/1}
+  .tex img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .tex:hover img{transform:scale(1.05)}
+  .tex .cap{position:absolute;left:0;right:0;bottom:0;padding:34px 16px 14px;background:linear-gradient(0deg,rgba(0,0,0,.72),transparent);color:#fff;font-size:12px}
+  .tex .cap b{display:block;font-family:var(--display);font-size:13.5px}
+  .tex.grad{background:var(--grad-lilac)}
+  .tex.grad2{background:var(--grad-blaze)}
+  .photo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .photo-grid .ph{aspect-ratio:4/5;border-radius:var(--r-card);overflow:hidden;background:#ddd}
+  .photo-grid .ph:nth-child(3n+1){border-radius:var(--r-xl) var(--r-card) var(--r-card) var(--r-card)}
+  .photo-grid .ph:nth-child(5n){border-radius:var(--r-card) var(--r-xl) var(--r-card) var(--r-card)}
+  .photo-grid img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .photo-grid .ph:hover img{transform:scale(1.06)}
+  .ph-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+  .ph-rules .card{padding:22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:none;color:#fff}
+  .ph-rules .card:hover{transform:none;box-shadow:none;border-color:rgba(255,255,255,.3)}
+  .ph-rules .card p{color:var(--gray-fog)}
+  .ph-rules .card b{color:#fff}
+  .ph-rules h3{font-size:16px}
+
+  /* ---------- componentes ---------- */
+  .comp{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:30px;margin-bottom:20px}
+  .comp > .ct{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+  .comp > .ct h3{font-size:19px;font-weight:700}
+  .comp > .ct span{font-size:12px;color:var(--muted);font-family:ui-monospace,Consolas,monospace}
+  .comp .row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .comp .on-dark{background:var(--purple-deep);border-radius:var(--r-card);padding:28px;margin-top:18px}
+  .comp .on-black{background:#000;border-radius:var(--r-card);padding:28px;margin-top:18px}
+  .comp .cap{font-size:12.5px;color:var(--muted);margin-top:14px}
+  /* kicker/tag/badge */
+  .c-kicker{font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--purple-royal)}
+  .c-kicker.on-d{color:var(--gray-fog)}
+  .tag{font-family:var(--display);font-weight:700;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:var(--r-pill);display:inline-block}
+  .tag-purple{background:var(--purple-deep);color:#fff}
+  .tag-soft{background:var(--blaze-b);color:var(--purple-deep)}
+  .tag-line{border:1.5px solid var(--purple-royal);color:var(--purple-deep)}
+  .tag-yellow{background:var(--yellow);color:#000}
+  .tag-fog{background:var(--gray-fog-soft);color:var(--ink)}
+  .swipe{display:inline-flex;align-items:center;gap:12px;font-family:var(--body);font-weight:400;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-fog)}
+  .swipe svg{width:12px;height:20px;stroke:var(--yellow);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  /* input */
+  .field{display:grid;gap:7px;min-width:280px}
+  .field label{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+  .field input,.field select{font-family:var(--body);font-size:15px;padding:14px 16px;border-radius:var(--r-btn);border:1.5px solid #cfcad9;background:#fff;color:var(--ink);transition:border-color .2s,box-shadow .2s;outline:none}
+  .field input::placeholder{color:#9a95a8}
+  .field input:hover{border-color:var(--gray-fog)}
+  .field input:focus{border-color:var(--purple-royal);box-shadow:0 0 0 4px rgba(102,69,177,.18)}
+  .field.err input{border-color:#c0283a;box-shadow:0 0 0 4px rgba(192,40,58,.12)}
+  .field .help{font-size:12.5px;color:var(--muted)}
+  .field.err .help{color:#b3222f}
+  .chk{display:flex;gap:10px;align-items:center;font-size:14px}
+  .chk i{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--purple-royal);display:inline-flex;align-items:center;justify-content:center}
+  .chk i.on{background:var(--purple-royal)}
+  .chk i.on::after{content:'';width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+  /* cards */
+  .cc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .c-course{border-radius:var(--r-xl);overflow:hidden;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
+  .c-course:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+  .c-course .im{height:170px;background-size:cover;background-position:center;position:relative}
+  .c-course .im .tag{position:absolute;left:16px;top:16px}
+  .c-course .bd{padding:24px 24px 26px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .c-course h4{font-size:21px;font-weight:700;line-height:1.05;text-transform:uppercase}
+  .c-course p{font-size:14px;margin:0}
+  .c-course .ft{margin-top:auto;padding-top:12px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted)}
+  .c-dark{background:var(--purple-deep);border:none;color:#fff}
+  .c-dark h4{color:#fff}.c-dark p{color:var(--gray-fog)}.c-dark .ft{color:var(--gray-fog)}
+  .c-stat{border-radius:var(--r-card);padding:26px;background:var(--grad-blaze);color:#fff}
+  .c-stat .n{font-family:var(--display);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.03em}
+  .c-stat .n .em{font-size:.8em}
+  .c-stat p{color:#fff;margin:12px 0 0;font-size:14px}
+  .c-quote{border-radius:var(--r-xl);background:#000;color:#fff;padding:32px}
+  .c-quote .qm{font-family:var(--serif);font-style:italic;color:var(--yellow);font-size:56px;line-height:.6}
+  .c-quote p{font-family:var(--serif);font-style:italic;font-size:21px;line-height:1.4;color:#fff;margin:6px 0 16px}
+  .c-quote .who{font-family:var(--display);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-fog);font-weight:600}
+  .cta-band{border-radius:var(--r-xl);background:var(--purple-deep);color:#fff;padding:44px 48px;display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap;position:relative;overflow:hidden}
+  .cta-band::before{content:'';position:absolute;left:0;top:0;bottom:0;width:14px;background:var(--yellow)}
+  .cta-band h4{font-size:clamp(26px,3.2vw,40px);font-weight:800;text-transform:uppercase;line-height:1;margin-bottom:8px}
+  .cta-band h4 .em{text-transform:none}
+  .cta-band p{color:var(--gray-fog);margin:0;max-width:44ch}
+  .seal{display:inline-flex;align-items:center;gap:14px;padding:14px 20px;border-radius:var(--r-card);background:#fff;border:1px solid var(--line)}
+  .seal img{height:26px}
+  .seal i{width:1px;height:28px;background:var(--gray-fog)}
+  .seal b{font-family:var(--display);font-size:14px}
+  .seal b em{font-style:normal;color:var(--purple-royal)}
+  .alert{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:var(--r-btn);font-size:14px;max-width:420px}
+  .alert i{width:22px;height:22px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:800;font-size:13px;color:#fff;font-family:var(--display)}
+  .alert.info{background:#efeafa;color:var(--purple-deep)}.alert.info i{background:var(--purple-royal)}
+  .alert.warn{background:#fff3d6;color:#6b4300}.alert.warn i{background:var(--yellow);color:#000}
+  .alert.err{background:#ffe6e8;color:#8f1d29}.alert.err i{background:#c0283a}
+  .alert.ok{background:#e0f5e6;color:#14602a}.alert.ok i{background:#2c9a4b}
+
+  /* ---------- peças (mockups em unidade 1080) ---------- */
+  .pieces{display:grid;grid-template-columns:repeat(12,1fr);gap:28px;align-items:start}
+  .pc-wrap{display:flex;flex-direction:column;gap:12px}
+  .pc-wrap .pc-cap{font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:10px}
+  .pc-wrap .pc-cap b{font-family:var(--display);color:var(--ink);font-size:13.5px}
+  .piece{container-type:inline-size;position:relative;overflow:hidden;background:#000;box-shadow:var(--shadow-lg);border-radius:14px;--u:calc(100cqw / 1080)}
+  .piece *{box-sizing:border-box}
+  .piece .a{position:absolute}
+  .p-feed{grid-column:span 5;}
+  .p-story{grid-column:span 3;}
+  .p-poster{grid-column:span 4;}
+  .p-slide{grid-column:span 8;}
+  .p-slide2{grid-column:span 4}
+  .piece.sq{aspect-ratio:1/1}
+  .piece.st{aspect-ratio:9/16}
+  .piece.po{aspect-ratio:4/5}
+  .piece.wd{aspect-ratio:16/9;--u:calc(100cqw / 1920)}
+  .T{font-family:var(--display);font-weight:700;letter-spacing:-.025em;line-height:.95}
+  .R{font-family:var(--body)}
+  .S{font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:0}
+
+  /* ---------- voz ---------- */
+  .voice-ex{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+  .vx{border-radius:var(--r-xl);padding:30px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between}
+  .vx .lb{font-family:var(--display);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .vx p{font-family:var(--display);font-size:25px;font-weight:700;line-height:1.05;letter-spacing:-.02em;margin:0;color:inherit}
+  .vx p .em{font-size:1.04em}
+  .dodont{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+  .dodont > div{border-radius:var(--r-card);padding:24px 28px;background:#fff;border:1px solid var(--line)}
+  .dodont h4{font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+  .dodont .do h4{color:#14602a}.dodont .dont h4{color:#9a1b27}
+  .dodont li{font-size:14.5px;padding:8px 0;border-top:1px solid var(--line);list-style:none}
+  .dodont ul{margin:0;padding:0}
+  .dodont li:first-child{border-top:none}
+  .check{columns:2;column-gap:36px;margin-top:16px}
+  .check li{list-style:none;position:relative;padding:9px 0 9px 32px;font-size:14.5px;break-inside:avoid;border-bottom:1px solid var(--line)}
+  .check li::before{content:'';position:absolute;left:0;top:11px;width:18px;height:18px;border-radius:5px;border:1.5px solid var(--purple-royal)}
+  .check{margin-left:0;padding:0}
+
+  /* ---------- tokens / IA ---------- */
+  .code-card{background:#0d0a14;border-radius:var(--r-card);padding:0;overflow:hidden;margin-top:20px}
+  .code-card .bar{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.08);font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-fog)}
+  .code-card pre{margin:0;padding:22px 24px;overflow:auto;max-height:430px;font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:12.5px;line-height:1.65;color:#d8d2e6}
+  .code-card pre .k{color:#c9a3ff}.code-card pre .v{color:#ffcf87}.code-card pre .c{color:#7d7691}
+  textarea#mdOut{width:100%;min-height:340px;margin-top:16px;padding:20px 22px;border-radius:var(--r-card);border:1px solid rgba(255,255,255,.12);background:#0d0a14;color:#d8d2e6;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;line-height:1.6;resize:vertical;display:none}
+
+  footer{background:#000;color:var(--gray-fog);padding:64px 32px;text-align:center;font-size:13px}
+  footer img{height:42px;margin:0 auto 20px}
+  footer b{color:var(--yellow)}
+  .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#000;color:#fff;padding:12px 22px;border-radius:99px;font-family:var(--display);font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:300;box-shadow:0 10px 30px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.15)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---------- responsivo ---------- */
+  @media screen and (max-width:1180px){ nav.top ul{display:none} }
+  @media screen and (max-width:980px){
+    .hero{grid-template-columns:1fr;grid-template-rows:auto 220px 260px;min-height:0}
+    .h-main{grid-row:auto;border-radius:var(--r-xl) var(--r-xl) 0 0;padding:40px 28px 36px}
+    .h-main::after{width:14px;height:32%}
+    .h-tex{border-radius:0}.h-photo{border-radius:0 0 var(--r-xl) var(--r-xl)}
+    .g3,.g4,.fam,.cc-grid,.voice-ex,.ph-rules{grid-template-columns:1fr 1fr}
+    .sw-grid{grid-template-columns:1fr 1fr}
+    .tex-grid{grid-template-columns:1fr 1fr}
+    .photo-grid{grid-template-columns:repeat(3,1fr)}
+    .fluid-demo,.type-demo,.ic-demo,.tok-grid,.dodont,.dd,.dd3{grid-template-columns:1fr}
+    .pieces{grid-template-columns:1fr 1fr}
+    .p-feed,.p-story,.p-poster,.p-slide,.p-slide2{grid-column:span 2}
+    .logo-grid,.shapes{grid-template-columns:1fr 1fr}
+    .wrong{grid-template-columns:1fr 1fr}
+    .scale-row{grid-template-columns:70px 1fr}
+    .scale-row .sp{grid-column:1/-1;text-align:left}
+    nav.top ul{display:none}
+  }
+  @media screen and (max-width:600px){
+    .wrap{padding:0 20px}
+    .section{padding:72px 0}
+    .g2,.g3,.g4,.fam,.cc-grid,.voice-ex,.ph-rules,.sw-grid,.logo-grid,.shapes,.wrong,.tex-grid{grid-template-columns:1fr}
+    .sw.wide,.tex.wide{grid-column:auto}
+    .tex.tall{grid-row:auto;aspect-ratio:1/1}
+    .photo-grid{grid-template-columns:1fr 1fr}
+    .pieces{grid-template-columns:1fr}
+    .p-feed,.p-story,.p-poster,.p-slide,.p-slide2{grid-column:auto}
+    .check{columns:1}
+    .quote-bar{padding:30px 26px;flex-direction:column;gap:6px}
+    .type-demo{padding:32px 26px}
+    .cta-band{padding:34px 28px 34px 38px}
+  }
+
+  @media screen and (max-width:600px){
+    code{overflow-wrap:anywhere}
+    .dd3{grid-template-columns:1fr}
+    .scale-row > span{min-width:0;overflow-wrap:anywhere}
+    .scale-row span[style*='font-size:56px']{font-size:34px !important}
+    .scale-row span[style*='font-size:42px']{font-size:30px !important}
+    .ctr-table,.ctr-table tbody{display:block}
+    .ctr-table tr{display:grid;grid-template-columns:116px 1fr;gap:4px 10px;padding:12px 0;border-top:1px solid var(--line)}
+    .ctr-table tr:first-child{border-top:none}
+    .ctr-table td{border:none !important;padding:2px 0 !important;width:auto !important}
+    .ctr-table td:nth-child(3){grid-column:1/-1;text-align:left !important}
+    .ctr-pair{width:108px}
+  }
+
+  /* ---------- login ---------- */
+  html:not(.unlocked) body{overflow:hidden;height:100vh}
+  html:not(.unlocked) body > *:not(#gate){visibility:hidden}
+  html.unlocked #gate{display:none}
+  #gate{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;padding:24px;visibility:visible !important}
+  #gate .gb{position:absolute;inset:12px;display:grid;grid-template-columns:1.5fr 1fr;grid-template-rows:1fr 1fr;gap:12px}
+  #gate .gb > div{position:relative}
+  #gate .g1{grid-row:1/3;background:var(--purple-deep);border-radius:var(--r-xl) 0 0 var(--r-xl)}
+  #gate .g1::after{content:'';position:absolute;right:0;bottom:0;width:22px;height:38%;background:var(--yellow)}
+  #gate .g2{background:url('assets/tex/tex-dobras-lilas.jpg') center/cover;border-radius:0 var(--r-xl) 0 0}
+  #gate .g3{background:url('assets/tex/tex-fitas-vidro.jpg') center/cover;border-radius:0 0 var(--r-xl) 0}
+  .gate-card{position:relative;background:#fff;border-radius:var(--r-xl);padding:44px 40px 38px;width:100%;max-width:420px;box-shadow:0 30px 80px rgba(0,0,0,.45);text-align:left}
+  .gate-card img{height:52px;width:auto;margin-bottom:22px}
+  .gate-card .gk{font-family:var(--display);font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--purple-royal);margin-bottom:8px}
+  .gate-card h2{font-weight:800;font-size:34px;line-height:.98;text-transform:uppercase;letter-spacing:-.025em;margin-bottom:12px}
+  .gate-card p{font-size:14.5px;color:#4a4458;margin-bottom:22px}
+  .gate-card form{display:grid;gap:12px}
+  .gate-card label{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
+  .gate-card input{font-family:var(--body);font-size:16px;padding:14px 16px;border-radius:var(--r-btn);border:1.5px solid #cfcad9;outline:none;transition:border-color .2s,box-shadow .2s;width:100%}
+  .gate-card input:focus{border-color:var(--purple-royal);box-shadow:0 0 0 4px rgba(102,69,177,.18)}
+  .gate-card .btn{justify-content:center;width:100%}
+  .gate-card .gerr{min-height:20px;font-size:13.5px;font-weight:600;color:#b3222f;margin-top:2px}
+  .gate-card.shake{animation:gshake .35s ease}
+  @keyframes gshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+  @media(max-width:700px){#gate .gb{grid-template-columns:1fr;grid-template-rows:1fr 1fr}#gate .g1{grid-row:auto;border-radius:var(--r-xl) var(--r-xl) 0 0}#gate .g2{border-radius:0}#gate .g3{display:none}}
+  @media print{#gate{display:none !important}}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{transition-duration:.01ms !important;animation-duration:.01ms !important}
+    .reveal{opacity:1;transform:none}
+    .card:hover,.sw:hover,.c-course:hover,.btn:hover,.tex:hover img,.photo-grid .ph:hover img{transform:none}
+  }
+
+  nav.top a.active{color:#fff}
+  nav.top a.active::after{width:100%}
+  .sw:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+
+  /* ---------- impressão ---------- */
+  @media print{
+    @page{size:1280px 1810px;margin:0}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    html,body{width:1280px}
+    nav.top,.btn-pdf,#ia .actions,.toast,#mdOut{display:none !important}
+    .reveal{opacity:1 !important;transform:none !important;transition:none !important}
+    *{animation:none !important}
+    .hero{min-height:1810px;height:1810px;break-after:page;grid-template-rows:1.25fr 1fr}
+    .section{padding:48px 0;break-before:page}
+    .logo-tile{height:128px}
+    .wrong > div{height:92px}
+    .photo-grid .ph{aspect-ratio:4/3}
+    .tex{aspect-ratio:4/3}
+    .tex.wide{aspect-ratio:8/3}
+    .llm-block{display:none !important}
+    h2.title,h3.sub{break-after:avoid}
+    .card,.comp,.rule,.logo-tile,.tex,.sw,.pc-wrap,.tok,.ic-card,.vx,.c-course,.quote-bar,.dd > div,.type-demo,.scale-row,.c-stat,.c-quote,.cta-band,.alert,.shape-tile,.fl,.wrong > div,.ph,.dodont > div,.code-card{break-inside:avoid}
+    .card:hover,.sw:hover,.c-course:hover,.tex:hover img,.photo-grid .ph:hover img{transform:none;box-shadow:none}
+    .proportion,.g2,.g3,.g4,.cc-grid,.voice-ex,.dodont,.tok-grid,.ic-demo,.fluid-demo,.fam,.ph-rules,.pieces{break-inside:avoid}
+    .code-card pre{max-height:none;overflow:visible}
+    footer{break-before:avoid;padding:48px 32px}
+  }</style>
+</head>
+<body>
+
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <div class="gb"><div class="g1"></div><div class="g2"></div><div class="g3"></div></div>
+  <div class="gate-card" id="gateCard">
+    <img src="assets/logo/pm3-logo-roxo.svg" alt="PM3">
+    <div class="gk">Acesso restrito</div>
+    <h2 id="gate-title">Design System</h2>
+    <p>Este material é de uso interno. Digite a senha para continuar.</p>
+    <noscript><p style="color:#b3222f;font-weight:600">Ative o JavaScript do navegador para acessar este material.</p></noscript>
+    <form id="gateForm" autocomplete="off" onsubmit="return false">
+      <label for="gatePass">Senha</label>
+      <input id="gatePass" type="password" autocomplete="off" autofocus required>
+      <div class="gerr" id="gateErr" role="alert" aria-live="polite"></div>
+      <button class="btn btn-primary" type="submit">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<nav class="top">
+  <div class="brand"><img src="assets/logo/pm3-logo-branco.svg" alt="PM3"> <span>Design System</span></div>
+  <ul>
+    <li><a href="#essencia">Essência</a></li>
+    <li><a href="#logo">Logo</a></li>
+    <li><a href="#cores">Cores</a></li>
+    <li><a href="#tipografia">Tipografia</a></li>
+    <li><a href="#grid">Grid &amp; forma</a></li>
+    <li><a href="#imagem">Texturas &amp; fotos</a></li>
+    <li><a href="#componentes">Componentes</a></li>
+    <li><a href="#pecas">Peças</a></li>
+    <li><a href="#voz">Voz</a></li>
+    <li><a href="#ia">Tokens &amp; IA</a></li>
+  </ul>
+  <a class="btn btn-pdf btn-sm" href="Design-System-PM3.pdf" download>Baixar PDF</a>
+</nav>
+
+<!-- ============================ HERO ============================ -->
+<header class="hero">
+  <div class="h-main">
+    <div>
+      <div class="h-kicker">Design System · v1.0 · 2026</div>
+      <h1>Pessoas <br><span class="l2">criam</span> <br>produtos.</h1>
+      <p>Fundamentos, componentes e regras de composição para criar qualquer peça PM3 — do anúncio ao slide, da página à apresentação — com a mesma sofisticação do Key Visual.</p>
+    </div>
+    <img class="h-logo" src="assets/logo/pm3-logo-branco.svg" alt="PM3">
+  </div>
+  <div class="h-tex"></div>
+  <div class="h-photo"><span class="tag">Grid fluido · blocos que se encaixam</span></div>
+</header>
+
+<!-- ============================ ESSÊNCIA ============================ -->
+<section class="section" id="essencia">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">01</span> Essência da marca</div>
+    <h2 class="title reveal">Pessoas criam <span class="c2">produtos</span></h2>
+    <p class="lead reveal">A PM3 ensina produtos digitais para pessoas reais. A identidade coloca o profissional no centro — em ambientes de trabalho e estudo do dia a dia — cercado por uma linguagem gráfica fluida e sofisticada. Este documento transforma o Key Visual 2025 em um sistema reutilizável.</p>
+
+    <div class="attr reveal">
+      <span>Produtos Digitais</span><span>Premium</span><span>Líder</span><span>Confiável</span><span>Autêntica</span><span>Transformadora</span><span>Ativa</span><span>Parceira</span><span>Aprendizado fluido</span>
+    </div>
+
+    <h3 class="sub reveal">Princípios de design do Key Visual</h3>
+    <div class="grid g3 reveal">
+      <div class="card"><div class="idx">1</div><h3>Design sofisticado</h3><p>Acabamento refinado, muito respiro, poucos elementos por peça. Premium se mostra pelo que se retira.</p></div>
+      <div class="card"><div class="idx">2</div><h3>Proporções harmônicas</h3><p>Divisões assimétricas (1/3 + 2/3, 2/5 + 3/5). Nunca quatro quadrantes iguais.</p></div>
+      <div class="card"><div class="idx">3</div><h3>Grid fluido</h3><p>Blocos de cor, foto e textura com cantos generosos que se encaixam — e se abrem — uns nos outros.</p></div>
+      <div class="card"><div class="idx">4</div><h3>Sofisticação e dinamismo</h3><p>Contraste de pesos tipográficos, itálico de virada, blocos deslocados e gradientes em movimento.</p></div>
+      <div class="card"><div class="idx">5</div><h3>Articulação de cores</h3><p>Roxo e branco dominam; preto e prata ancoram; gradiente e amarelo aparecem como acento.</p></div>
+      <div class="card" style="background:var(--purple-deep);color:#fff;border:none"><div class="idx" style="color:var(--yellow)">+</div><h3 style="color:#fff">Pessoas no centro</h3><p style="color:var(--gray-fog)">Diversidade real, cenas verossímeis, olhar para dentro da peça. A tecnologia serve à pessoa — nunca o contrário.</p></div>
+    </div>
+
+    <div class="quote-bar reveal">
+      <div class="qm">“</div>
+      <div><p>Arriscar é uma oportunidade.</p><small>Tagline de campanha · Key Visual 2025</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ LOGO ============================ -->
+<section class="section black" id="logo">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">02</span> Logo &amp; símbolo</div>
+    <h2 class="title reveal">O <span class="c2">3</span> que se abre</h2>
+    <p class="lead reveal">O símbolo é o número <b style="color:#fff">3</b> inscrito em um quadrado de cantos arredondados: o traço nasce da própria borda e se abre em uma curva generosa na base. O logotipo combina o símbolo ao wordmark <b style="color:#fff">PM3</b>, em sans-serif geométrica, com o “3” aberto ecoando o ícone.</p>
+
+    <div class="logo-grid reveal" style="margin-top:44px">
+      <div class="logo-tile lt-white"><img src="assets/logo/pm3-logo-roxo.svg" alt=""><small>Roxo profundo — padrão em fundo claro</small></div>
+      <div class="logo-tile lt-deep"><img src="assets/logo/pm3-logo-branco.svg" alt=""><small>Branco — sobre roxo profundo</small></div>
+      <div class="logo-tile lt-black"><img src="assets/logo/pm3-logo-branco.svg" alt=""><small>Branco — sobre preto</small></div>
+      <div class="logo-tile lt-fog"><img src="assets/logo/pm3-logo-preto.svg" alt=""><small>Preto — sobre prata</small></div>
+      <div class="logo-tile lt-lilac"><img src="assets/logo/pm3-logo-preto.svg" alt=""><small>Preto — sobre gradiente lilás</small></div>
+      <div class="logo-tile lt-royal"><img src="assets/logo/pm3-logo-branco.svg" alt=""><small>Branco — sobre roxo vibrante</small></div>
+      <div class="logo-tile sym lt-white"><img src="assets/logo/pm3-simbolo-roxo.svg" alt=""><small>Símbolo — ícone, avatar, favicon</small></div>
+      <div class="logo-tile sym lt-deep"><img src="assets/logo/pm3-simbolo-branco.svg" alt=""><small>Símbolo branco — marca d’água, estampa</small></div>
+      <div class="logo-tile sym lt-black"><img src="assets/logo/pm3-simbolo-vibrante.svg" alt=""><small>Símbolo vibrante — destaque em preto</small></div>
+    </div>
+
+    <h3 class="sub reveal">Respiro e tamanho mínimo <span class="chip-prop">proposta</span></h3>
+    <div class="clear-demo reveal">
+      <div class="cs-box">
+        <i class="xt">X</i><i class="xl">X</i><i class="xr">X</i><i class="xb">X</i>
+        <img src="assets/logo/pm3-logo-branco.svg" alt="">
+      </div>
+      <p style="max-width:430px;margin:0">O espaço livre (<b style="color:#fff">X</b>) em todos os lados é igual à <b style="color:#fff">metade da altura do símbolo</b>. Nenhum texto, foto ou borda de bloco invade essa área.<br><br><b style="color:#fff">Tamanho mínimo:</b> logo horizontal com 72&nbsp;px de largura em tela (18&nbsp;mm em impresso); símbolo isolado com 24&nbsp;px (8&nbsp;mm).</p>
+    </div>
+
+    <h3 class="sub reveal">Posição na peça</h3>
+    <div class="dd dd3 reveal">
+      <div><h4 style="color:#fff">Canto, pequeno</h4><p style="margin:0;font-size:14px">Logo sempre num canto — inferior esquerdo é o mais frequente, superior esquerdo na sequência. Nunca centralizado como título.</p></div>
+      <div><h4 style="color:#fff">Âncora preta</h4><p style="margin:0;font-size:14px">Em peças com fotos, um bloco preto (geralmente inferior esquerdo) ancora o logo em branco.</p></div>
+      <div><h4 style="color:#fff">O “3” gigante</h4><p style="margin:0;font-size:14px">Em peças hero, o símbolo aparece em escala monumental, só em contorno branco fino, sobre retrato de perfil. <b style="color:#fff">Uma vez por peça</b>, parcialmente cortado — e <b style="color:#fff">nunca sobre o rosto</b>.</p></div>
+    </div>
+
+    <div class="dd reveal" style="margin-top:24px">
+      <div class="ok"><h4>Faça</h4><ul>
+        <li>Use os arquivos vetoriais oficiais (SVG) desta pasta</li>
+        <li>Versão branca sobre roxo, preto ou foto escura</li>
+        <li>Mantenha o respiro mínimo e a posição de canto</li>
+        <li>Use o gradiente apenas como fundo do bloco, com o logo em preto</li>
+      </ul></div>
+      <div class="no"><h4>Evite</h4><ul>
+        <li>Distorcer, esticar, inclinar ou rotacionar o logo</li>
+        <li>Recolorir fora da paleta (roxo profundo, vibrante, branco, preto)</li>
+        <li>Aplicar sobre gradiente de alta saturação sem área de respiro</li>
+        <li>Adicionar sombra, brilho ou contorno ao logo</li>
+      </ul></div>
+    </div>
+
+    <div class="wrong reveal">
+      <div style="background:#fff"><img src="assets/logo/pm3-logo-roxo.svg" alt="" style="transform:scaleX(1.5)"><span>Distorcido</span><b class="x">✕</b></div>
+      <div style="background:var(--yellow)"><img src="assets/logo/pm3-logo-vibrante.svg" alt=""><span style="color:#8a1620">Fora da paleta / baixo contraste</span><b class="x">✕</b></div>
+      <div style="background:var(--purple-deep)"><img src="assets/logo/pm3-logo-roxo.svg" alt=""><span style="color:#ffadb4">Roxo sobre roxo</span><b class="x" style="color:#ffadb4">✕</b></div>
+      <div style="background:#fff"><img src="assets/logo/pm3-logo-roxo.svg" alt="" style="transform:rotate(-8deg);filter:drop-shadow(4px 6px 3px rgba(0,0,0,.4))"><span>Inclinado, com sombra</span><b class="x">✕</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CORES ============================ -->
+<section class="section" id="cores">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">03</span> Cores</div>
+    <h2 class="title reveal">Articulação <span class="c2">de cores</span></h2>
+    <p class="lead reveal">Quatro cores principais, duas de apoio e dois gradientes. Clique em qualquer cor para copiar o HEX.</p>
+
+    <h3 class="sub reveal">Cores principais</h3>
+    <div class="sw-grid reveal">
+      <div class="sw wide" role="button" tabindex="0" data-hex="#452E78" style="background:#452E78"><span class="hint">copiar HEX</span><div><div class="nm">Deep One Purple</div><div class="role">Roxo Profundo · institucional — blocos principais, logo, títulos em fundo claro</div></div><div class="codes"><b>HEX</b>#452E78 &nbsp; <b>RGB</b>69 46 120<br><b>CMYK</b>89 98 20 7 &nbsp; <b>PANTONE</b>7672 C</div></div>
+      <div class="sw wide" role="button" tabindex="0" data-hex="#6645B1" style="background:#6645B1"><span class="hint">copiar HEX</span><div><div class="nm">Royal Purple</div><div class="role">Roxo Vibrante · ação — botões, kickers, blocos secundários, hover</div></div><div class="codes"><b>HEX</b>#6645B1 &nbsp; <b>RGB</b>102 69 177<br><b>CMYK</b>72 82 0 0 &nbsp; <b>PANTONE</b>2725 C</div></div>
+      <div class="sw wide" role="button" tabindex="0" data-hex="#000000" style="background:#000"><span class="hint">copiar HEX</span><div><div class="nm">Obsidian Black</div><div class="role">Preto · alto contraste — blocos de ancoragem, rodapés, brindes</div></div><div class="codes"><b>HEX</b>#000000 &nbsp; <b>RGB</b>0 0 0<br><b>CMYK</b>100 100 100 100 &nbsp; <b>PANTONE</b>6 C</div></div>
+      <div class="sw wide light bordered" role="button" tabindex="0" data-hex="#FFFFFF" style="background:#fff"><span class="hint">copiar HEX</span><div><div class="nm">Luminous White</div><div class="role">Branco · respiro — cards, áreas de texto</div></div><div class="codes"><b>HEX</b>#FFFFFF &nbsp; <b>RGB</b>255 255 255<br><b>CMYK</b>0 0 0 0</div></div>
+    </div>
+
+    <h3 class="sub reveal">Cores de apoio</h3>
+    <div class="sw-grid reveal">
+      <div class="sw wide light" role="button" tabindex="0" data-hex="#B9B5C1" style="background:#B9B5C1"><span class="hint">copiar HEX</span><div><div class="nm">Gray Fog</div><div class="role">Prata · fundo neutro frio, texto secundário sobre roxo, 2ª linha de títulos</div></div><div class="codes"><b>HEX</b>#B9B5C1 &nbsp; <b>RGB</b>185 181 193<br><b>CMYK</b>27 24 15 0 &nbsp; <b>PANTONE</b>Silver 10077 C</div></div>
+      <div class="sw wide light" role="button" tabindex="0" data-hex="#FFB12A" style="background:#FFB12A"><span class="hint">copiar HEX</span><div><div class="nm">Yellow Glow</div><div class="role">Amarelo · acento mínimo — barras finas, setas, ponto de energia. Nunca fundo dominante</div></div><div class="codes"><b>HEX</b>#FFB12A &nbsp; <b>RGB</b>255 177 42<br><b>CMYK</b>0 35 93 0 &nbsp; <b>PANTONE</b>1235 C</div></div>
+    </div>
+
+    <h3 class="sub reveal">Gradientes</h3>
+    <div class="sw-grid reveal">
+      <div class="sw wide light" role="button" tabindex="0" data-hex="linear-gradient(135deg, #B04DDD 0%, #FCCBC9 100%)" style="background:linear-gradient(135deg,#B04DDD 0%,#FCCBC9 100%);color:#000"><span class="hint">copiar CSS</span><div><div class="nm">Lilac Gradient</div><div class="role">Lilás → rosa-pêssego · fundo de bloco, atrás do “3” gigante, transição foto↔cor</div></div><div class="codes"><b>DE</b>#B04DDD &nbsp; <b>PARA</b>#FCCBC9 &nbsp; <b>ÂNGULO</b>135°</div></div>
+      <div class="sw wide" role="button" tabindex="0" data-hex="linear-gradient(90deg, #4D2B9F 0%, #DACBF6 100%)" style="background:linear-gradient(90deg,#4D2B9F 0%,#DACBF6 100%)"><span class="hint">copiar CSS</span><div><div class="plate"><div class="nm">Blaze Gradient</div><div class="role">Roxo intenso → lavanda · blocos extensos, fundos de cards e estatísticas</div></div></div><div><div class="plate codes"><b>DE</b>#4D2B9F &nbsp; <b>PARA</b>#DACBF6 &nbsp; <b>ÂNGULO</b>90° (ou vertical)</div></div></div>
+    </div>
+
+    <h3 class="sub reveal">Neutros de interface <span class="chip-prop">derivados do template GTM</span></h3>
+    <div class="sw-grid reveal">
+      <div class="sw light" role="button" tabindex="0" data-hex="#16121F" style="background:#16121F;color:#fff;min-height:150px"><span class="hint">copiar HEX</span><div class="nm">Ink</div><div class="codes"><b>HEX</b>#16121F<br><span style="opacity:.7;font-family:var(--body)">texto em fundo claro</span></div></div>
+      <div class="sw light bordered" role="button" tabindex="0" data-hex="#FAFAF9" style="background:#FAFAF9;min-height:150px"><span class="hint">copiar HEX</span><div class="nm">Paper</div><div class="codes"><b>HEX</b>#FAFAF9<br><span style="opacity:.7;font-family:var(--body)">fundo de página</span></div></div>
+      <div class="sw light" role="button" tabindex="0" data-hex="#E4E1EA" style="background:#E4E1EA;min-height:150px"><span class="hint">copiar HEX</span><div class="nm">Fog Soft</div><div class="codes"><b>HEX</b>#E4E1EA<br><span style="opacity:.7;font-family:var(--body)">divisórias, desabilitado</span></div></div>
+      <div class="sw light" role="button" tabindex="0" data-hex="#D9D9D9" style="background:#D9D9D9;min-height:150px"><span class="hint">copiar HEX</span><div class="nm">Placeholder</div><div class="codes"><b>HEX</b>#D9D9D9<br><span style="opacity:.7;font-family:var(--body)">imagem provisória</span></div></div>
+    </div>
+
+    <h3 class="sub reveal">Proporção de uso</h3>
+    <div class="proportion reveal">
+      <div style="flex-grow:60;background:var(--purple-deep);color:#fff">Roxo profundo + branco · ~60%</div>
+      <div style="flex-grow:23;background:#000;color:#fff">Preto ou prata · 20–25%</div>
+      <div style="flex-grow:13;background:var(--grad-lilac);color:#000">Gradiente · 10–15%</div>
+      <div style="flex-grow:2;background:var(--yellow);color:#000;padding:10px 4px;font-size:9px">≤2%</div>
+    </div>
+    <p style="margin-top:16px;font-size:14px" class="reveal">O roxo vibrante é cor de <b>ação</b> (botões, kickers) e entra nos 60%. O amarelo é detalhe — uma barra fina, uma seta — e nunca ocupa mais de 2% da área. Gradiente e texturas sempre recortados dentro de um bloco.</p>
+
+    <h3 class="sub reveal">Contraste e acessibilidade <span class="chip-prop">calculado</span></h3>
+    <div class="card reveal" style="padding:10px 18px">
+      <table class="ctr-table" id="ctrTable"></table>
+    </div>
+    <p style="margin-top:14px;font-size:13.5px" class="reveal">Razões calculadas pela fórmula WCAG 2.x. Texto normal exige 4,5:1 (AA); texto grande (≥24 px, ou ≥18,5 px em negrito) exige 3:1. Amarelo só aceita texto preto; roxo vibrante sobre branco é adequado para kickers e botões, não para parágrafos longos.</p>
+  </div>
+</section>
+
+<!-- ============================ TIPOGRAFIA ============================ -->
+<section class="section alt" id="tipografia">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">04</span> Tipografia</div>
+    <h2 class="title reveal">Contraste que <span class="c2">marca</span></h2>
+    <p class="lead reveal">Três famílias, três papéis. O contraste entre a sans-serif firme dos títulos e o itálico serifado da ênfase é a assinatura tipográfica da PM3.</p>
+
+    <div class="fam reveal" style="margin-top:40px">
+      <div class="card">
+        <div class="label">Títulos / destaques</div>
+        <div class="big" style="font-family:var(--display);font-weight:800;letter-spacing:-.03em">Inter Tight</div>
+        <div style="font-family:var(--display);font-weight:700;font-size:20px;line-height:1.2;letter-spacing:-.01em">AaBbCcDdEeFfGgHhIiJjKk<br>LlMmNnOoPpQqRrSsTtUuVv<br>WwXxYyZz 0123456789</div>
+        <div class="weights" style="font-family:var(--display)"><span style="font-weight:300">Light</span><span style="font-weight:400">Regular</span><span style="font-weight:500">Medium</span><span style="font-weight:600">Semibold</span><span style="font-weight:700">Bold</span><span style="font-weight:800">Extrabold</span></div>
+        <div class="meta">Bold/Extrabold, caixa alta, tracking −2% a −3%, entrelinha ~0,95. Em cabeçalhos longos, caixa mista também é válida.</div>
+      </div>
+      <div class="card">
+        <div class="label">Parágrafos e interface</div>
+        <div class="big" style="font-family:var(--body);font-weight:500">Rubik</div>
+        <div style="font-family:var(--body);font-size:20px;line-height:1.25">AaBbCcDdEeFfGgHhIiJjKk<br>LlMmNnOoPpQqRrSsTtUuVv<br>WwXxYyZz 0123456789</div>
+        <div class="weights" style="font-family:var(--body)"><span style="font-weight:300">Light</span><span style="font-weight:400">Regular</span><span style="font-weight:500">Medium</span><span style="font-weight:600">Semibold</span></div>
+        <div class="meta">Regular/Medium para corpo, entrelinha ~1,4. Nunca justificado. Parágrafos de até 5 linhas.</div>
+      </div>
+      <div class="card" style="background:var(--purple-deep);color:#fff;border:none">
+        <div class="label" style="color:var(--gray-fog)">Frase de ênfase</div>
+        <div class="big" style="font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:0">Playfair</div>
+        <div style="font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.3">AaBbCcDdEeFfGgHhIiJjKk<br>LlMmNnOoPpQqRrSsTtUuVv<br>WwXxYyZz 0123456789</div>
+        <div class="weights" style="font-family:var(--serif);font-style:italic"><span style="font-weight:400">Italic 400</span><span style="font-weight:500">Italic 500</span><span style="font-weight:600">Italic 600</span></div>
+        <div class="meta" style="color:var(--gray-fog)">Sempre itálico. <b style="color:#fff">Uma expressão por peça</b> — dentro do título ou logo abaixo dele.</div>
+      </div>
+    </div>
+
+    <h3 class="sub reveal">A assinatura: título + ênfase</h3>
+    <div class="type-demo reveal">
+      <div>
+        <div class="k">Eleve seu conhecimento</div>
+        <h3>Eleve seu<br>conhecimento<br><span class="c2">em produtos<br>digitais</span></h3>
+        <div class="em-line">Esse é o momento</div>
+      </div>
+      <div>
+        <ol class="anat">
+          <li><div><b>Kicker</b> — Inter Tight Bold, caixa alta, pequeno. Roxo vibrante em fundo claro; prata em fundo escuro.</div></li>
+          <li><div><b>Título</b> — Inter Tight Bold/Extrabold, caixa alta, grande. Branco ou preto; a segunda linha pode cair para prata ou roxo vibrante.</div></li>
+          <li><div><b>Ênfase</b> — Playfair Display Italic, mesmo tamanho ou maior. Marca a “virada” da frase.</div></li>
+          <li><div><b>Corpo</b> — Rubik Regular, 2–5 linhas, prata em fundo escuro.</div></li>
+          <li><div><b>CTA</b> — Inter Tight Bold caixa alta, botão roxo vibrante.</div></li>
+        </ol>
+      </div>
+    </div>
+
+    <h3 class="sub reveal">Escala tipográfica — web e documentos</h3>
+    <div class="card reveal" style="padding:10px 28px">
+      <div class="scale">
+        <div class="scale-row"><span class="tg">Display</span><span style="font-family:var(--display);font-weight:800;font-size:56px;line-height:.95;letter-spacing:-.03em;text-transform:uppercase">Pessoas criam produtos</span><span class="sp">Inter Tight 800 · 56–104px · LH .95 · −3%</span></div>
+        <div class="scale-row"><span class="tg">H1</span><span style="font-family:var(--display);font-weight:800;font-size:42px;line-height:1;letter-spacing:-.025em;text-transform:uppercase">Formação em dados</span><span class="sp">Inter Tight 800 · 36–48px · LH 1 · −2,5%</span></div>
+        <div class="scale-row"><span class="tg">H2</span><span style="font-family:var(--display);font-weight:700;font-size:30px;line-height:1.05;letter-spacing:-.02em">Aprenda com especialistas</span><span class="sp">Inter Tight 700 · 28–32px · LH 1,05 · −2%</span></div>
+        <div class="scale-row"><span class="tg">H3</span><span style="font-family:var(--display);font-weight:700;font-size:21px;line-height:1.15;letter-spacing:-.01em">Módulo 1 — Fundamentos</span><span class="sp">Inter Tight 700 · 20–22px · LH 1,15</span></div>
+        <div class="scale-row"><span class="tg">Ênfase</span><span class="em" style="font-size:36px;line-height:1.1">com especialistas</span><span class="sp">Playfair Italic 500 · = título · LH 1,1</span></div>
+        <div class="scale-row"><span class="tg">Kicker</span><span class="c-kicker" style="font-size:13px;letter-spacing:.16em">O que esse curso promete?</span><span class="sp">Inter Tight 700 · 12–13px · +16% · caixa alta</span></div>
+        <div class="scale-row"><span class="tg">Body L</span><span style="font-size:18px;line-height:1.5">Conheça o contexto do mercado e as habilidades mais requisitadas.</span><span class="sp">Rubik 400 · 18px · LH 1,5</span></div>
+        <div class="scale-row"><span class="tg">Body</span><span style="font-size:16px;line-height:1.5">Aprenda a usar ferramentas de coleta, processamento, análise e visualização de dados.</span><span class="sp">Rubik 400 · 16px · LH 1,5</span></div>
+        <div class="scale-row"><span class="tg">Small</span><span style="font-size:14px;line-height:1.45;color:var(--muted)">Legendas, metadados e textos de apoio.</span><span class="sp">Rubik 400 · 14px · LH 1,45</span></div>
+        <div class="scale-row"><span class="tg">Botão</span><span style="font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--purple-royal)">Quero agora</span><span class="sp">Inter Tight 700 · 13–14px · +6% · caixa alta</span></div>
+      </div>
+    </div>
+
+    <h3 class="sub reveal">Escala para peças de 1080 px</h3>
+    <div class="grid g4 reveal">
+      <div class="card"><div class="label" style="font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--purple-royal)">TÍTULO</div><div class="T" style="font-size:44px;margin:10px 0 8px;color:var(--purple-deep)">56–88 px</div><p>Bold, caixa alta ou mista, LH .95</p></div>
+      <div class="card"><div class="label" style="font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--purple-royal)">ÊNFASE</div><div class="S" style="font-size:44px;margin:10px 0 8px;color:var(--purple-deep);line-height:1">= título</div><p>Playfair Italic, mesmo corpo</p></div>
+      <div class="card"><div class="label" style="font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--purple-royal)">CORPO</div><div class="R" style="font-size:44px;margin:10px 0 8px;line-height:1">32–40 px</div><p>Rubik Regular, LH 1,3</p></div>
+      <div class="card"><div class="label" style="font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--purple-royal)">CTA / KICKER</div><div class="T" style="font-size:44px;margin:10px 0 8px;line-height:1">28–36 px</div><p>Bold, caixa alta, +4–6%</p></div>
+    </div>
+
+    <h3 class="sub reveal">Técnica de ritmo <span class="chip-prop">do KV</span></h3>
+    <div class="card reveal" style="background:var(--purple-deep);border:none;padding:40px 44px">
+      <div class="T" style="font-size:clamp(26px,3.6vw,46px);text-transform:uppercase;color:#fff">Comente <span style="color:var(--gray-fog)">“dados”</span> agora e <span style="color:var(--gray-fog)">receba o link</span> na sua DM</div>
+      <p style="color:var(--gray-fog);margin:16px 0 0;font-size:14px">Alterne palavras em branco e prata dentro da mesma frase de CTA para criar cadência de leitura. Em títulos, a segunda linha cai para prata.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ GRID & FORMA ============================ -->
+<section class="section" id="grid">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">05</span> Grid fluido &amp; forma</div>
+    <h2 class="title reveal">Blocos que <span class="c2">se encaixam</span></h2>
+    <p class="lead reveal">A peça é dividida em blocos de cor, foto e textura com cantos arredondados que se encaixam como peças de um quebra-cabeça. É o que diferencia o grid PM3 de um layout de cards comum.</p>
+
+    <div class="fluid-demo reveal" style="margin-top:44px">
+      <div class="fl">
+        <div class="b-photo"></div>
+        <div class="b-white"></div>
+        <div class="b-label">Bloco<br>branco</div>
+        <div class="b-purple"></div>
+        <div class="b-yellow"></div>
+        <div class="b-label l2" style="color:#fff;bottom:9%;left:12%;top:auto">Bloco roxo</div>
+        <span class="num">1/3 · 2/3</span>
+      </div>
+      <div class="rules">
+        <div class="rule"><div class="n">1</div><div><h4>Divisão assimétrica</h4><p>Proporções próximas de 1/3 + 2/3 ou 2/5 + 3/5. Nunca quatro quadrantes iguais.</p></div></div>
+        <div class="rule"><div class="n">2</div><div><h4>Cantos generosos</h4><p>Raio de 40–80 px em peças de 1080 px; 18 px em cards de interface. Cantos retos só nas bordas da peça.</p></div></div>
+        <div class="rule"><div class="n">3</div><div><h4>Canto côncavo</h4><p>Um bloco “morde” o vizinho com um canto invertido, encaixando-se nele. Use ao menos um por peça.</p></div></div>
+        <div class="rule"><div class="n">4</div><div><h4>Foto sangrando</h4><p>A foto toca ao menos uma borda e a pessoa olha para dentro da peça, em direção ao texto.</p></div></div>
+        <div class="rule"><div class="n">5</div><div><h4>Âncora preta + barra amarela</h4><p>Um bloco preto segura o logo; uma barra fina amarela dá o ponto de energia.</p></div></div>
+        <div class="rule"><div class="n">6</div><div><h4>Respiro</h4><p>Texto ocupa no máximo 60% da largura do bloco onde está.</p></div></div>
+        <div class="rule" style="border-color:var(--purple-royal);box-shadow:0 0 0 3px rgba(102,69,177,.12)"><div class="n">7</div><div><h4>Rosto sempre livre</h4><p>Nenhum bloco, texto, logo, textura ou contorno do “3” cobre rosto, olhos ou boca. Posicione os blocos em volta da pessoa e recorte a foto para que o rosto fique inteiro e na área visível.</p></div></div>
+      </div>
+    </div>
+
+    <h3 class="sub reveal">O canto côncavo</h3>
+    <p class="reveal" style="max-width:68ch">Dois blocos vizinhos trocam de raio: onde um tem canto convexo, o outro tem o canto invertido. Em CSS, a classe <code>.ic</code> (ver Tokens) desenha o preenchimento côncavo com um gradiente radial — sem imagens.</p>
+    <div class="ic-demo reveal">
+      <div class="ic-card">
+        <div class="stage" style="background:url('assets/img/foto-sofa-homem.jpg') 50% 30%/cover">
+          <div class="blk" style="left:0;top:0;width:52%;height:48%;background:#fff;border-radius:0 0 40px 0"></div>
+          <div class="blk" style="right:0;bottom:0;width:46%;height:22%;background:var(--purple-deep);border-radius:40px 0 0 0"></div>
+        </div>
+        <div class="cap"><b>Encaixe diagonal</b>Dois blocos com cantos convexos opostos deixam a foto passar entre eles — a “ponte” do grid fluido. O rosto fica sempre livre.</div>
+      </div>
+      <div class="ic-card">
+        <div class="stage" style="background:url('assets/tex/tex-dobras-lilas.jpg') center/cover">
+          <div class="blk" style="left:0;top:0;width:40%;bottom:0;background:var(--gray-fog)"></div>
+          <div class="blk" style="left:0;bottom:0;right:0;height:30%;background:var(--gray-fog)"></div>
+          <div class="blk ic ic-bl" style="--r:40px;--c:var(--gray-fog);left:40%;top:calc(70% - 40px)"></div>
+          
+        </div>
+        <div class="cap"><b>Canto côncavo (.ic)</b>Dois blocos formam um “L”; a classe <code>.ic-bl</code> preenche a dobra interna com um arco, sem imagem.</div>
+      </div>
+    </div>
+
+    <h3 class="sub reveal">Formas de encaixe (vetores do KV)</h3>
+    <div class="shapes reveal">
+      <div class="shape-tile" style="background:var(--grad-lilac);border:none"><img src="assets/logo/forma-subtract.svg" alt="" style="filter:none"><small style="color:#000">Subtract.svg — bloco com símbolo integrado</small></div>
+      <div class="shape-tile" style="background:var(--purple-deep);border:none"><img src="assets/logo/forma-vector46.svg" alt="" style="filter:brightness(0) invert(1)"><small style="color:var(--gray-fog)">Vector 46.svg — encaixe em L</small></div>
+      <div class="shape-tile"><img src="assets/logo/pm3-simbolo-roxo.svg" alt="" style="height:100px"><small>Símbolo — também funciona como forma de encaixe</small></div>
+    </div>
+
+    <h3 class="sub reveal">Tokens de forma</h3>
+    <div class="tok-grid reveal">
+      <div class="tok">
+        <h4>Espaçamento · base 4 px</h4>
+        <div class="sp-row"><span class="v">--sp-1 · 4</span><span class="bar" style="width:4px"></span></div>
+        <div class="sp-row"><span class="v">--sp-2 · 8</span><span class="bar" style="width:8px"></span></div>
+        <div class="sp-row"><span class="v">--sp-3 · 12</span><span class="bar" style="width:12px"></span></div>
+        <div class="sp-row"><span class="v">--sp-4 · 16</span><span class="bar" style="width:16px"></span></div>
+        <div class="sp-row"><span class="v">--sp-6 · 24</span><span class="bar" style="width:24px"></span></div>
+        <div class="sp-row"><span class="v">--sp-8 · 32</span><span class="bar" style="width:32px"></span></div>
+        <div class="sp-row"><span class="v">--sp-12 · 48</span><span class="bar" style="width:48px"></span></div>
+        <div class="sp-row"><span class="v">--sp-16 · 64</span><span class="bar" style="width:64px"></span></div>
+        <div class="sp-row"><span class="v">--sp-24 · 96</span><span class="bar" style="width:96px"></span></div>
+        <div class="sp-row"><span class="v">--sp-32 · 128</span><span class="bar" style="width:128px"></span></div>
+      </div>
+      <div style="display:grid;gap:20px">
+        <div class="tok">
+          <h4>Raios</h4>
+          <div class="rd-row">
+            <div class="rd"><div style="border-radius:8px"></div>sm · 8</div>
+            <div class="rd"><div style="border-radius:14px"></div>btn · 14</div>
+            <div class="rd"><div style="border-radius:18px"></div>card · 18</div>
+            <div class="rd"><div style="border-radius:40px"></div>xl · 40</div>
+            <div class="rd"><div style="border-radius:40px 0 0 0;height:64px"></div>peça · 40–80</div>
+          </div>
+        </div>
+        <div class="tok">
+          <h4>Elevação</h4>
+          <div class="sh-row">
+            <div class="sh" style="box-shadow:none">sem sombra</div>
+            <div class="sh" style="box-shadow:var(--shadow)">--shadow</div>
+            <div class="sh" style="box-shadow:var(--shadow-lg)">--shadow-lg</div>
+          </div>
+          <p style="font-size:13px;margin:14px 0 0">Em peças gráficas, sem sombra: a profundidade vem das texturas e do contraste entre blocos.</p>
+        </div>
+        <div class="tok">
+          <h4>Movimento <span class="chip-prop">proposta</span></h4>
+          <p style="font-size:13.5px;margin:0">Transições de 200–300 ms com <code>ease</code>; elevação de −2 px no hover de botões e −4 a −6 px em cards. Entrada por <i>fade + slide</i> de 20 px, uma vez. Respeitar <code>prefers-reduced-motion</code>.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub reveal">Formatos</h3>
+    <div class="grid g4 reveal">
+      <div class="card"><div class="label" style="font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--purple-royal)">STORIES / REELS</div><div class="T" style="font-size:30px;margin:8px 0">1080 × 1920</div><p>Carrossel de curso, pré-venda</p></div>
+      <div class="card"><div class="label" style="font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--purple-royal)">FEED QUADRADO</div><div class="T" style="font-size:30px;margin:8px 0">1080 × 1080</div><p>Anúncio de aulas, parcerias</p></div>
+      <div class="card"><div class="label" style="font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--purple-royal)">PAISAGEM 16:9</div><div class="T" style="font-size:30px;margin:8px 0">1920 × 1080</div><p>Slides, capa de vídeo, apresentações</p></div>
+      <div class="card"><div class="label" style="font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--purple-royal)">MÍDIA EXTERIOR</div><div class="T" style="font-size:30px;margin:8px 0">Vertical</div><p>Relógio de rua, totem, metrô</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TEXTURAS & FOTOS ============================ -->
+<section class="section black" id="imagem">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">06</span> Texturas &amp; fotografia</div>
+    <h2 class="title reveal">Camadas de <span class="c2">aprendizado</span></h2>
+    <p class="lead reveal">As texturas 3D remetem a fluidez e a camadas de aprendizado. <b style="color:#fff">Uma textura por peça</b>, sempre recortada dentro de um bloco do grid — nunca como fundo total atrás de texto longo.</p>
+
+    <div class="tex-grid reveal" style="margin-top:44px">
+      <div class="tex"><img src="assets/tex/tex-dobras-lilas.jpg" alt=""><div class="cap"><b>Dobras lilás</b>Textura principal</div></div>
+      <div class="tex"><img src="assets/tex/tex-dobras-roxas.jpg" alt=""><div class="cap"><b>Dobras roxas</b>Aberturas, capas</div></div>
+      <div class="tex"><img src="assets/tex/tex-fitas-vidro.jpg" alt=""><div class="cap"><b>Fitas de vidro</b>Capas, abertura de vídeo</div></div>
+      <div class="tex grad"><div class="cap" style="background:none;color:#000"><b>Gradiente Lilac</b>Fundo de bloco</div></div>
+      <div class="tex wide"><img src="assets/tex/tex-ondas-dados.jpg" alt=""><div class="cap"><b>Ondas de dados</b>Conteúdo de dados e analytics</div></div>
+      <div class="tex"><img src="assets/tex/tex-montanhas-dados.jpg" alt=""><div class="cap"><b>Montanhas de dados</b>Analytics</div></div>
+      <div class="tex grad2"><div class="cap" style="background:none"><b>Gradiente Blaze</b>Blocos extensos</div></div>
+      <div class="tex"><img src="assets/tex/tex-linhas-dados.jpg" alt="" style="object-position:40% 50%"><div class="cap"><b>Linhas de dados</b>Ciano/magenta em preto</div></div>
+      <div class="tex"><img src="assets/tex/tex-barras-dados.jpg" alt=""><div class="cap"><b>Barras de dados</b>Data viz, destaque</div></div>
+    </div>
+    <p class="reveal" style="margin-top:20px;font-size:14px">As texturas de <b style="color:#fff">dados</b> (ciano/magenta sobre preto) são específicas para conteúdo de dados e analytics. Para o restante do portfólio, prefira as dobras lilás/roxas.</p>
+
+    <h3 class="sub reveal" style="margin-top:72px">Fotografia</h3>
+    <div class="photo-grid reveal">
+      <div class="ph"><img src="assets/img/foto-sofa-fone.jpg" alt="Mulher de fones no sofá com notebook"></div>
+      <div class="ph"><img src="assets/img/foto-mesa-cafe.jpg" alt="Homem com notebook em mesa"></div>
+      <div class="ph"><img src="assets/img/foto-fone-oculos.jpg" alt="Mulher de fones e óculos"></div>
+      <div class="ph"><img src="assets/img/foto-conversa.jpg" alt="Mulher em conversa"></div>
+      <div class="ph"><img src="assets/img/foto-sofa-homem.jpg" alt="Homem com notebook em sofá"></div>
+    </div>
+
+    <p class="reveal" style="margin-top:24px;font-size:13.5px"><span class="chip-prop" style="margin:0 8px 0 0">atenção</span>As imagens desta pasta vêm de duas origens: arquivos <code>criacao_*</code> (gerados por IA) e <code>shutterstock_*</code> (banco de imagens, com licença). Confirme direitos de uso e de imagem antes de publicar peças externas; as fotos aqui são referência de direção.</p>
+    <div class="ph-rules reveal">
+      <div class="card"><h3>Direção</h3><p>Pessoas reais em trabalho e estudo: notebook no sofá, mesa ou coworking; fones de ouvido; conversas com gestos e sorriso natural. Diversidade étnica, de gênero e de idade é obrigatória na seleção. <b>O rosto nunca é coberto</b> por blocos, textos ou elementos gráficos.</p></div>
+      <div class="card"><h3>Luz e cor</h3><p>Luz natural lateral, janelas desfocadas ao fundo, tons de pele preservados. Roupas sóbrias (preto, cinza, bege, roxo escuro). Em peças hero: estúdio com gel roxo e rosa, fundo gradiente.</p></div>
+      <div class="card"><h3>Tratamento</h3><p>Contraste moderado, sem filtros pesados. Pode-se aplicar leve tonalização roxa nas sombras. Evite poses de catálogo — mesmo em banco de imagens ou IA, mantenha a naturalidade.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ COMPONENTES ============================ -->
+<section class="section" id="componentes">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">07</span> Componentes</div>
+    <h2 class="title reveal">Blocos de <span class="c2">construção</span></h2>
+    <p class="lead reveal">Componentes de interface e de peça com as classes CSS usadas neste documento (<code>.btn</code>, <code>.tag</code>, <code>.c-course</code>…) — copie e adapte. Os estados são interativos: passe o mouse e use Tab.</p>
+
+    <div class="comp reveal" style="margin-top:40px">
+      <div class="ct"><h3>Botões</h3><span>.btn · .btn-primary | secondary | ghost | light | accent</span></div>
+      <div class="row">
+        <button class="btn btn-primary">Quero agora</button>
+        <button class="btn btn-secondary">Saiba mais</button>
+        <button class="btn btn-ghost">Ver formações <span aria-hidden="true">→</span></button>
+        <button class="btn btn-primary" disabled>Indisponível</button>
+        <button class="btn btn-primary btn-sm">Inscreva-se já</button>
+      </div>
+      <div class="on-dark"><div class="row"><button class="btn btn-light">Garanta sua vaga</button><button class="btn btn-accent">Quero agora</button><button class="btn btn-secondary" style="color:#fff;border-color:#fff">Baixar ementa</button></div></div>
+      <p class="cap"><b>Primário</b> é o único com fundo roxo vibrante — um por tela/peça. Fundo roxo vibrante, Inter Tight Bold caixa alta, raio 14 px, padding generoso (altura ≈ 2,5× o corpo da fonte). Sobre roxo profundo, use <b>light</b>; o <b>accent</b> amarelo é exceção, nunca mais de um por tela.</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="comp reveal">
+        <div class="ct"><h3>Kicker, tags &amp; indicadores</h3><span>.c-kicker · .tag · .swipe</span></div>
+        <div class="c-kicker">O que esse curso promete?</div>
+        <div class="row" style="margin-top:18px">
+          <span class="tag tag-purple">Formação</span><span class="tag tag-soft">Novo</span><span class="tag tag-line">Online</span><span class="tag tag-yellow">Pré-venda</span><span class="tag tag-fog">3h</span>
+        </div>
+        <div class="on-dark"><div class="c-kicker on-d" style="margin-bottom:14px">Curso para analistas de dados</div>
+          <div class="swipe">Arraste <svg viewBox="0 0 12 20"><path d="M2 2l8 8-8 8"/></svg></div></div>
+        <p class="cap">Kicker em Inter Tight Bold, caixa alta. “ARRASTE” em Rubik Regular caixa alta, prata, seta amarela.</p>
+      </div>
+
+      <div class="comp reveal">
+        <div class="ct"><h3>Campos de formulário</h3><span>.field · estados</span></div>
+        <div class="row" style="align-items:flex-start">
+          <div class="field"><label for="f1">Seu e-mail</label><input id="f1" type="email" placeholder="voce@empresa.com"><span class="help">Enviaremos o link de acesso.</span></div>
+          <div class="field err"><label for="f2">Telefone</label><input id="f2" type="text" value="(11) 9999"><span class="help">Digite o número completo, com DDD.</span></div>
+        </div>
+        <div class="row" style="margin-top:20px;gap:28px"><div class="chk"><i class="on"></i> Aceito receber novidades</div><div class="chk"><i></i> Quero falar com um consultor</div></div>
+        <p class="cap">Raio 14 px, borda 1,5 px. Foco com anel roxo vibrante a 18%. Erro em vermelho com mensagem textual — nunca só pela cor.</p>
+      </div>
+    </div>
+
+    <div class="comp reveal">
+      <div class="ct"><h3>Cards de curso</h3><span>.c-course · .c-dark</span></div>
+      <div class="cc-grid">
+        <div class="c-course"><div class="im" style="background-image:url('assets/img/foto-fone-oculos.jpg')"><span class="tag tag-yellow">Formação</span></div><div class="bd"><div class="c-kicker">Dados</div><h4>Analista <span class="em" style="text-transform:none">de dados</span></h4><p>Coleta, processamento, análise e visualização com SQL, Python e Power BI.</p><div class="ft"><span>Online · com certificado</span><button class="btn btn-ghost btn-sm">Ver →</button></div></div></div>
+        <div class="c-course c-dark"><div class="im" style="background-image:url('assets/tex/tex-dobras-lilas.jpg')"><span class="tag tag-soft">Novo</span></div><div class="bd"><div class="c-kicker on-d">Produto</div><h4>Gestão <span class="em" style="text-transform:none">de produtos</span></h4><p>Da descoberta à entrega: construa produtos digitais que as pessoas querem usar.</p><div class="ft"><span>Online · com certificado</span><button class="btn btn-light btn-sm">Ver →</button></div></div></div>
+        <div class="c-course"><div class="im" style="background-image:url('assets/img/foto-conversa.jpg')"><span class="tag tag-fog">Sprint · 4h</span></div><div class="bd"><div class="c-kicker">Marketing</div><h4>Go-to-market <span class="em" style="text-transform:none">na prática</span></h4><p>Posicionamento, lançamento e mensuração de resultados pós-lançamento.</p><div class="ft"><span>Online</span><button class="btn btn-ghost btn-sm">Ver →</button></div></div></div>
+      </div>
+      <p class="cap">Raio de card grande (40 px), imagem sangrando no topo, kicker + título em caixa alta com ênfase em itálico. Os textos são ilustrativos.</p>
+    </div>
+
+    <div class="grid g3">
+      <div class="comp reveal" style="padding:0;border:none;background:none"><div class="c-stat"><div class="n">3 <span class="em">aulas</span></div><p><span class="plate">gratuitas com especialistas em produtos digitais</span></p></div><p class="cap" style="padding:0 6px"><b>Estatística</b> — gradiente Blaze, número em Inter Tight Extrabold com ênfase serifada.</p></div>
+      <div class="comp reveal" style="padding:0;border:none;background:none"><div class="c-quote"><div class="qm">“</div><p>Aprendi a decidir com dados — e a explicar minhas decisões.</p><div class="who">Nome Sobrenome · Aluna</div></div><p class="cap" style="padding:0 6px"><b>Depoimento</b> — preto, citação em Playfair Italic, aspas amarelas.</p></div>
+      <div class="comp reveal" style="padding:0;border:none;background:none"><div style="display:grid;gap:12px"><div class="alert info"><i>i</i><div><b>Aulas ao vivo às 19h.</b> Você recebe o link por e-mail.</div></div><div class="alert warn"><i>!</i><div><b>Poucas vagas.</b> A turma fecha em 3 dias.</div></div><div class="alert err"><i>×</i><div><b>Não foi possível enviar.</b> Tente novamente.</div></div><div class="alert ok"><i>✓</i><div><b>Inscrição confirmada.</b></div></div></div><p class="cap" style="padding:0 6px"><b>Avisos</b> — fundos suaves, ícone + texto (nunca só cor).</p></div>
+    </div>
+
+    <div class="comp reveal" style="margin-top:20px">
+      <div class="ct"><h3>Faixa de CTA &amp; selo de parceria</h3><span>.cta-band · .seal</span></div>
+      <div class="cta-band"><div style="padding-left:18px"><h4>Esse é o <span class="em">momento</span></h4><p>Inscreva-se já e comece com 3 aulas gratuitas.</p></div><button class="btn btn-accent">Quero agora</button></div>
+      <div class="row" style="margin-top:22px"><div class="seal"><img src="assets/logo/pm3-logo-roxo.svg" alt="PM3"><i></i><b>Evolução <em>360</em></b></div><p class="cap" style="margin:0;max-width:60ch">Sub-marca: aparece abaixo/ao lado do logo PM3 em preto, separada por filete. Logos de parceiros ficam <b>em branco sobre bloco roxo</b> — nunca coloridos.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PEÇAS ============================ -->
+<section class="section alt" id="pecas">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">08</span> Peças de referência</div>
+    <h2 class="title reveal">Tudo <span class="c2">junto</span></h2>
+    <p class="lead reveal">Quatro composições reconstruídas com os componentes acima — HTML vivo, com as fotos e texturas da pasta. Use como ponto de partida para novas peças. Textos de exemplo.</p>
+
+    <div class="pieces" style="margin-top:44px">
+
+      <!-- FEED -->
+      <div class="pc-wrap p-feed reveal">
+        <div class="piece sq">
+          <div class="a" style="left:calc(560*var(--u));top:0;width:calc(520*var(--u));height:calc(540*var(--u));background:url('assets/img/foto-mesa-cafe.jpg') 55% 25%/cover"></div>
+          <div class="a" style="left:0;top:0;width:calc(675*var(--u));height:calc(540*var(--u));background:#fff;border-bottom-right-radius:calc(90*var(--u))"></div>
+          <div class="a" style="left:0;top:calc(540*var(--u));width:100%;height:calc(540*var(--u));background:var(--purple-deep)"></div>
+          <div class="a" style="left:0;top:calc(540*var(--u));width:calc(45*var(--u));height:calc(540*var(--u));background:var(--yellow)"></div>
+          <div class="a" style="left:calc(45*var(--u));top:calc(540*var(--u));width:calc(90*var(--u));height:calc(90*var(--u));background:radial-gradient(circle at 100% 100%,#000 calc(89.5*var(--u)),var(--purple-deep) calc(90*var(--u)));display:none"></div>
+          <img class="a" src="assets/logo/pm3-logo-roxo.svg" alt="" style="left:calc(44*var(--u));top:calc(44*var(--u));height:calc(56*var(--u))">
+          <div class="a T" style="left:calc(44*var(--u));top:calc(190*var(--u));width:calc(600*var(--u));font-size:calc(66*var(--u));color:#000;font-weight:600">3 aulas gratuitas <span class="S" style="font-weight:500">com especialistas</span> em produtos digitais</div>
+          <div class="a T" style="left:calc(44*var(--u));top:calc(452*var(--u));font-size:calc(34*var(--u));color:#000;font-weight:600;letter-spacing:-.01em">Inscrições abertas · PM3.COM.BR</div>
+          <div class="a R" style="left:calc(100*var(--u));top:calc(600*var(--u));width:calc(640*var(--u));font-size:calc(35*var(--u));line-height:1.3;color:var(--gray-fog)">Conheça o contexto desse mercado e as principais habilidades que tornam o profissional requisitado por grandes empresas.</div>
+          <div class="a T" style="left:calc(100*var(--u));top:calc(895*var(--u));width:calc(437*var(--u));height:calc(105*var(--u));background:var(--purple-royal);color:#fff;border-radius:calc(14*var(--u));display:flex;align-items:center;justify-content:center;font-size:calc(38*var(--u));letter-spacing:.01em">QUERO AGORA</div>
+        </div>
+        <div class="pc-cap"><b>Feed · 1080 × 1080</b><span>Anúncio de aulas</span></div>
+      </div>
+
+      <!-- STORY -->
+      <div class="pc-wrap p-story reveal">
+        <div class="piece st">
+          <div class="a" style="inset:0;background:var(--purple-deep)"></div>
+          <div class="a T" style="left:calc(400*var(--u));top:calc(305*var(--u));font-size:calc(82*var(--u));color:#fff;text-transform:uppercase;width:calc(640*var(--u));line-height:.98">Curso para analistas de dados</div>
+          <div class="a R" style="left:calc(865*var(--u));top:calc(865*var(--u));font-size:calc(28*var(--u));letter-spacing:.06em;color:var(--gray-fog);display:flex;align-items:center;gap:calc(18*var(--u))">ARRASTE <svg viewBox="0 0 12 20" style="width:calc(24*var(--u));height:calc(40*var(--u));stroke:var(--yellow);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M2 2l8 8-8 8"/></svg></div>
+          <div class="a" style="left:0;top:calc(640*var(--u));width:calc(361*var(--u));height:calc(520*var(--u));background:url('assets/tex/tex-dobras-lilas.jpg') center/cover;border-top-right-radius:calc(70*var(--u))"></div>
+          <div class="a" style="left:0;top:calc(1160*var(--u));width:calc(361*var(--u));height:calc(760*var(--u));background:#000"></div>
+          <img class="a" src="assets/logo/pm3-logo-branco.svg" alt="" style="left:calc(45*var(--u));top:calc(1706*var(--u));height:calc(58*var(--u))">
+          <div class="a" style="left:calc(361*var(--u));top:calc(960*var(--u));right:0;bottom:0;background:url('assets/img/foto-fone-oculos.jpg') 45% 45%/cover"></div>
+        </div>
+        <div class="pc-cap"><b>Story · 1080 × 1920</b><span>Capa de carrossel</span></div>
+      </div>
+
+      <!-- POSTER -->
+      <div class="pc-wrap p-poster reveal">
+        <div class="piece po">
+          <div class="a" style="inset:0;background:#fff"></div>
+          <div class="a" style="left:0;top:0;right:0;height:calc(1180*var(--u));background:var(--grad-lilac);border-radius:0 0 calc(80*var(--u)) 0;overflow:hidden">
+            <div class="a" style="inset:0;background:url('assets/img/foto-perfil-roxo.jpg') 50% 20%/cover;mix-blend-mode:normal"></div>
+            <svg class="a" viewBox="0 0 510 510" style="right:calc(-250*var(--u));top:calc(330*var(--u));width:calc(760*var(--u));height:calc(760*var(--u))"><path fill-rule="evenodd" clip-rule="evenodd" d="M447.264 0H62.8555C28.1478 0 0 28.1412 0 62.8408V447.159C0 481.859 28.1478 510 62.8555 510H304.139C345.049 510 387.152 463.615 387.152 410.79C387.152 350.931 329.067 302.399 269.193 302.399H187.135V273.304L342.544 125.682H109.252V80.1309H418.281V111.492L413.033 116.5L267.166 256.729C356.857 256.729 432.832 330.659 432.832 410.671C432.832 450.021 418.639 483.051 396.455 509.881H447.145C481.852 509.881 510 481.74 510 447.04V62.8408C510 28.1412 481.852 0 447.145 0Z" fill="none" stroke="#fff" stroke-width="3.4"/></svg>
+            <div class="a T" style="left:calc(48*var(--u));top:calc(48*var(--u));font-size:calc(58*var(--u));color:#000;text-transform:uppercase;width:calc(400*var(--u))">Pessoas criam produtos</div>
+          </div>
+          <img class="a" src="assets/logo/pm3-logo-roxo.svg" alt="" style="left:calc(48*var(--u));top:calc(1240*var(--u));height:calc(58*var(--u))">
+          <div class="a T" style="right:calc(48*var(--u));top:calc(1252*var(--u));font-size:calc(34*var(--u));color:var(--purple-deep)">PM3.COM.BR</div>
+        </div>
+        <div class="pc-cap"><b>Poster · 1080 × 1350</b><span>Hero com “3” gigante</span></div>
+      </div>
+
+      <!-- SLIDE 16:9 -->
+      <div class="pc-wrap p-slide reveal">
+        <div class="piece wd">
+          <div class="a" style="left:0;top:0;width:calc(320*var(--u));height:calc(360*var(--u));background:var(--purple-royal)"></div>
+          <div class="a" style="left:calc(320*var(--u));top:0;width:calc(800*var(--u));height:calc(360*var(--u));background:#fff"></div>
+          <div class="a" style="left:0;top:calc(360*var(--u));width:calc(1120*var(--u));height:calc(720*var(--u));background:var(--gray-fog)"></div>
+          <div class="a" style="left:calc(1120*var(--u));top:0;right:0;bottom:0;background:url('assets/img/foto-conversa.jpg') 55% 20%/cover;border-top-left-radius:calc(110*var(--u))"></div>
+          <div class="a" style="left:calc(320*var(--u));top:0;width:calc(800*var(--u));height:calc(360*var(--u));background:#fff;border-bottom-right-radius:calc(110*var(--u))"></div>
+          <div class="a R" style="left:calc(360*var(--u));top:calc(36*var(--u));font-size:calc(34*var(--u));color:var(--ink)">Design sofisticado</div>
+          <img class="a" src="assets/logo/pm3-logo-preto.svg" alt="" style="left:calc(40*var(--u));top:calc(404*var(--u));height:calc(56*var(--u))">
+          <div class="a T" style="left:calc(40*var(--u));top:calc(780*var(--u));font-size:calc(96*var(--u));color:#000;text-transform:uppercase;line-height:.98">Proporções<br>harmônicas</div>
+        </div>
+        <div class="pc-cap"><b>Slide · 1920 × 1080</b><span>Divisão assimétrica 7/12 + 5/12</span></div>
+      </div>
+
+      <div class="pc-wrap p-slide2 reveal">
+        <div class="piece wd" style="aspect-ratio:auto;height:100%;min-height:200px;--u:calc(100cqw / 1080);background:var(--purple-deep)">
+          <div class="a" style="inset:0;background:var(--purple-deep)"></div>
+          <div class="a T" style="left:calc(60*var(--u));top:calc(70*var(--u));font-size:calc(84*var(--u));color:#fff;text-transform:uppercase;width:calc(900*var(--u))">Eleve seu<br>conhecimento<br><span style="color:var(--gray-fog)">em produtos<br>digitais</span></div>
+          <div class="a S" style="left:calc(60*var(--u));bottom:calc(60*var(--u));font-size:calc(88*var(--u));color:#fff;font-weight:400">Esse é o momento</div>
+          <div class="a T" style="right:calc(40*var(--u));top:calc(36*var(--u));font-size:calc(26*var(--u));color:#fff">PM3.COM.BR</div>
+        </div>
+        <div class="pc-cap"><b>Título + ênfase</b><span>Inter Tight × Playfair</span></div>
+      </div>
+    </div>
+
+    <h3 class="sub reveal">Checklist rápido para novas peças</h3>
+    <ul class="check reveal">
+      <li>Logo PM3 num canto, pequeno, na cor correta para o fundo.</li>
+      <li>Paleta restrita: roxos, preto, branco, prata e amarelo mínimo.</li>
+      <li>Título em Inter Tight Bold + uma expressão em Playfair Italic.</li>
+      <li>Blocos arredondados, proporção assimétrica, ao menos um canto côncavo ou bloco deslocado.</li>
+      <li>Uma foto de pessoa real em trabalho/estudo, olhando para dentro da peça.</li>
+      <li><b>Rosto inteiro e visível:</b> nenhum bloco, texto, logo ou contorno cobre rosto, olhos ou boca.</li>
+      <li>No máximo uma textura 3D ou gradiente, recortada dentro de um bloco.</li>
+      <li>CTA em botão roxo vibrante, texto branco em caixa alta.</li>
+      <li>Texto ocupa até 60% da largura do bloco.</li>
+      <li><code>PM3.COM.BR</code> nas peças de alcance (outdoor, capa, anúncio).</li>
+      <li>Contraste verificado (ver tabela de cores).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ VOZ ============================ -->
+<section class="section" id="voz">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">09</span> Tom de voz</div>
+    <h2 class="title reveal">Direto e <span class="c2">convidativo</span></h2>
+    <p class="lead reveal">A PM3 fala como uma parceira de carreira: próxima, afirmativa sobre o momento, e transforma o risco em crescimento. Foco em pessoas, não na plataforma.</p>
+
+    <div class="grid g4 reveal" style="margin-top:36px">
+      <div class="card"><h3>Direto</h3><p>“Inscreva-se já.” “Garanta sua vaga.” “Quero agora.”</p></div>
+      <div class="card"><h3>Afirmativo</h3><p>“Esse é o momento.” “A pré-venda já começou.”</p></div>
+      <div class="card"><h3>Encorajador</h3><p>“Arriscar é uma oportunidade.”</p></div>
+      <div class="card"><h3>Centrado em pessoas</h3><p>“Pessoas criam produtos.” “Aulas com especialistas.”</p></div>
+    </div>
+
+    <h3 class="sub reveal">O tom na prática</h3>
+    <div class="voice-ex reveal">
+      <div class="vx" style="background:var(--purple-deep);color:#fff"><span class="lb" style="color:var(--gray-fog)">Convite</span><p>Eleve seu conhecimento em produtos digitais. <span class="em">Esse é o momento.</span></p></div>
+      <div class="vx" style="background:var(--grad-lilac);color:#000"><span class="lb">Chamada</span><p>3 aulas gratuitas <span class="em">com especialistas.</span></p></div>
+      <div class="vx" style="background:#000;color:#fff"><span class="lb" style="color:var(--gray-fog)">Manifesto</span><p>Pessoas criam produtos. Arriscar é uma <span class="em">oportunidade.</span></p></div>
+    </div>
+
+    <div class="dodont reveal">
+      <div class="do"><h4>Escreva assim</h4><ul>
+        <li>Frases curtas; títulos de 2 a 4 palavras por linha</li>
+        <li>Parágrafos de até 5 linhas</li>
+        <li>Linguagem do mercado de produto sem jargão excessivo: dados, discovery, stakeholders, decisão estratégica</li>
+        <li>Verbo de ação no CTA: Inscreva-se, Garanta, Comece</li>
+      </ul></div>
+      <div class="dont"><h4>Evite</h4><ul>
+        <li>Tom professoral ou corporativo distante</li>
+        <li>Promessas absolutas de resultado ou de emprego</li>
+        <li>Siglas internas nas peças para o aluno (códigos de formação são de uso interno)</li>
+        <li>Mais de uma expressão em itálico serifado por peça</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TOKENS & IA ============================ -->
+<section class="section dark" id="ia">
+  <div class="wrap">
+    <div class="kicker reveal"><span class="num">10</span> Tokens &amp; IA</div>
+    <h2 class="title reveal">Pronto para <span class="c2">código</span></h2>
+    <p class="lead reveal">Tokens CSS para sites, apresentações e ferramentas — e um contexto em Markdown para alimentar outras IAs na criação de peças consistentes com a marca.</p>
+
+    <div class="code-card reveal">
+      <div class="bar"><span>tokens.css</span><button class="btn btn-light btn-sm" id="copyCss">Copiar CSS</button></div>
+<pre id="cssTokens"><span class="c">/* PM3 — Design tokens v1.0 */</span>
+:root {
+  <span class="c">/* Marca — oficiais */</span>
+  <span class="k">--pm3-roxo-profundo</span>: <span class="v">#452E78</span>;   <span class="c">/* Deep One Purple · Pantone 7672 C */</span>
+  <span class="k">--pm3-roxo-vibrante</span>: <span class="v">#6645B1</span>;   <span class="c">/* Royal Purple · Pantone 2725 C */</span>
+  <span class="k">--pm3-preto</span>:         <span class="v">#000000</span>;   <span class="c">/* Obsidian Black */</span>
+  <span class="k">--pm3-branco</span>:        <span class="v">#FFFFFF</span>;   <span class="c">/* Luminous White */</span>
+  <span class="k">--pm3-prata</span>:         <span class="v">#B9B5C1</span>;   <span class="c">/* Gray Fog · Silver 10077 C */</span>
+  <span class="k">--pm3-amarelo</span>:       <span class="v">#FFB12A</span>;   <span class="c">/* Yellow Glow · Pantone 1235 C — ≤2% da área */</span>
+
+  <span class="c">/* Gradientes */</span>
+  <span class="k">--pm3-grad-lilac</span>: linear-gradient(135deg, <span class="v">#B04DDD</span> 0%, <span class="v">#FCCBC9</span> 100%);
+  <span class="k">--pm3-grad-blaze</span>: linear-gradient(90deg,  <span class="v">#4D2B9F</span> 0%, <span class="v">#DACBF6</span> 100%);
+
+  <span class="c">/* Interface — derivadas */</span>
+  <span class="k">--pm3-ink</span>:           <span class="v">#16121F</span>;
+  <span class="k">--pm3-paper</span>:         <span class="v">#FAFAF9</span>;
+  <span class="k">--pm3-prata-suave</span>:   <span class="v">#E4E1EA</span>;
+
+  <span class="c">/* Tipografia */</span>
+  <span class="k">--pm3-font-titulo</span>: "Inter Tight", system-ui, sans-serif;
+  <span class="k">--pm3-font-corpo</span>:  "Rubik", system-ui, sans-serif;
+  <span class="k">--pm3-font-enfase</span>: "Playfair Display", Georgia, serif;  <span class="c">/* sempre itálico */</span>
+
+  <span class="c">/* Forma */</span>
+  <span class="k">--pm3-r-sm</span>: <span class="v">8px</span>;  <span class="k">--pm3-r-btn</span>: <span class="v">14px</span>;  <span class="k">--pm3-r-card</span>: <span class="v">18px</span>;
+  <span class="k">--pm3-r-xl</span>: <span class="v">40px</span>; <span class="k">--pm3-r-pill</span>: <span class="v">99px</span>;
+  <span class="k">--pm3-shadow</span>: 0 1px 2px rgba(22,18,31,.04), 0 10px 28px rgba(22,18,31,.06);
+
+  <span class="c">/* Espaçamento — base 4px */</span>
+  <span class="k">--pm3-sp-1</span>: 4px;  <span class="k">--pm3-sp-2</span>: 8px;   <span class="k">--pm3-sp-3</span>: 12px; <span class="k">--pm3-sp-4</span>: 16px;
+  <span class="k">--pm3-sp-6</span>: 24px; <span class="k">--pm3-sp-8</span>: 32px;  <span class="k">--pm3-sp-12</span>: 48px; <span class="k">--pm3-sp-16</span>: 64px;
+}
+
+<span class="c">/* Canto côncavo: quadrado r×r com círculo vazado. Posicione no encontro de dois blocos. */</span>
+.ic     { position:absolute; width:var(--r,40px); height:var(--r,40px); }
+.ic-tl  { background: radial-gradient(circle at 100% 100%, transparent calc(var(--r,40px) - .5px), var(--c,#fff) var(--r,40px)); }
+.ic-tr  { background: radial-gradient(circle at 0 100%,    transparent calc(var(--r,40px) - .5px), var(--c,#fff) var(--r,40px)); }
+.ic-bl  { background: radial-gradient(circle at 100% 0,    transparent calc(var(--r,40px) - .5px), var(--c,#fff) var(--r,40px)); }
+.ic-br  { background: radial-gradient(circle at 0 0,       transparent calc(var(--r,40px) - .5px), var(--c,#fff) var(--r,40px)); }</pre>
+    </div>
+    <p style="margin-top:14px;font-size:13.5px" class="reveal">Fontes: <code>&lt;link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&amp;family=Rubik:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@1,400;1,500;1,600&amp;display=swap" rel="stylesheet"&gt;</code></p>
+
+    <h3 class="sub reveal">Lacunas conhecidas</h3>
+    <p class="reveal" style="max-width:68ch">O Key Visual 2025 não define os itens abaixo. Eles ainda precisam de decisão do time de marca — por isso não foram inventados neste documento.</p>
+    <div class="ph-rules reveal">
+      <div class="card"><h3>Iconografia</h3><p>Sem biblioteca de ícones no KV. Sugestão: traço fino, cantos arredondados, cor herdada do texto.</p></div>
+      <div class="card"><h3>Gráficos e dados</h3><p>Sem paleta de data viz. As texturas de dados (ciano/magenta) existem, mas não há cores categóricas para gráficos nem regras de legenda.</p></div>
+      <div class="card"><h3>Web responsivo</h3><p>Sem breakpoints, grid de colunas ou layouts de site definidos. O grid fluido vale para peças; a versão para interface precisa ser desenhada.</p></div>
+      <div class="card"><h3>Sub-marcas e parceiros</h3><p>Só há o exemplo do selo Evolução 360 e de um logo de parceiro. Faltam regras de lockup e de proporção entre marcas.</p></div>
+      <div class="card"><h3>Motion e vídeo</h3><p>Sem diretrizes de animação, aberturas ou legendas de vídeo. Os valores de movimento aqui são propostas.</p></div>
+      <div class="card"><h3>Uso em dark mode</h3><p>Não há versão escura de interface definida; os blocos roxo profundo e preto são pensados para peças.</p></div>
+    </div>
+
+    <div class="llm-block">
+    <h3 class="sub reveal">Contexto para LLM</h3>
+    <p class="reveal" style="max-width:66ch">Gera um bloco em Markdown com a identidade completa — pronto para colar como contexto em outra IA.</p>
+    <div class="actions reveal" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
+      <button class="btn btn-accent" id="genMd">Gerar .md para LLM</button>
+      <button class="btn btn-light" id="copyMd" style="display:none">Copiar texto</button>
+      <button class="btn btn-light" id="dlMd" style="display:none">Baixar .md</button>
+    </div>
+    <textarea id="mdOut" readonly></textarea>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <img src="assets/logo/pm3-logo-branco.svg" alt="PM3">
+  <div>Design System · PM3 · Versão 1.0 · <b>2026</b> · Baseado no Key Visual 2025</div>
+</footer>
+
+<div class="toast" id="toast">Copiado!</div>
+
+<script type="text/markdown" id="ai-context"># PM3 — Design System / Brand Context (para uso por IA)
+
+> Referência estruturada da identidade PM3 para gerar peças, páginas, apresentações e ferramentas consistentes com o Key Visual 2025. Ao desenhar logo/símbolo, use sempre os SVGs oficiais — não recrie de memória.
+
+## 1. Marca
+- Nome: PM3 · Site: PM3.COM.BR
+- Conceito: "Pessoas criam produtos." Ensino de produtos digitais para pessoas reais.
+- Atributos: Produtos Digitais, Premium, Líder, Confiável, Autêntica, Transformadora, Ativa, Parceira, Aprendizado fluido
+- Princípios de design: design sofisticado · proporções harmônicas · grid fluido · sofisticação e dinamismo · articulação de cores
+- Taglines: "Pessoas criam produtos" · "Arriscar é uma oportunidade" · "Eleve seu conhecimento em produtos digitais" · "Esse é o momento" · "Inscreva-se já"
+
+## 2. Logo
+- Símbolo: número 3 inscrito em quadrado de cantos arredondados; traço do 3 nasce da borda e abre em curva na base. Logotipo = símbolo + wordmark "PM3" (sans geométrica, caixa alta, 3 aberto).
+- Arquivos (SVG): assets/logo/pm3-logo-{roxo|branco|preto|vibrante}.svg · assets/logo/pm3-simbolo-{roxo|branco|preto|vibrante}.svg
+- Roxo profundo (#452E78) em fundo claro; branco sobre roxo, preto ou foto escura; preto sobre prata ou gradiente lilás.
+- Posição: canto inferior esquerdo (preferido) ou superior esquerdo, pequeno. Bloco preto ancora o logo em peças com fotos.
+- "3" gigante: só em contorno branco fino sobre retrato de perfil, uma vez por peça, parcialmente cortado.
+- Respiro mínimo (proposta): metade da altura do símbolo. Tamanho mínimo: logo 72 px / 18 mm; símbolo 24 px / 8 mm.
+- Nunca: distorcer, inclinar, recolorir fora da paleta, aplicar sombra, usar sobre gradiente saturado sem respiro.
+
+## 3. Cores
+| Nome | Papel | HEX | RGB | CMYK | Pantone |
+|---|---|---|---|---|---|
+| Deep One Purple | Institucional: blocos principais, logo, títulos em fundo claro | #452E78 | 69 46 120 | 89 98 20 7 | 7672 C |
+| Royal Purple | Ação: botões, kickers, blocos secundários, hover | #6645B1 | 102 69 177 | 72 82 0 0 | 2725 C |
+| Obsidian Black | Alto contraste, âncora do logo, rodapés | #000000 | 0 0 0 | 100 100 100 100 | 6 C |
+| Luminous White | Respiro, cards, texto | #FFFFFF | 255 255 255 | 0 0 0 0 | — |
+| Gray Fog | Fundo neutro frio, texto secundário sobre roxo, 2ª linha de títulos | #B9B5C1 | 185 181 193 | 27 24 15 0 | Silver 10077 C |
+| Yellow Glow | Acento mínimo (barras, setas); nunca fundo dominante | #FFB12A | 255 177 42 | 0 35 93 0 | 1235 C |
+- Gradiente Lilac: linear-gradient(135deg, #B04DDD, #FCCBC9)
+- Gradiente Blaze: linear-gradient(90deg, #4D2B9F, #DACBF6)
+- Neutros de interface (derivados): Ink #16121F · Paper #FAFAF9 · Fog Soft #E4E1EA
+- Proporção: roxo profundo + branco ~60% · preto ou prata 20–25% · gradiente/texturas 10–15% · amarelo ≤2%
+- Contraste: texto branco sobre #452E78 e #6645B1 passa AA; amarelo só aceita texto preto.
+
+## 4. Tipografia
+- Títulos e destaques: Inter Tight — Bold/Extrabold, caixa alta (ou mista), tracking −2% a −3%, entrelinha ~0,95
+- Parágrafos e UI: Rubik — Regular/Medium, entrelinha ~1,4–1,5, nunca justificado
+- Ênfase: Playfair Display Italic (400–600) — UMA expressão por peça, mesmo corpo do título
+- Hierarquia da peça: kicker (Inter Tight Bold caixa alta, roxo vibrante/prata) → título → ênfase serifada → corpo (2–5 linhas) → CTA (botão roxo vibrante, caixa alta)
+- Escala web: Display 56–104 · H1 36–48 · H2 28–32 · H3 20–22 · Body 16–18 · Small 14 · Botão 13–14 (caixa alta, +6%)
+- Escala peças 1080 px: título 56–88 · corpo 32–40 · CTA/kicker 28–36
+- Ritmo: alternar palavras brancas e prata em frases de CTA
+
+## 5. Grid fluido e forma
+- Blocos de cor, foto e textura com cantos grandes (40–80 px em peças 1080; 18 px em cards de UI; 14 px em botões)
+- Divisão assimétrica (1/3+2/3, 2/5+3/5); nunca quatro quadrantes iguais
+- Ao menos um canto côncavo (inverse radius) ou bloco deslocado por peça
+- Foto sangrando em ao menos uma borda; pessoa olha para dentro da peça
+- REGRA: o rosto nunca é coberto — nenhum bloco, texto, logo, textura ou contorno do "3" pode cobrir rosto, olhos ou boca; posicione os blocos em volta da pessoa
+- Barra fina amarela lateral/base; bloco preto ancorando o logo
+- Texto ocupa no máx. 60% da largura do bloco
+- Espaçamento base 4 px (4, 8, 12, 16, 24, 32, 48, 64, 96, 128). Sem sombras em peças gráficas; em UI: 0 1px 2px rgba(22,18,31,.04), 0 10px 28px rgba(22,18,31,.06)
+- Formatos: Stories 1080×1920 · Feed 1080×1080 · Paisagem 1920×1080 · Mídia exterior vertical
+
+## 6. Texturas e fotografia
+- Texturas 3D: dobras lilás/roxas (principal), fitas de vidro (capas), linhas/ondas de dados em preto (somente conteúdo de dados). UMA textura por peça, recortada dentro de um bloco; nunca como fundo atrás de texto longo.
+- Fotografia: pessoas reais em trabalho/estudo; diversidade étnica, de gênero e idade; luz natural lateral; tons de pele preservados; roupas sóbrias; sem poses de catálogo; contraste moderado; leve tonalização roxa nas sombras é aceitável.
+- Peças hero: retrato de perfil sob luz de estúdio com gel roxo/rosa, fundo gradiente, "3" gigante em contorno.
+
+## 7. Componentes
+- Botão primário: fundo #6645B1, texto branco Inter Tight Bold caixa alta (~13–14 px, +6%), raio 14 px, padding ~15×28; hover → #452E78 e elevação −2 px; foco com anel amarelo. Um primário por tela.
+- Kicker/tag: Inter Tight Bold caixa alta; roxo vibrante em fundo claro, prata em fundo escuro
+- Indicador "ARRASTE": Rubik Regular caixa alta prata + seta amarela
+- Card de conteúdo: branco, raio grande, sem sombra (ou mínima), canto côncavo opcional
+- Selo de sub-marca: abaixo/ao lado do logo PM3 em preto; logos de parceiros em branco sobre bloco roxo
+- Campos: raio 14 px, borda 1,5 px, foco roxo vibrante; erro com texto, não só cor
+
+## 8. Tom de voz
+- Direto e convidativo; afirmativo sobre o momento; valoriza o risco como crescimento; foco em pessoas, não na plataforma
+- Frases curtas; títulos de 2–4 palavras por linha; parágrafos de até 5 linhas
+- Exemplos: "Inscreva-se já." · "Garanta sua vaga" · "Esse é o momento" · "A pré-venda já começou" · "3 aulas gratuitas com especialistas em produtos digitais"
+- Evitar: tom professoral, promessas absolutas, siglas internas de formação nas peças ao aluno
+
+## 9. Checklist
+Logo em canto · paleta restrita · título Inter Tight Bold + 1 ênfase Playfair Italic · blocos assimétricos com canto côncavo · foto de pessoa real com rosto livre (nada cobre rosto, olhos ou boca) · no máx. 1 textura · CTA roxo vibrante · texto ≤60% do bloco · PM3.COM.BR em peças de alcance
+
+## 10. Fonte
+Key Visual 2025 (KEYVISUAL.pdf, moodboards, assets Figma) · Modelo de apresentação GTM · Design-System-PM3.html
+</script>
+
+<script>
+  // login (verificação por hash SHA-256; a senha em si não fica no arquivo)
+  (function(){
+    const HASH='7c4add9bc6c8d7e8e1e1fca73715fa43ffdc18427d316ae37cfa4616c65c9db3';
+    function sha256(str){
+      const u=unescape(encodeURIComponent(str)),K=[],H=[];let p=2,n=0;
+      const isP=x=>{for(let i=2;i*i<=x;i++)if(x%i===0)return false;return true};
+      while(n<64){if(isP(p)){if(n<8)H[n]=(Math.pow(p,.5)%1*4294967296)|0;K[n]=(Math.pow(p,1/3)%1*4294967296)|0;n++}p++}
+      const b=[];for(let i=0;i<u.length;i++)b.push(u.charCodeAt(i));
+      const l=b.length*8;b.push(0x80);while(b.length%64!==56)b.push(0);
+      for(let i=7;i>=0;i--)b.push(i>=4?0:(l>>>(i*8))&255);
+      const r=(x,k)=>(x>>>k)|(x<<(32-k));let h=H.slice();
+      for(let o=0;o<b.length;o+=64){
+        const w=[];for(let i=0;i<16;i++)w[i]=(b[o+i*4]<<24)|(b[o+i*4+1]<<16)|(b[o+i*4+2]<<8)|b[o+i*4+3];
+        for(let i=16;i<64;i++){const s0=r(w[i-15],7)^r(w[i-15],18)^(w[i-15]>>>3),s1=r(w[i-2],17)^r(w[i-2],19)^(w[i-2]>>>10);w[i]=(w[i-16]+s0+w[i-7]+s1)|0}
+        let [a,bb,c,d,e,f,g,hh]=h;
+        for(let i=0;i<64;i++){const S1=r(e,6)^r(e,11)^r(e,25),ch=(e&f)^(~e&g),t1=(hh+S1+ch+K[i]+w[i])|0,S0=r(a,2)^r(a,13)^r(a,22),mj=(a&bb)^(a&c)^(bb&c),t2=(S0+mj)|0;hh=g;g=f;f=e;e=(d+t1)|0;d=c;c=bb;bb=a;a=(t1+t2)|0}
+        h=[h[0]+a,h[1]+bb,h[2]+c,h[3]+d,h[4]+e,h[5]+f,h[6]+g,h[7]+hh].map(x=>x|0);
+      }
+      return h.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('');
+    }
+    const form=document.getElementById('gateForm'),inp=document.getElementById('gatePass'),err=document.getElementById('gateErr'),card=document.getElementById('gateCard');
+    if(!document.documentElement.classList.contains('unlocked')&&inp)setTimeout(()=>inp.focus(),50);
+    form&&form.addEventListener('submit',ev=>{
+      ev.preventDefault();
+      if(sha256(inp.value)===HASH){
+        try{localStorage.setItem('pm3_ds_ok','1')}catch(e){}
+        document.documentElement.classList.add('unlocked');err.textContent='';inp.value='';
+      }else{
+        err.textContent='Senha incorreta. Tente novamente.';inp.value='';inp.focus();
+        card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');
+      }
+    });
+  })();
+
+  // reveal
+  const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}}),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  if(matchMedia('print').matches) document.querySelectorAll('.reveal').forEach(el=>el.classList.add('show'));
+  window.addEventListener('beforeprint',()=>document.querySelectorAll('.reveal').forEach(el=>el.classList.add('show')));
+
+  // toast + copy
+  const toast=document.getElementById('toast');let tt;
+  function showToast(m){toast.textContent=m;toast.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('show'),1800)}
+  function copy(text,msg){
+    const done=()=>showToast(msg);
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(done)}
+    else{const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}t.remove();done()}
+  }
+  document.querySelectorAll('.sw').forEach(sw=>sw.addEventListener('click',()=>{const h=sw.dataset.hex;copy(h,(h.startsWith('#')?h:'CSS do gradiente')+' copiado!')}));
+
+  document.querySelectorAll('.sw').forEach(sw=>sw.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();sw.click()}}));
+  // scroll-spy
+  const spyLinks=[...document.querySelectorAll('nav.top a[href^="#"]')];
+  const spy=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){spyLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-45% 0px -50% 0px'});
+  spyLinks.forEach(a=>{const s=document.querySelector(a.getAttribute('href'));if(s)spy.observe(s)});
+
+  // contraste (WCAG)
+  function lum(hex){const c=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4));return .2126*c[0]+.7152*c[1]+.0722*c[2]}
+  function ratio(a,b){const l1=lum(a),l2=lum(b);return (Math.max(l1,l2)+.05)/(Math.min(l1,l2)+.05)}
+  const pairs=[
+    ['#FFFFFF','#452E78','Branco sobre Roxo profundo','Texto em blocos principais'],
+    ['#FFFFFF','#6645B1','Branco sobre Roxo vibrante','Botão primário'],
+    ['#B9B5C1','#452E78','Prata sobre Roxo profundo','Corpo/2ª linha em fundo roxo'],
+    ['#452E78','#FFFFFF','Roxo profundo sobre Branco','Títulos, logo em fundo claro'],
+    ['#6645B1','#FFFFFF','Roxo vibrante sobre Branco','Kickers, links, botão secundário'],
+    ['#FFFFFF','#000000','Branco sobre Preto','Blocos de ancoragem'],
+    ['#000000','#B9B5C1','Preto sobre Prata','Blocos neutros'],
+    ['#000000','#FFB12A','Preto sobre Amarelo','Único texto permitido sobre amarelo'],
+    ['#FFFFFF','#FFB12A','Branco sobre Amarelo','Não usar'],
+    ['#16121F','#FAFAF9','Ink sobre Paper','Texto corrido na interface']
+  ];
+  const tb=document.getElementById('ctrTable');
+  tb.innerHTML=pairs.map(([fg,bg,nm,use])=>{
+    const r=ratio(fg,bg);
+    const cls=r>=7?['aaa','AAA']:r>=4.5?['aa','AA']:r>=3?['lg','Só texto grande']:['no','Reprovado'];
+    return `<tr><td style="width:170px"><span class="ctr-pair" style="background:${bg};color:${fg};${bg==='#FFFFFF'||bg==='#FAFAF9'?'border:1px solid rgba(22,18,31,.12)':''}">Aa Texto</span></td><td><b style="font-family:var(--display)">${nm}</b><br><span style="font-size:12.5px;color:var(--muted)">${use}</span></td><td style="text-align:right;white-space:nowrap"><span class="mono" style="margin-right:10px">${r.toFixed(2)}:1</span><span class="ctr-badge ${cls[0]}">${cls[1]}</span></td></tr>`;
+  }).join('');
+
+  // tokens css
+  document.getElementById('copyCss').addEventListener('click',()=>copy(document.getElementById('cssTokens').textContent,'CSS copiado!'));
+
+  // markdown export
+  const md=document.getElementById('ai-context').textContent.trim();
+  const out=document.getElementById('mdOut');
+  document.getElementById('genMd').addEventListener('click',()=>{out.value=md;out.style.display='block';document.getElementById('copyMd').style.display='inline-flex';document.getElementById('dlMd').style.display='inline-flex';out.scrollIntoView({behavior:'smooth',block:'nearest'})});
+  document.getElementById('copyMd').addEventListener('click',()=>copy(out.value,'Markdown copiado!'));
+  document.getElementById('dlMd').addEventListener('click',()=>{const b=new Blob([out.value],{type:'text/markdown;charset=utf-8'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='pm3-brand-context.md';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u)});
+
+  // nav offset
+  document.querySelectorAll('nav.top a[href^="#"]').forEach(a=>a.addEventListener('click',ev=>{const t=document.querySelector(a.getAttribute('href'));if(t){ev.preventDefault();scrollTo({top:t.getBoundingClientRect().top+scrollY-52,behavior:'smooth'})}}));
+</script>
+</body>
+</html>
