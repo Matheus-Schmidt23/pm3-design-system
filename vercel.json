@@ -1,7 +1,5 @@
 {
-  "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/Design-System-PM3.html" },
-    { "source": "/slides", "destination": "/Design-System-PM3.pdf" }
+    { "source": "/", "destination": "/Design-System-PM3.html" }
   ]
 }
