@@ -189,13 +189,9 @@
   .ctr-table{width:100%;border-collapse:collapse;margin-top:12px}
   .ctr-table td{padding:12px 14px;border-top:1px solid var(--line);font-size:14px;vertical-align:middle}
   .ctr-table tr:first-child td{border-top:none}
-  .ctr-table tr.fail td{background:rgba(192,40,58,.07)}
-  .ctr-table tr.fail td:first-child{border-radius:12px 0 0 12px}
-  .ctr-table tr.fail td:last-child{border-radius:0 12px 12px 0}
-  .ctr-table tr.fail b,.ctr-table tr.fail .mono{text-decoration:underline;text-decoration-color:#d6283c;text-decoration-thickness:3px;text-underline-offset:4px}
   .ctr-pair{display:inline-flex;align-items:center;justify-content:center;width:150px;height:44px;border-radius:10px;font-family:var(--display);font-weight:700;font-size:14px}
   .ctr-badge{font-family:var(--display);font-weight:800;font-size:11px;letter-spacing:.06em;padding:3px 9px;border-radius:99px;display:inline-block}
-  .ctr-badge.aaa{background:#d8f3dc;color:#0b5d1e}.ctr-badge.aa{background:#e6f4d6;color:#3b6b0a}.ctr-badge.lg{background:#fff1c7;color:#7a5200}.ctr-badge.no{background:#ffe1e3;color:#9a1b27}
+  .ctr-badge.aaa{background:#d8f3dc;color:#0b5d1e}.ctr-badge.aa{background:#e6f4d6;color:#3b6b0a}.ctr-badge.lg{background:#fff1c7;color:#7a5200}.ctr-badge.no{background:#d6283c;color:#fff}
 
   /* ---------- tipografia ---------- */
   .fam{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
@@ -474,10 +470,8 @@ body{overflow-x:hidden}
 .ctr .t span{display:block;font:400 21px var(--body);color:var(--muted);margin-top:3px}
 .ctr .v{font:500 21px ui-monospace,Consolas,monospace;text-align:right}
 .ctr .t b{font-weight:700}
-.ctr .r.fail{background:rgba(192,40,58,.08);border-radius:16px;padding-left:16px;padding-right:16px;margin:0 -16px;border-top-color:transparent}
-.ctr .r.fail .t b,.ctr .r.fail .v{text-decoration:underline;text-decoration-color:#d6283c;text-decoration-thickness:4px;text-underline-offset:6px}
 .ctr .bg2{font:800 15px var(--display);letter-spacing:.06em;padding:3px 12px;border-radius:99px;margin-left:10px}
-.bg-aaa{background:#d8f3dc;color:#0b5d1e}.bg-aa{background:#e6f4d6;color:#3b6b0a}.bg-lg{background:#fff1c7;color:#7a5200}.bg-no{background:#ffe1e3;color:#9a1b27}
+.bg-aaa{background:#d8f3dc;color:#0b5d1e}.bg-aa{background:#e6f4d6;color:#3b6b0a}.bg-lg{background:#fff1c7;color:#7a5200}.bg-no{background:#d6283c;color:#fff}
 
 /* tipografia */
 .famx{border-radius:32px;padding:44px 44px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column}
@@ -1028,7 +1022,7 @@ body{overflow-x:hidden}
   const pairs=[['#FFFFFF','#452E78','Branco sobre Roxo profundo','Texto em blocos principais'],['#FFFFFF','#6645B1','Branco sobre Roxo vibrante','Botão primário'],['#B9B5C1','#452E78','Prata sobre Roxo profundo','Corpo em fundo roxo'],['#452E78','#FFFFFF','Roxo profundo sobre Branco','Títulos, logo em fundo claro'],['#6645B1','#FFFFFF','Roxo vibrante sobre Branco','Kickers, botão secundário'],['#FFFFFF','#000000','Branco sobre Preto','Blocos de ancoragem'],['#000000','#B9B5C1','Preto sobre Prata','Blocos neutros'],['#000000','#FFB12A','Preto sobre Amarelo','Único texto sobre amarelo'],['#FFFFFF','#FFB12A','Branco sobre Amarelo','Não usar'],['#16121F','#FAFAF9','Ink sobre Paper','Texto corrido na interface']];
   const el=document.getElementById('ctr');
   if(el)el.innerHTML=pairs.map(([fg,bg,nm,use])=>{const r=ratio(fg,bg);const c=r>=7?['aaa','AAA']:r>=4.5?['aa','AA']:r>=3?['lg','Só texto grande']:['no','Reprovado'];
-    return '<div class="r'+(c[0]==='no'?' fail':'')+'"><div class="sample" style="background:'+bg+';color:'+fg+';'+((bg==='#FFFFFF'||bg==='#FAFAF9')?'border:1px solid rgba(22,18,31,.14)':'')+'">Aa Texto</div><div class="t"><b>'+nm+'</b><span>'+use+'</span></div><div class="v">'+r.toFixed(2)+':1<span class="bg2 bg-'+c[0]+'">'+c[1]+'</span></div></div>'}).join('');
+    return '<div class="r"><div class="sample" style="background:'+bg+';color:'+fg+';'+((bg==='#FFFFFF'||bg==='#FAFAF9')?'border:1px solid rgba(22,18,31,.14)':'')+'">Aa Texto</div><div class="t"><b>'+nm+'</b><span>'+use+'</span></div><div class="v">'+r.toFixed(2)+':1<span class="bg2 bg-'+c[0]+'">'+c[1]+'</span></div></div>'}).join('');
   // pré-visualização em tela: escala para a largura da janela (não afeta a impressão)
   function fit(){document.documentElement.style.zoom=Math.min(1,innerWidth/1960)}
   if(!matchMedia('print').matches){fit();addEventListener('resize',fit)}

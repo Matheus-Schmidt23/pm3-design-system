@@ -191,13 +191,9 @@
   .ctr-table{width:100%;border-collapse:collapse;margin-top:12px}
   .ctr-table td{padding:12px 14px;border-top:1px solid var(--line);font-size:14px;vertical-align:middle}
   .ctr-table tr:first-child td{border-top:none}
-  .ctr-table tr.fail td{background:rgba(192,40,58,.07)}
-  .ctr-table tr.fail td:first-child{border-radius:12px 0 0 12px}
-  .ctr-table tr.fail td:last-child{border-radius:0 12px 12px 0}
-  .ctr-table tr.fail b,.ctr-table tr.fail .mono{text-decoration:underline;text-decoration-color:#d6283c;text-decoration-thickness:3px;text-underline-offset:4px}
   .ctr-pair{display:inline-flex;align-items:center;justify-content:center;width:150px;height:44px;border-radius:10px;font-family:var(--display);font-weight:700;font-size:14px}
   .ctr-badge{font-family:var(--display);font-weight:800;font-size:11px;letter-spacing:.06em;padding:3px 9px;border-radius:99px;display:inline-block}
-  .ctr-badge.aaa{background:#d8f3dc;color:#0b5d1e}.ctr-badge.aa{background:#e6f4d6;color:#3b6b0a}.ctr-badge.lg{background:#fff1c7;color:#7a5200}.ctr-badge.no{background:#ffe1e3;color:#9a1b27}
+  .ctr-badge.aaa{background:#d8f3dc;color:#0b5d1e}.ctr-badge.aa{background:#e6f4d6;color:#3b6b0a}.ctr-badge.lg{background:#fff1c7;color:#7a5200}.ctr-badge.no{background:#d6283c;color:#fff}
 
   /* ---------- tipografia ---------- */
   .fam{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
@@ -1353,7 +1349,7 @@ Key Visual 2025 (KEYVISUAL.pdf, moodboards, assets Figma) · Modelo de apresenta
   tb.innerHTML=pairs.map(([fg,bg,nm,use])=>{
     const r=ratio(fg,bg);
     const cls=r>=7?['aaa','AAA']:r>=4.5?['aa','AA']:r>=3?['lg','Só texto grande']:['no','Reprovado'];
-    return `<tr class="${cls[0]==='no'?'fail':''}"><td style="width:170px"><span class="ctr-pair" style="background:${bg};color:${fg};${bg==='#FFFFFF'||bg==='#FAFAF9'?'border:1px solid rgba(22,18,31,.12)':''}">Aa Texto</span></td><td><b style="font-family:var(--display)">${nm}</b><br><span style="font-size:12.5px;color:var(--muted)">${use}</span></td><td style="text-align:right;white-space:nowrap"><span class="mono" style="margin-right:10px">${r.toFixed(2)}:1</span><span class="ctr-badge ${cls[0]}">${cls[1]}</span></td></tr>`;
+    return `<tr><td style="width:170px"><span class="ctr-pair" style="background:${bg};color:${fg};${bg==='#FFFFFF'||bg==='#FAFAF9'?'border:1px solid rgba(22,18,31,.12)':''}">Aa Texto</span></td><td><b style="font-family:var(--display)">${nm}</b><br><span style="font-size:12.5px;color:var(--muted)">${use}</span></td><td style="text-align:right;white-space:nowrap"><span class="mono" style="margin-right:10px">${r.toFixed(2)}:1</span><span class="ctr-badge ${cls[0]}">${cls[1]}</span></td></tr>`;
   }).join('');
 
   // tokens css
